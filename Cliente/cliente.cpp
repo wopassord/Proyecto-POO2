@@ -74,7 +74,16 @@ public:
         cout << "Menu de opciones:\n";
         cout << "1. Saludo personalizado\n";
         cout << "2. Subir archivo G-Code\n";
-        cout << "3. Salir y apagar todo\n";
+        cout<< "3. Conectar/desconectar robot.\n";
+        cout<< "4. Activar/desactivar motores del robot.\n";
+        cout<< "5. Mostrar reporte de informacion general. \n";
+        cout<<"6. [SOLO ADMIN] Mostrar reporte de log de trabajo del servidor. \n "; // las que dicen solo admin para mi no van 
+        cout<< "7. Seleccionar los modos de trabajo (manual o automatico) o coordenadas (absolutas o relativas). \n ";
+        cout<<"8. [SOLO ADMIN] Mostrar usuarios. \n";
+        cout<< "9. [SOLO ADMIN] Mostrar/editar los parametros de conexion del robot. \n ";
+        cout<< "10. Mostrar operaciones posibles a realizar por un cliente o un operador en el servidor. \n";
+        cout<< "11. [SOLO MODO MANUAL] Enviar comandos en formato G-Code para accionar robot. \n";
+        cout << "12. Salir y apagar todo\n";// esta la deje para probar pero no va
         cout << "Seleccione una opción: ";
     }
 };
@@ -108,7 +117,7 @@ public:
             else if (opcion == 2) {
                 cliente->subirArchivoGCode();
             } 
-            else if (opcion == 3) {
+            else if (opcion == 12) {
                 cliente->apagarServidor();
                 cout << "Cliente apagado.\n";
                 break;
