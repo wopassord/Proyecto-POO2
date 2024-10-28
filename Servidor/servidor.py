@@ -1,12 +1,12 @@
 from xmlrpc.server import SimpleXMLRPCServer, SimpleXMLRPCRequestHandler
 from usuario import Usuario  # Asegúrate de tener la clase Usuario en un archivo separado llamado usuario.py
 from controlador import Controlador  # Clase que controla el robot, por ejemplo
+import csv
 import threading
-import time
 
 class Servidor:
     def __init__(self):
-        self.usuarios = []  # Lista de usuarios
+        self.usuarios = self.leer_usuarios_csv()  # Lista de usuarios
         self.sesion_iniciada = False  # Estado de la sesión de usuario
         self.sesion = {}  # Información de la sesión actual
         self.running = False  # Estado del servidor
@@ -44,6 +44,25 @@ class Servidor:
         self.server_thread = threading.Thread(target=run_server)
         self.server_thread.start()
         print("Servidor XML-RPC iniciado en un hilo separado.")
+
+    def leer_usuarios_csv(self, archivo='usuarios_servidor.csv'):
+        try:
+            with open(archivo, mode='r', newline='') as csvfile:
+                reader = csv.reader(csvfile)
+                usuarios = []
+                for row in reader:
+                    nombre_usuario, contrasena, admin = row
+                    admin = admin.lower() == 'true'  # Convertir el valor del campo admin a booleano
+                    usuarios.append(Usuario(nombre_usuario, contrasena, admin))
+                
+                return usuarios
+        
+        except FileNotFoundError:
+            print(f"El archivo {archivo} no existe.")
+            return []
+        except Exception as e:
+            print(f"Error al leer el archivo: {e}")
+            return []
 
     def iniciar_interfaz(self):
         """Inicia la interfaz de usuario en la terminal en un hilo separado."""

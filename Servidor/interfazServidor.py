@@ -13,9 +13,6 @@ class InterfazServidor:
         self.peticion = None
         self.ip_cliente = None
 
-    def iniciar_sesion_usuario(self):
-        print(f"Sesion iniciada por el usuario: {self.usuario} con la IP: {self.ip_cliente}")
-
     def listar_comandos(self):
         print("Comandos posibles a realizar: \n")
         print(" 1) Conectar/desconectar robot.")
@@ -29,6 +26,9 @@ class InterfazServidor:
         print(" 9) [SOLO ADMIN] Mostrar usuarios.")
         print(" 10) [SOLO ADMIN] Mostrar/editar los parametros de conexion del robot.")
         print(" 11) [SOLO ADMIN] Encender/apagar servidor.")
+        print(" 12) Cerrar sesion.")
+        print(" 13) Listar comandos nuevamente.")
+        print(" 14) Apagar programa.")
 
     def administrar_comandos(self):
         while True:
@@ -65,6 +65,12 @@ class InterfazServidor:
                         self.servidor.iniciar_servidor()
                     else:
                         self.servidor.apagar_servidor()
+                elif opcion_elegida == 12:
+                    self.servidor.cerrar_sesion()
+                elif opcion_elegida == 13:
+                    self.listar_comandos()
+                elif opcion_elegida == 14:
+                    return 14
                 else:
                     print("Opción no válida.")
             except ValueError:
