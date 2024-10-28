@@ -107,11 +107,11 @@ class Servidor:
         """Agrega un usuario nuevo al sistema."""
         if any(u.nombre_usuario == nombre_usuario for u in self.usuarios):
             print("El usuario ingresado ya existe.")
-            return
-        nuevo_usuario = Usuario(nombre_usuario, contrasena, admin)
-        self.usuarios.append(nuevo_usuario)
-        print(f"Usuario {nombre_usuario} agregado correctamente.")
-        nuevo_usuario.guardar_usuarios_csv()
+        else:
+            nuevo_usuario = Usuario(nombre_usuario, contrasena, admin)
+            self.usuarios.append(nuevo_usuario)
+            print(f"Usuario {nombre_usuario} agregado correctamente.")
+            nuevo_usuario.guardar_usuarios_csv()
 
     def iniciar_sesion(self):
         """Inicia una sesión de usuario."""

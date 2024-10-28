@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <fstream>
 #include <sstream>
+#include <windows.h>
 #include "libreria_Chris_Morley/XmlRpc.h" 
 using namespace std;
 using namespace XmlRpc;
@@ -16,20 +17,6 @@ public:
     // Constructor para inicializar el cliente con el host y puerto
     ClienteRPC(const string& host, int port) : client(host.c_str(), port) {}
 
-    // Método para solicitar un saludo personalizado
-    void solicitarSaludo() {
-        string nombre;
-        cout << "Ingrese su nombre para el saludo personalizado: ";
-        cin >> nombre;
-        args[0] = nombre;
-
-        if (client.execute("saludo_personalizado", args, result)) {
-            cout << "Respuesta del servidor: " << result << "\n\n";
-        } else {
-            cerr << "Error al ejecutar el saludo personalizado\n\n";
-        }
-    }
-
     // Método para apagar el servidor de manera remota
     void apagarServidor() {
         if (client.execute("apagar_servidor", noArgs, result)) {
@@ -38,36 +25,67 @@ public:
             cerr << "Error al intentar apagar el servidor.\n\n";
         }
     }
+//         void activarAlarma() {
+//         HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
 
-    // Método para subir archivo G-Code
-    void subirArchivoGCode() {
-        string rutaArchivo;
-        cout << "Ingrese la ruta del archivo G-Code: ";
-        getline(cin >> ws, rutaArchivo);
+//         for (int i = 0; i < 5; ++i) {
+//             // Cambia el color de la consola a rojo y muestra el mensaje de alarma
+//             SetConsoleTextAttribute(hConsole, FOREGROUND_RED | FOREGROUND_INTENSITY);
+//             std::cout << "\r¡ALERTA! Error en la transferencia del archivo." << std::flush;
 
-        // Leer el archivo
-        ifstream archivoGCode(rutaArchivo);
-        if (archivoGCode.fail()) {
-            cerr << "Error al abrir el archivo: " << rutaArchivo << "\n\n";
-            return;
-        }
+//             // Generar un sonido de alarma
+//             Beep(1000, 300); // Frecuencia de 1000 Hz durante 300 ms
+//             MessageBeep(MB_ICONHAND); // Sonido de error del sistema
 
-        // Convertir el contenido del archivo en una cadena
-        stringstream buffer;
-        buffer << archivoGCode.rdbuf();
-        string contenidoArchivo = buffer.str();
+//             // Pausa para el parpadeo
+//             std::this_thread::sleep_for(std::chrono::milliseconds(300));
 
-        // Establecer los argumentos
-        args[0] = XmlRpcValue(rutaArchivo);        // Nombre del archivo
-        args[1] = XmlRpcValue(contenidoArchivo);
+//             // Cambia el color de la consola al color normal
+//             SetConsoleTextAttribute(hConsole, FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE);
+//             std::cout << "\r                                     " << std::flush; // Borrar el mensaje
 
-        // Enviar al servidor
-        if (client.execute("subir_archivo_gcode", args, result)) {
-            cout << "Respuesta del servidor: " << result << "\n\n";
-        } else {
-            cerr << "Error al subir el archivo G-Code\n\n";
-        }
-    }
+//             // Pausa entre flashes
+//             std::this_thread::sleep_for(std::chrono::milliseconds(300));
+//         }
+//     }
+
+//     // Método para subir archivo G-Code
+//     void subirArchivoGCode() {
+//         string rutaArchivo;
+//         cout << "Ingrese la ruta del archivo G-Code: ";
+//         getline(cin >> ws, rutaArchivo);
+
+//         // Leer el archivo
+//         ifstream archivoGCode(rutaArchivo);
+//         if (archivoGCode.fail()) {
+//             cerr << "Error al abrir el archivo: " << rutaArchivo << "\n\n";
+//             return;
+//         }
+
+//         // Convertir el contenido del archivo en una cadena
+//         stringstream buffer;
+//         buffer << archivoGCode.rdbuf();
+//         string contenidoArchivo = buffer.str();
+
+//         // Establecer los argumentos
+//         args[0] = XmlRpcValue(rutaArchivo);  // Nombre del archivo
+//         args[1] = XmlRpcValue(contenidoArchivo);
+
+//         // Enviar al servidor
+//         if (client.execute("subir_archivo_gcode", args, result)) {
+//             // Verificar respuesta del servidor para determinar si activar la alarma
+//             string respuesta = static_cast<string>(result);
+//             if (respuesta == "Error al subir el archivo") {
+//                 activarAlarma();
+//             } else {
+//                 cout << "Respuesta del servidor: " << respuesta << "\n\n";
+//             }
+//         } else {
+//             cerr << "Error en la conexión al subir el archivo G-Code\n\n";
+//             activarAlarma();
+//         }
+//     }
+// };
 
     void conectarDesconectarRobot() {
         if (client.execute("recibir_comando_cliente", 1, result)) {
@@ -75,22 +93,6 @@ public:
         } else {
             cerr << "Error al enviar el comando al servidor\n\n";
         }
-    }
-
-    void activarDesactivarMotoresRobot(){
-
-    }
-
-    void seleccionarModoTrabajo(){
-
-    }
-
-    void seleccionarModoCoordenadas(){
-
-    }
-
-    void mostrarOperaciones(){
-
     }
 
     void enviarComando(const string& comando) {
@@ -109,7 +111,7 @@ public:
         cout << "Menu de opciones:\n";
         cout << "1. Saludo personalizado\n";
         cout << "2. Subir archivo G-Code\n"; 
-        cout << "3. Conectar/desconectar robot.\n"; // ACCION 1
+        cout << "3. Conectar/desconectar robot.\n"; // ACCION 1 EN SERVIDOR
         cout << "4. Activar/desactivar motores del robot.\n"; // ACCION 2
         // cout << "5. Mostrar reporte de informacion general. \n";
         // cout << "6. [SOLO ADMIN] Mostrar reporte de log de trabajo del servidor. \n "; // las que dicen solo admin para mi no van 
@@ -147,10 +149,10 @@ public:
             cin >> opcion;
 
             if (opcion == 1) {
-                cliente->solicitarSaludo();
+                //cliente->solicitarSaludo();
             }  
             else if (opcion == 2) {
-                cliente->subirArchivoGCode();
+                //cliente->subirArchivoGCode();
             } 
             else if (opcion == 3){
 
