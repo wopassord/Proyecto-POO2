@@ -10,23 +10,35 @@ def main():
     servidor.iniciar_servidor()  
     interfaz.servidor.iniciar_interfaz()
 
-    # Ejemplo de agregar usuario e iniciar sesión
-    servidor.agregar_usuario("Renzito", "1234", True)
-    servidor.iniciar_sesion()
-
     # Listar comandos y bucle principal
     interfaz.listar_comandos()
+
     ejecutando = True
     while ejecutando:
-        try:
-            opcion = int(input("Ingrese 0 si quiere salir, otro número para continuar: "))
-            if opcion == 0:
-                print("Saliendo del programa.")
-                ejecutando = False
-            else:
-                interfaz.administrar_comandos()
-        except ValueError:
-            print("Por favor, ingresa un número válido.")
+        if servidor.sesion_iniciada == False:
+            try:
+                print("Inicie sesion antes de proceder.")
+                print(" 1) Iniciar sesion")
+                print(" 2) Agregar usuario")
+                opcion = int(input("Por favor, ingrese una de las anteriores opciones: \n"))
+                if opcion == 1:
+                    servidor.iniciar_sesion()
+                elif opcion == 2:
+                     # Pedir datos del usuario para agregar
+                    nombre_usuario = input("Ingrese el nombre de usuario: ")
+                    contrasena = input("Ingrese la contraseña: ")
+                    admin_input = input("¿Es administrador? (s/n): ").strip().lower()
+                    admin = admin_input == 's'
+                    servidor.agregar_usuario(nombre_usuario, contrasena, admin)
+            except ValueError:
+                print("Ingrese un numero valido.")
+        else:
+            try:
+                comando = interfaz.administrar_comandos()
+                if comando == 14:
+                    ejecutando = False
+            except ValueError:
+                print("Por favor, ingresa un número válido.")
 
     # Apagar el servidor al salir
     if servidor.get_estado_servidor():
