@@ -82,11 +82,12 @@ class Servidor:
         try:
             with open(nombre_archivo, 'w') as f:
                 f.write(contenido_archivo)
-            print(f"Archivo {nombre_archivo} recibido y guardado.")
+            print(f"Archivo {nombre_archivo} recibido.")
+            print(f"Contenido del archivo: \n{contenido_archivo}")
             return f"Archivo {nombre_archivo} recibido y almacenado correctamente."
         except Exception as e:
-            print(f"Error al guardar el archivo: {e}")
-            return f"Error al guardar el archivo: {str(e)}"
+            print(f"Error al guardar el archivo: {str(e)}")
+            return "Error al subir el archivo"
 
     def recibir_comando_cliente(self, comando):
         """Recibe un comando desde el cliente y lo procesa."""
