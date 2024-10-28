@@ -1,5 +1,6 @@
 from xmlrpc.server import SimpleXMLRPCServer, SimpleXMLRPCRequestHandler
 from usuario import Usuario
+from controlador import Controlador
 import threading
 import time
 
@@ -13,6 +14,7 @@ class Servidor:
         self.server_thread = None  # Hilo para el servidor
         self.ip_cliente = None # Almacena ultima IP
         self.comando_recibido = None # Almacena el ultimo comando recibido de un cliente
+        self.controlador = Controlador()
 
     def get_estado_servidor(self):
         return self.running
@@ -23,13 +25,13 @@ class Servidor:
     def get_usuarios(self):
         return self.usuarios
     
-    def agregar_usuario(self, nombre_usuario, contrasena):
+    def agregar_usuario(self, nombre_usuario, contrasena, admin):
         for usuario in self.usuarios:
             if nombre_usuario == usuario.nombre_usuario:
                 print("El usuario ingresado ya existe, por favor, ingrese un usuario válido.")
                 return  # Salimos del método si el usuario ya existe
         
-        nuevo_usuario = Usuario(nombre_usuario, contrasena)
+        nuevo_usuario = Usuario(nombre_usuario, contrasena, admin)
         self.usuarios.append(nuevo_usuario)
         print(f"Usuario {nombre_usuario} agregado correctamente.")
         nuevo_usuario.guardar_usuarios_csv()
@@ -113,7 +115,8 @@ class Servidor:
 #####################################################################################################################################################################    
     def recibir_comando_cliente(self, comando):
         self.comando_recibido = comando
-        # return Alguna respuesta del servidor
+        respuesta = Controlador.procesar_comando(comando)
+        return respuesta
 #####################################################################################################################################################################
 
 

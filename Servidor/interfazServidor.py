@@ -181,7 +181,7 @@ class InterfazServidor:
         print(" G90: Modo de coordenadas absolutas \n")
         print(" G91: Modo de coordenadas relativas \n")
         print(" M17: Activar motores \n")
-        print(" M18: Desactivar motores \n")
+        print(" M18: Desactivar motores \n")        
 
     def escribir_comando(self):
         self.peticion = "Enviar comando"
@@ -193,6 +193,7 @@ class InterfazServidor:
                 print(f"Error al enviar el comando: {e} ")
         else: 
             print("El modo de trabajo no es manual. Por favor, cambie el modo de trabajo antes de realizar esta accion.")
+
 '''
 
     def set_ip_cliente(self):

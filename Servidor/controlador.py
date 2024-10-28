@@ -1,6 +1,5 @@
 import serial
 import time
-import logTrabajo
 
 class Controlador:
 
