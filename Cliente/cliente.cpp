@@ -1,8 +1,9 @@
 #include <iostream>
-#include <stdlib.h>
 #include <fstream>
 #include <sstream>
 #include <windows.h>
+#include <thread>
+#include <chrono>
 #include <thread>
 #include <chrono>
 #include "libreria_Chris_Morley/XmlRpc.h" 
@@ -19,6 +20,31 @@ public:
     // Constructor para inicializar el cliente con el host y puerto
     ClienteRPC(const string& host, int port) : client(host.c_str(), port) {}
 
+    // Método para activar la alarma visual y auditiva
+    void activarAlarma() {
+        HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+
+        for (int i = 0; i < 5; ++i) {
+            // Cambia el color de la consola a rojo y muestra el mensaje de alarma
+            SetConsoleTextAttribute(hConsole, FOREGROUND_RED | FOREGROUND_INTENSITY);
+            std::cout << "\r¡ALERTA! Error en la transferencia del archivo." << std::flush;
+
+            // Generar un sonido de alarma
+            Beep(1000, 300); // Frecuencia de 1000 Hz durante 300 ms
+            MessageBeep(MB_ICONHAND); // Sonido de error del sistema
+
+            // Pausa para el parpadeo
+            std::this_thread::sleep_for(std::chrono::milliseconds(300));
+
+            // Cambia el color de la consola al color normal
+            SetConsoleTextAttribute(hConsole, FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE);
+            std::cout << "\r                                     " << std::flush; // Borrar el mensaje
+
+            // Pausa entre flashes
+            std::this_thread::sleep_for(std::chrono::milliseconds(300));
+        }
+    }
+
     // Método para apagar el servidor de manera remota
     void apagarServidor() {
         if (client.execute("apagar_servidor", noArgs, result)) {
@@ -28,31 +54,7 @@ public:
         }
     }
 
-    void activarAlarma() {
-        HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
-
-        for (int i = 0; i < 5; ++i) {
-            // Cambia el color de la consola a rojo y muestra el mensaje de alarma
-            SetConsoleTextAttribute(hConsole, FOREGROUND_RED | FOREGROUND_INTENSITY);
-            cout << "\r¡ALERTA! Error en la transferencia del archivo." << flush;
-
-            // Generar un sonido de alarma
-            Beep(1000, 300); // Frecuencia de 1000 Hz durante 300 ms
-            MessageBeep(MB_ICONHAND); // Sonido de error del sistema
-
-            // Pausa para el parpadeo
-            this_thread::sleep_for(chrono::milliseconds(300));
-
-            // Cambia el color de la consola al color normal
-            SetConsoleTextAttribute(hConsole, FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE);
-            cout << "\r                                     " << flush; // Borrar el mensaje
-
-            // Pausa entre flashes
-            this_thread::sleep_for(chrono::milliseconds(300));
-        }
-    }
-
-    // Método para subir archivo G-Code
+   // Método para subir archivo G-Code
     void subirArchivoGCode() {
         string rutaArchivo;
         cout << "Ingrese la ruta del archivo G-Code: ";
@@ -62,6 +64,7 @@ public:
         ifstream archivoGCode(rutaArchivo);
         if (archivoGCode.fail()) {
             cerr << "Error al abrir el archivo: " << rutaArchivo << "\n\n";
+            activarAlarma(); // Activar alarma en caso de error al abrir el archivo
             return;
         }
 
@@ -78,7 +81,7 @@ public:
         if (client.execute("subir_archivo_gcode", args, result)) {
             // Verificar respuesta del servidor para determinar si activar la alarma
             string respuesta = static_cast<string>(result);
-            if (respuesta.find("Error") != string::npos) { // Verificar si hay error en la respuesta
+            if (respuesta == "Error al subir el archivo") {
                 activarAlarma();
             } else {
                 cout << "Respuesta del servidor: " << respuesta << "\n\n";
@@ -89,6 +92,7 @@ public:
         }
     }
 
+    // Método para conectar o desconectar el robot
     void conectarDesconectarRobot() {
         if (client.execute("recibir_comando_cliente", 1, result)) {
             cout << "Respuesta del servidor: " << result << "\n\n";
@@ -97,8 +101,11 @@ public:
         }
     }
 
-    void activarDesactivarMotores() {
-        if (client.execute("recibir_comando_cliente", 2, result)) {
+    // Método para enviar un comando personalizado
+    void enviarComando(const string& comando) {
+        args[0] = comando;  // Establece el comando a enviar
+
+        if (client.execute("recibir_comando_cliente", args, result)) {
             cout << "Respuesta del servidor: " << result << "\n\n";
         } else {
             cerr << "Error al enviar el comando al servidor\n\n";
@@ -127,6 +134,9 @@ public:
         } else {
             cerr << "Error al obtener las operaciones del servidor\n\n";
         }
+    }
+    void activarDesactivarMotores() {
+
     }
 
     void enviarComandoGCode() {
