@@ -6,6 +6,7 @@
 #include <chrono>
 #include <thread>
 #include <chrono>
+#include <cmath>
 #include "libreria_Chris_Morley/XmlRpc.h" 
 using namespace std;
 using namespace XmlRpc;
@@ -55,42 +56,87 @@ public:
     }
 
    // Método para subir archivo G-Code
-    void subirArchivoGCode() {
-        string rutaArchivo;
-        cout << "Ingrese la ruta del archivo G-Code: ";
-        getline(cin >> ws, rutaArchivo);
+ #include <cmath> // Para usar sqrt y pow
 
-        // Leer el archivo
-        ifstream archivoGCode(rutaArchivo);
-        if (archivoGCode.fail()) {
-            cerr << "Error al abrir el archivo: " << rutaArchivo << "\n\n";
-            activarAlarma(); // Activar alarma en caso de error al abrir el archivo
-            return;
-        }
+// Método para verificar si una posición es alcanzable
+bool esPosicionAlcanzable(double x, double y, double z) {
+    double distancia = sqrt(pow(x, 2) + pow(y, 2) + pow(z, 2));
+    double longitudMaxima = 122.0 + 120.0 + 120.0; // Longitud máxima del brazo
 
-        // Convertir el contenido del archivo en una cadena
-        stringstream buffer;
-        buffer << archivoGCode.rdbuf();
-        string contenidoArchivo = buffer.str();
+    return distancia <= longitudMaxima;
+}
 
-        // Establecer los argumentos
-        args[0] = XmlRpcValue(rutaArchivo);  // Nombre del archivo
-        args[1] = XmlRpcValue(contenidoArchivo);
+// Método para subir archivo G-Code con verificación de coordenadas
+void subirArchivoGCode() {
+    string rutaArchivo;
+    cout << "Ingrese la ruta del archivo G-Code: ";
+    getline(cin >> ws, rutaArchivo);
 
-        // Enviar al servidor
-        if (client.execute("subir_archivo_gcode", args, result)) {
-            // Verificar respuesta del servidor para determinar si activar la alarma
-            string respuesta = static_cast<string>(result);
-            if (respuesta == "Error al subir el archivo") {
+    // Leer el archivo en modo de solo lectura
+    ifstream archivoGCode(rutaArchivo, ios::in);
+    if (archivoGCode.fail()) {
+        cerr << "Error al abrir el archivo: " << rutaArchivo << "\n\n";
+        activarAlarma();  // Activar alarma en caso de error al abrir el archivo
+        return;
+    }
+
+    // Convertir el contenido del archivo en una cadena completa
+    stringstream buffer;
+    buffer << archivoGCode.rdbuf();
+    string contenidoArchivo = buffer.str();
+
+    // Cierra el archivo para asegurarnos de no manipularlo más
+    archivoGCode.close();
+
+    // Procesar el contenido del G-Code para verificar coordenadas
+    stringstream contenidoStream(contenidoArchivo);  // Reutilizamos el contenido leído
+    string linea;
+    bool coordenadasValidas = true;
+
+    while (getline(contenidoStream, linea)) {
+        // Verificar si la línea contiene un comando G1, que especifica una posición
+        if (linea.find("G1") != string::npos) {
+            double x = 0, y = 0, z = 0;
+            size_t posX = linea.find("X"), posY = linea.find("Y"), posZ = linea.find("Z");
+
+            if (posX != string::npos) x = stod(linea.substr(posX + 1));
+            if (posY != string::npos) y = stod(linea.substr(posY + 1));
+            if (posZ != string::npos) z = stod(linea.substr(posZ + 1));
+
+            // Verificar si la posición es alcanzable
+            if (!esPosicionAlcanzable(x, y, z)) {
+                cerr << "Posición fuera del alcance: X" << x << " Y" << y << " Z" << z << "\n";
                 activarAlarma();
-            } else {
-                cout << "Respuesta del servidor: " << respuesta << "\n\n";
+                coordenadasValidas = false;
+                break;
             }
-        } else {
-            cerr << "Error en la conexión al subir el archivo G-Code\n\n";
-            activarAlarma();
         }
     }
+
+    if (!coordenadasValidas) {
+        cerr << "El archivo G-Code contiene posiciones no alcanzables.\n\n";
+        return;
+    }
+
+    // Establecer los argumentos para el servidor
+    args[0] = XmlRpcValue(rutaArchivo);  // Nombre del archivo
+    args[1] = XmlRpcValue(contenidoArchivo);  // Contenido completo del archivo
+
+    // Enviar al servidor si las coordenadas son válidas
+    if (client.execute("subir_archivo_gcode", args, result)) {
+        string respuesta = static_cast<string>(result);
+        if (respuesta == "Error al subir el archivo") {
+            activarAlarma();
+        } else {
+            cout << "Respuesta del servidor: " << respuesta << "\n\n";
+        }
+    } else {
+        cerr << "Error en la conexión al subir el archivo G-Code\n\n";
+        activarAlarma();
+    }
+}
+
+
 
     // Método para conectar o desconectar el robot
     void conectarDesconectarRobot() {
@@ -157,7 +203,6 @@ public:
     // Método para mostrar el menú
     void mostrarMenu() {
         cout << "Menu de opciones:\n";
-        cout << "1. Saludo personalizado\n";
         cout << "2. Subir archivo G-Code\n"; 
         cout << "3. Conectar/desconectar robot.\n";
         cout << "4. Activar/desactivar motores del robot.\n";
@@ -193,9 +238,6 @@ public:
             cin >> opcion;
 
             switch (opcion) {
-                case 1:
-                    // cliente->solicitarSaludo(); (Implementar según sea necesario)
-                    break;
                 case 2:
                     cliente->subirArchivoGCode();
                     break;
