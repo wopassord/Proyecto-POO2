@@ -82,3 +82,12 @@ M18: Desactivar motores
     - Revisar como enviar valores para inicializar la clase de archivo.py
     - Revisar como enviar para valores para incializar la clase de logTrabajo.py
     - Implementar registro en logTrabajo para todos los métodos
+
+
+# MODIFICACIONES 23/10 TARDE (BAUDINO)
+
+    - Reseteamos el repositorio. (Juntamos todos los archivos del cliente que teníamos en la main, junto con los archivos de cliente que tenían maia, marcos y santi)
+    - Se editó el código de servidor.py para implementar la comunicación correcta con el cliente. Solamente trabajan con el servidor 127.0.0.1 y puerto 8080, habría que verificar
+    que se pueda seguir realizando con otros puertos, y no solamente en la misma computadora
+    - El código permite mandar un saludo personalizado, y apagar el servidor, pero falta el subir el archivo G-CODE
+    - Habría que ver como se puede acceder desde el cliente a todas las funciones que habíamos incorporado en el menú del servidor
