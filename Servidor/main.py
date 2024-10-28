@@ -1,21 +1,25 @@
-
 from interfazServidor import InterfazServidor
+from servidor import Servidor
 
 def main():
-    # Crear una instancia de InterfazServidor
-    interfaz = InterfazServidor(modo_trabajo="manual", modo_coordenadas="absolutas")
+    # Crear instancias de Servidor y pasarlo a InterfazServidor
+    servidor = Servidor()
+    interfaz = InterfazServidor(servidor, modo_trabajo="manual", modo_coordenadas="absolutas")
 
-    interfaz.servidor.agregar_usuario("Renzito", "1234", True)
-    interfaz.servidor.iniciar_sesion()
+    # Iniciar el servidor y la interfaz de usuario en hilos separados
+    servidor.iniciar_servidor()  
+    interfaz.servidor.iniciar_interfaz()
 
+    # Ejemplo de agregar usuario e iniciar sesión
+    servidor.agregar_usuario("Renzito", "1234", True)
+    servidor.iniciar_sesion()
+
+    # Listar comandos y bucle principal
     interfaz.listar_comandos()
-
-    # Bucle principal del programa para administrar comandos
     ejecutando = True
     while ejecutando:
-        
         try:
-            opcion = int(input("Ingrese 0 si quiere salir, si no, imprima cualquier otro numero: "))
+            opcion = int(input("Ingrese 0 si quiere salir, otro número para continuar: "))
             if opcion == 0:
                 print("Saliendo del programa.")
                 ejecutando = False
@@ -24,9 +28,9 @@ def main():
         except ValueError:
             print("Por favor, ingresa un número válido.")
 
-    # Apagar el servidor antes de salir
-    if interfaz.servidor.get_estado_servidor():
-        interfaz.servidor.apagar_servidor()
+    # Apagar el servidor al salir
+    if servidor.get_estado_servidor():
+        servidor.apagar_servidor()
     print("Programa finalizado.")
 
 if __name__ == "__main__":
