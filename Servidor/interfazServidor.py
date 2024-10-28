@@ -37,7 +37,11 @@ class InterfazServidor:
         opcion_elegida = None
         while opcion_elegida not in list(range(1, 10)):
             try:
-                opcion_elegida = int(input("Ingrese la acción a realizar: "))
+                if self.servidor.get_comando_recibido() == None:
+                    opcion_elegida = int(input("Ingrese la acción a realizar: "))
+                else:
+                    opcion_elegida = self.servidor.get_comando_recibido()
+                    
                 inicio = time.time()
 
                 if opcion_elegida == 1:
@@ -200,7 +204,3 @@ class InterfazServidor:
         self.ip_cliente = self.servidor.get_"
 
     '''
-    
-
-
-        

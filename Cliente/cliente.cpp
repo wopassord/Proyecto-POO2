@@ -69,21 +69,56 @@ public:
         }
     }
 
+    void conectarDesconectarRobot() {
+        if (client.execute("recibir_comando_cliente", 1, result)) {
+            cout << "Respuesta del servidor: " << result << "\n\n";
+        } else {
+            cerr << "Error al enviar el comando al servidor\n\n";
+        }
+    }
+
+    void activarDesactivarMotoresRobot(){
+
+    }
+
+    void seleccionarModoTrabajo(){
+
+    }
+
+    void seleccionarModoCoordenadas(){
+
+    }
+
+    void mostrarOperaciones(){
+
+    }
+
+    void enviarComando(const string& comando) {
+        args[0] = comando;  // Establece el comando a enviar
+
+        if (client.execute("recibir_comando_cliente", args, result)) {
+            cout << "Respuesta del servidor: " << result << "\n\n";
+        } else {
+            cerr << "Error al enviar el comando al servidor\n\n";
+        }
+    }
+
+
     // Método para mostrar el menú
     void mostrarMenu() {
         cout << "Menu de opciones:\n";
         cout << "1. Saludo personalizado\n";
-        cout << "2. Subir archivo G-Code\n";
-        cout<< "3. Conectar/desconectar robot.\n";
-        cout<< "4. Activar/desactivar motores del robot.\n";
-        cout<< "5. Mostrar reporte de informacion general. \n";
-        cout<<"6. [SOLO ADMIN] Mostrar reporte de log de trabajo del servidor. \n "; // las que dicen solo admin para mi no van 
-        cout<< "7. Seleccionar los modos de trabajo (manual o automatico) o coordenadas (absolutas o relativas). \n ";
-        cout<<"8. [SOLO ADMIN] Mostrar usuarios. \n";
-        cout<< "9. [SOLO ADMIN] Mostrar/editar los parametros de conexion del robot. \n ";
-        cout<< "10. Mostrar operaciones posibles a realizar por un cliente o un operador en el servidor. \n";
-        cout<< "11. [SOLO MODO MANUAL] Enviar comandos en formato G-Code para accionar robot. \n";
-        cout << "12. Salir y apagar todo\n";// esta la deje para probar pero no va
+        cout << "2. Subir archivo G-Code\n"; 
+        cout << "3. Conectar/desconectar robot.\n"; // ACCION 1
+        cout << "4. Activar/desactivar motores del robot.\n"; // ACCION 2
+        // cout << "5. Mostrar reporte de informacion general. \n";
+        // cout << "6. [SOLO ADMIN] Mostrar reporte de log de trabajo del servidor. \n "; // las que dicen solo admin para mi no van 
+        cout << "5. Seleccionar los modos de trabajo (manual o automatico) o coordenadas (absolutas o relativas). \n "; // ACCION 3 Y 4
+        // cout << "8. [SOLO ADMIN] Mostrar usuarios. \n";
+        // cout << "9. [SOLO ADMIN] Mostrar/editar los parametros de conexion del robot. \n ";
+        cout << "6. Mostrar operaciones posibles a realizar por un cliente o un operador en el servidor. \n"; // ACCION 5
+        cout << "7. [SOLO MODO MANUAL] Enviar comandos en formato G-Code para accionar robot. \n"; // ACCION 6
+        cout << "8. Salir y apagar todo\n"; // esta la deje para probar pero no va
         cout << "Seleccione una opción: ";
     }
 };
@@ -117,7 +152,23 @@ public:
             else if (opcion == 2) {
                 cliente->subirArchivoGCode();
             } 
-            else if (opcion == 12) {
+            else if (opcion == 3){
+
+            }
+            else if (opcion == 4){
+                
+            }
+            else if (opcion == 5){
+                
+            }
+            else if (opcion == 6){
+                
+            }
+            else if (opcion == 7){
+                
+            }
+
+            else if (opcion == 8) {
                 cliente->apagarServidor();
                 cout << "Cliente apagado.\n";
                 break;

@@ -25,6 +25,9 @@ class Servidor:
     def get_usuarios(self):
         return self.usuarios
     
+    def get_comando_recibido(self):
+        return self.comando_recibido
+    
     def agregar_usuario(self, nombre_usuario, contrasena, admin):
         for usuario in self.usuarios:
             if nombre_usuario == usuario.nombre_usuario:
@@ -77,6 +80,7 @@ class Servidor:
             # Registrar las funciones remotas que el cliente puede invocar
             self.server.register_function(self.saludo_personalizado, "saludo_personalizado")
             self.server.register_function(self.apagar_servidor, "apagar_servidor")  # Registramos el apagado
+            self.server.register_function(self.subir_archivo_gcode, "subir_archivo_gcode")
 
             print(f"Servidor XML-RPC escuchando en {host}:{port}...")
             while self.running:
@@ -108,6 +112,20 @@ class Servidor:
 
     def saludo_personalizado(self, nombre):
         return f"Hola {nombre}, ¡conexión exitosa con el servidor XML-RPC!"
+    
+    
+    
+    def subir_archivo_gcode(self, nombre_archivo, contenido_archivo):
+        try:
+            with open(nombre_archivo, 'w') as f:
+                f.write(contenido_archivo)
+
+            print(f"Archivo {nombre_archivo} recibido.")
+            print(f"Contenido del archivo: \n{contenido_archivo}")
+            
+            return f"Archivo {nombre_archivo} recibido y almacenado correctamente."
+        except Exception as e:
+            return f"Error al guardar el archivo: {str(e)}"
 
     def __repr__(self):
         return f"Servidor con {len(self.usuarios)} usuarios."
@@ -115,7 +133,10 @@ class Servidor:
 #####################################################################################################################################################################    
     def recibir_comando_cliente(self, comando):
         self.comando_recibido = comando
-        respuesta = Controlador.procesar_comando(comando)
+        if comando in list(range(1,7)):
+            respuesta = Controlador.procesar_comando(comando)
+        else:
+            respuesta = Controlador.procesar_comando(comando)
         return respuesta
 #####################################################################################################################################################################
 
@@ -128,8 +149,3 @@ class Servidor:
 
     def get_ip(self):
         return self.ip_cliente
-
-# Bloque principal para ejecutar el servidor
-if __name__ == "__main__":
-    servidor = Servidor()
-    servidor.iniciar_servidor()
