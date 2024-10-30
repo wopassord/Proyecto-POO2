@@ -16,6 +16,7 @@ class ClienteRPC {
 private:
     XmlRpcClient client;
     XmlRpcValue result, noArgs, args;
+    double posicionActualX = 0.0, posicionActualY = 0.0, posicionActualZ = 0.0; // Posición acumulada del robot
 
 public:
     // Constructor para inicializar el cliente con el host y puerto
@@ -92,29 +93,52 @@ void subirArchivoGCode() {
     stringstream contenidoStream(contenidoArchivo);  // Reutilizamos el contenido leído
     string linea;
     bool coordenadasValidas = true;
+    double modoAbsoluto = true;
+
+    // Reiniciar posición acumulada para este archivo
+    double posAcumuladaX = 0.0, posAcumuladaY = 0.0, posAcumuladaZ = 0.0;
 
     while (getline(contenidoStream, linea)) {
+        // Cambiar el modo de coordenadas según el comando
+        if(linea.find("G90") != string::npos){
+            modoAbsoluto = true; // Modo absoluto
+            continue;
+        } else if (linea.find("G91") != string::npos){
+            modoAbsoluto = false; // Modo relativo
+            continue;
+        }
+
         // Verificar si la línea contiene un comando G1, que especifica una posición
         if (linea.find("G1") != string::npos) {
-            double x = 0, y = 0, z = 0;
+            double x = posicionActualX, y = posicionActualY, z = posicionActualZ;
             size_t posX = linea.find("X"), posY = linea.find("Y"), posZ = linea.find("Z");
 
             if (posX != string::npos) x = stod(linea.substr(posX + 1));
             if (posY != string::npos) y = stod(linea.substr(posY + 1));
             if (posZ != string::npos) z = stod(linea.substr(posZ + 1));
 
+            // Calcular nueva posición acumulada
+            double nuevaPosX = modoAbsoluto ? x : posicionActualX + x;
+            double nuevaPosY = modoAbsoluto ? y : posicionActualY + y;
+            double nuevaPosZ = modoAbsoluto ? z : posicionActualZ + z;
+
             // Verificar si la posición es alcanzable
-            if (!esPosicionAlcanzable(x, y, z)) {
-                cerr << "Posición fuera del alcance: X" << x << " Y" << y << " Z" << z << "\n";
+            if (!esPosicionAlcanzable(nuevaPosX, nuevaPosY, nuevaPosZ)) {
+                cerr << "Posición fuera del alcance acumulativo: X" << nuevaPosX << " Y" << nuevaPosY << " Z" << nuevaPosZ << "\n";
                 activarAlarma();
                 coordenadasValidas = false;
                 break;
             }
+
+            // Actualizar la posición acumulada solo en modo relativo
+            posicionActualX = nuevaPosX;
+            posicionActualY = nuevaPosY;
+            posicionActualZ = nuevaPosZ;
         }
     }
 
     if (!coordenadasValidas) {
-        cerr << "El archivo G-Code contiene posiciones no alcanzables.\n\n";
+        cerr << "El archivo G-Code contiene posiciones no alcanzables acumuladas.\n\n";
         return;
     }
 
