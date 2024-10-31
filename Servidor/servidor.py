@@ -87,8 +87,6 @@ class Servidor:
             self.server.server_close()
         if self.server_thread:
             self.server_thread.join()  # Espera a que el hilo del servidor termine
-        if self.interface_thread:
-            self.interface_thread.join()  # Espera a que el hilo de la interfaz termine
         print("Servidor apagado y ambos hilos detenidos.")
 
     # Métodos XML-RPC

@@ -227,12 +227,12 @@ void subirArchivoGCode() {
     // Método para mostrar el menú
     void mostrarMenu() {
         cout << "Menu de opciones:\n";
-        cout << "2. Subir archivo G-Code\n"; 
+        cout << "2. [MODO AUTOMÁTICO] Subir archivo G-Code\n"; 
         cout << "3. Conectar/desconectar robot.\n";
         cout << "4. Activar/desactivar motores del robot.\n";
         cout << "5. Seleccionar modos de trabajo y coordenadas.\n";
         cout << "6. Mostrar operaciones posibles.\n";
-        cout << "7. [SOLO MODO MANUAL] Enviar comandos en formato G-Code.\n";
+        cout << "7. [MODO MANUAL] Enviar comandos en formato G-Code.\n";
         cout << "8. Salir y apagar todo\n";
         cout << "Seleccione una opción: ";
     }
