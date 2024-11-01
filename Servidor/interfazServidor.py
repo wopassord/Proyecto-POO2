@@ -30,68 +30,84 @@ class InterfazServidor:
         print(" 13) Listar comandos nuevamente.")
         print(" 14) Apagar programa.")
 
-    def administrar_comandos(self):
+    def administrar_comandos(self, opcion_elegida = None):
         while True:
             try:
-                if self.servidor.get_comando_recibido() is None:
+                if opcion_elegida == None:
+                    # Caso normal: se pide alguna accion desde el servidor
                     opcion_elegida = int(input("Ingrese la acción a realizar: "))
+                    self.ejecucion_administrar_comando(opcion_elegida)
                 else:
-                    opcion_elegida = self.servidor.get_comando_recibido()
-
-                # Ejecución de opciones
-                inicio = time.time()
-                if opcion_elegida == 1:
-                    self.activar_desactivar_robot()
-                elif opcion_elegida == 2:
-                    self.activar_desactivar_motores()
-                elif opcion_elegida == 3:
-                    self.seleccionar_modo_trabajo()
-                elif opcion_elegida == 4:
-                    self.seleccionar_modo_coordenadas()
-                elif opcion_elegida == 5:
-                    self.mostrar_operaciones_cliente()
-                elif opcion_elegida == 6:
-                    self.escribir_comando()
-                elif opcion_elegida == 7:
-                    self.mostrar_reporte_general()
-                elif opcion_elegida == 8:
-                    self.mostrar_log_trabajo()
-                elif opcion_elegida == 9:
-                    self.mostrar_usuarios()
-                elif opcion_elegida == 10:
-                    self.modificar_parametros_conexion()
-                elif opcion_elegida == 11:
-                    if not self.servidor.get_estado_servidor():
-                        self.servidor.iniciar_servidor()
-                    else:
-                        self.servidor.apagar_servidor()
-                elif opcion_elegida == 12:
-                    self.servidor.cerrar_sesion()
-                elif opcion_elegida == 13:
-                    self.listar_comandos()
-                elif opcion_elegida == 14:
-                    return 14
-                else:
-                    print("Opción no válida.")
+                    # Caso particular: se pide alguna accion desde el cliente
+                    print(f"ACCION REALIZADA POR CLIENTE CON IP: {self.ip_cliente}")
+                    respuesta = self.ejecucion_administrar_comando(opcion_elegida)
+                    opcion_elegida = None
+                    return respuesta    
             except ValueError:
                 print("Por favor, ingrese un número válido.")
+                opcion_elegida = None
+
+    def ejecucion_administrar_comando(self, opcion_elegida):
+        # Ejecución de opciones
+        inicio = time.time()
+        if opcion_elegida == 1:
+            respuesta = self.activar_desactivar_robot()
+        elif opcion_elegida == 2:
+            respuesta = self.activar_desactivar_motores()
+        elif opcion_elegida == 3:
+            respuesta = self.seleccionar_modo_trabajo()
+        elif opcion_elegida == 4:
+            respuesta = self.seleccionar_modo_coordenadas()
+        elif opcion_elegida == 5:
+            self.mostrar_operaciones_cliente()
+        elif opcion_elegida == 6:
+            self.escribir_comando()
+        elif opcion_elegida == 7:
+            self.mostrar_reporte_general()
+        elif opcion_elegida == 8:
+            self.mostrar_log_trabajo()
+        elif opcion_elegida == 9:
+            self.mostrar_usuarios()
+        elif opcion_elegida == 10:
+            self.modificar_parametros_conexion()
+        elif opcion_elegida == 11:
+            if not self.servidor.get_estado_servidor():
+                self.servidor.iniciar_servidor()
+            else:
+                self.servidor.apagar_servidor()
+        elif opcion_elegida == 12:
+            self.servidor.cerrar_sesion()
+        elif opcion_elegida == 13:
+            self.listar_comandos()
+        elif opcion_elegida == 14:
+            return 14
+        else:
+            print("Opción no válida.")
+        
+        # Retornar respuesta (sirve para el cliente practicamente):
+        if respuesta not in None:
+            return respuesta
+        
+        opcion_elegida = None
 
     # Métodos adicionales para manipular el robot y mostrar reportes
     def activar_desactivar_robot(self):
         if self.controlador.get_estado_robot():
-            self.controlador.desconectar_robot()
+            respuesta = self.controlador.desconectar_robot()
             self.peticion = "Desconectar robot"
         else:
-            self.controlador.conectar_robot()
+            respuesta = self.controlador.conectar_robot()
             self.peticion = "Conectar robot"
+        return respuesta
 
     def activar_desactivar_motores(self):
         if self.controlador.get_estado_motores():
-            self.controlador.desactivar_motores()  # Usamos la instancia
+            respuesta = self.controlador.desactivar_motores()  # Usamos la instancia
             self.peticion = "Desactivar motores"
         else:
-            self.controlador.activar_motores()
+            respuesta = self.controlador.activar_motores()
             self.peticion = "Activar motores"
+        return respuesta
 
     def mostrar_reporte_general(self):
         Archivo.mostrar_info()  # Muestra información general
@@ -119,17 +135,20 @@ class InterfazServidor:
         elif self.modo_trabajo == "automatico":
             self.modo_trabajo = "manual"
             self.peticion = "Seleccionado modo manual"
-        print(f"Modo de trabajo seleccionado: {self.modo_trabajo}")
+        respuesta = f"Modo de trabajo seleccionado: {self.modo_trabajo}"
+        print(respuesta)
+        return respuesta
 
     def seleccionar_modo_coordenadas(self):
         if self.modo_coordenadas == "absolutas":
             self.modo_coordenadas = "relativas"
-            self.controlador.enviar_comando('G91')
+            respuesta = self.controlador.enviar_comando('G91')
             self.peticion = "Seleccionar modo de coordenadas relativas"
         elif self.modo_coordenadas == "relativas":
             self.modo_coordenadas = "absolutas"
-            self.controlador.enviar_comando('G90')
+            respuesta = self.controlador.enviar_comando('G90')
             self.peticion = "Seleccionar modo de coordenadas absolutas"
+        return respuesta
 
     def mostrar_usuarios(self):
         self.peticion= "Mostrar usuarios"

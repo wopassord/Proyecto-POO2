@@ -58,7 +58,7 @@ class Servidor:
                 return usuarios
         
         except FileNotFoundError:
-            print(f"El archivo {archivo} no existe.")
+            print(f"El archivo {archivo} no existe o no hay usuarios disponibles.")
             return []
         except Exception as e:
             print(f"Error al leer el archivo: {e}")
@@ -86,8 +86,37 @@ class Servidor:
         if self.server:
             self.server.server_close()
         if self.server_thread:
-            self.server_thread.join()  # Espera a que el hilo del servidor termine
-        print("Servidor apagado y ambos hilos detenidos.")
+            self.server_thread.join()  # Espera a que el hilo del servidor termine, se puede seguir escribiendo en la terminal del "servidor"
+        print("Servidor apagado")
+
+    def login_o_signin(self, nombre_usuario, contrasena):
+        usuario_existente = next((u for u in self.usuarios if u.nombre_usuario == nombre_usuario), None)
+
+        if usuario_existente:
+            if usuario_existente.contrasena == contrasena:
+                self.sesion_iniciada = True
+                self.sesion = {'nombre_usuario': nombre_usuario, 'admin': usuario_existente.admin}
+                if usuario_existente.admin:
+                    return f"Bienvendio, {nombre_usuario}. Tienes permisos de administrador."
+                else:
+                    return f"Bienvenido, {nombre_usuario}. No tiene permisos de administrador."
+            else:
+                return "Contrasena incorrecta. Por favor, intenta de nuevo"
+        else:
+            nuevo_usuario = Usuario(nombre_usuario, contrasena, False)
+            self.usuarios.append(nuevo_usuario)
+            self.guardar_usuarios_csv(nombre_usuario, contrasena, admin= False)
+            self.sesion_iniciada = True
+            self.sesion = {'nombre_usuario': nombre_usuario, 'admin':False}
+            return f"Usuario {nombre_usuario} registrado exitosamente. No tienes permisos de administrador"
+
+    def guardar_usuario_csv(self, nombre_usuario, contrasena, admin=False, archivo='usuarios_servidor.csv'):
+            """Guarda un usuario nuevo en el archivo CSV."""
+            with open(archivo, mode='a', newline='') as csvfile:
+                writer = csv.writer(csvfile)
+                writer.writerow([nombre_usuario, contrasena, str(admin)])
+            print(f"Usuario {nombre_usuario} agregado al archivo CSV.")
+    
 
     # Métodos XML-RPC
     def saludo_personalizado(self, nombre):
@@ -109,8 +138,10 @@ class Servidor:
     def recibir_comando_cliente(self, comando):
         """Recibe un comando desde el cliente y lo procesa."""
         self.comando_recibido = comando
-        respuesta = self.controlador.procesar_comando(comando) if comando not in range(1, 7) else None
-        self.comando_recibido = None
+        if comando not in list(range(1, 5)):
+            respuesta = self.controlador.enviar_comando(comando)
+        else:
+            respuesta = self.interfaz.administrar_comandos(comando)
         return respuesta
 
     # Clase para manejar solicitudes XML-RPC, obteniendo la IP del cliente
@@ -121,7 +152,7 @@ class Servidor:
             super().handle()
 
     # Métodos de gestión de usuarios
-    def agregar_usuario(self, nombre_usuario, contrasena, admin):
+    def agregar_usuario(self, nombre_usuario, contrasena, admin = False):
         """Agrega un usuario nuevo al sistema."""
         if any(u.nombre_usuario == nombre_usuario for u in self.usuarios):
             print("El usuario ingresado ya existe.")

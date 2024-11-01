@@ -10,12 +10,13 @@ def main():
     servidor.iniciar_servidor()  
     interfaz.servidor.iniciar_interfaz()
 
-    # Listar comandos y bucle principal
-    interfaz.listar_comandos()
+    # Leer usuarios disponibles
+    servidor.leer_usuarios_csv()
+
 
     ejecutando = True
     while ejecutando:
-        if servidor.sesion_iniciada == False:
+        if not servidor.sesion_iniciada:
             try:
                 print("Inicie sesion antes de proceder.")
                 print(" 1) Iniciar sesion")
@@ -23,13 +24,13 @@ def main():
                 opcion = int(input("Por favor, ingrese una de las anteriores opciones: \n"))
                 if opcion == 1:
                     servidor.iniciar_sesion()
+                    if servidor.sesion_iniciada:
+                        interfaz.listar_comandos()
                 elif opcion == 2:
                      # Pedir datos del usuario para agregar
                     nombre_usuario = input("Ingrese el nombre de usuario: ")
                     contrasena = input("Ingrese la contraseña: ")
-                    admin_input = input("¿Es administrador? (s/n): ").strip().lower()
-                    admin = admin_input == 's'
-                    servidor.agregar_usuario(nombre_usuario, contrasena, admin)
+                    servidor.agregar_usuario(nombre_usuario, contrasena)
             except ValueError:
                 print("Ingrese un numero valido.")
         else:

@@ -6,7 +6,7 @@ class Controlador:
     def __init__(self):
         self.estado_robot = False
         self.estado_motores = False
-        self.baudrate = 9600
+        self.baudrate = 115200
         self.puerto_COM = 'COM3'
         self.arduino = None
 
@@ -29,19 +29,23 @@ class Controlador:
         try:
             self.arduino = serial.Serial(self.puerto_COM, self.baudrate, timeout=1)
             self.estado_robot = True
-            print(f"Conexión establecida en {self.puerto_COM} con baudrate {self.baudrate}.")
-        except serial.SerialException as e:
-            print(f"Error al conectar: Verifique que el puerto {self.puerto_COM} esté disponible y correcto.")
+            respuesta = f"Conexión establecida en {self.puerto_COM} con baudrate {self.baudrate}."
+        except serial.SerialException:
+            respuesta = f"Error al conectar: Verifique que el puerto {self.puerto_COM} esté disponible y correcto."
         except Exception as e:
-            print(f"Error al conectar: {e}")
+            respuesta = f"Error al conectar: {e}"
+        print(respuesta)
+        return respuesta
 
     def desconectar_robot(self):
         if self.arduino and self.arduino.is_open:
             self.arduino.close()
             self.estado_robot = False
-            print("Robot desconectado.")
+            respuesta = "Robot desconectado."
         else:
-            print("El robot ya está desconectado o no había conexión.")
+            respuesta = "El robot ya está desconectado o no había conexión."
+        print(respuesta)
+        return respuesta
 
     def activar_motores(self):
         if self.estado_robot:
@@ -52,7 +56,10 @@ class Controlador:
             else:
                 print("Error al activar motores.")
         else:
-            print("No se pueden activar los motores. El robot no está conectado.")
+            respuesta = "No se pueden activar los motores. El robot no está conectado."
+            print(respuesta)
+
+        return respuesta
     
     def desactivar_motores(self):
         if self.estado_robot:
@@ -63,7 +70,10 @@ class Controlador:
             else:
                 print("Error al desactivar motores.")
         else:
-            print("No se pueden desactivar los motores. El robot no está conectado.")
+            respuesta = "No se pueden desactivar los motores. El robot no está conectado."
+            print(respuesta)
+
+        return respuesta
 
     def enviar_comando(self, comando):
         if self.estado_robot:
@@ -75,10 +85,11 @@ class Controlador:
                     print(f"Respuesta recibida: {respuesta}")
                 else:
                     print("No se recibió respuesta del robot.")
-                return respuesta
             except Exception as e:
-                print(f"Error al enviar comando: {e}")
-                return None
+                respuesta = f"Error al enviar comando: {e}"
+                print(respuesta)
         else:
-            print("No se puede enviar el comando. El robot no está conectado.")
-            return None
+            respuesta = "No se puede enviar el comando. El robot no está conectado."
+            print(respuesta)
+        
+        return respuesta
