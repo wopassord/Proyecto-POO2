@@ -11,6 +11,8 @@ AplicacionCliente::~AplicacionCliente() {
 void AplicacionCliente::ejecutar() {
     int opcion;
 
+    cliente->login_o_signin();
+
     while (true) {
         cliente->mostrarMenu();
         cin >> opcion;

@@ -2,6 +2,24 @@
 
 ClienteRPC::ClienteRPC(const string& host, int port) : client(host.c_str(), port) {}
 
+void ClienteRPC::login_o_signin() {
+    string nombre_usuario, contrasena;
+    cout << "Ingrese el nombre de usuario: ";
+    cin >> nombre_usuario;
+    cout << "Ingrese la contraseña: ";
+    cin >> contrasena;
+
+    args[0] = nombre_usuario;
+    args[1] = contrasena;
+
+    if (client.execute("login_o_signin", args, result)) {
+        cout << static_cast<string>(result) << "\n";
+    } else {
+        cerr << "Error en la conexión al iniciar sesión o registrar el usuario.\n";
+    }
+}
+
+
 void ClienteRPC::activarAlarma() {
     HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
 

@@ -111,7 +111,7 @@ class InterfazServidor:
 
     def mostrar_reporte_general(self):
         Archivo.mostrar_info()  # Muestra información general
-        self.peticion= "Mostrar reporte general"
+        self.peticion = "Mostrar reporte general"
 
     def mostrar_log_trabajo(self):
         self.peticion= "Mostrar log de trabajo"
