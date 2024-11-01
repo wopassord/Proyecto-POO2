@@ -224,6 +224,27 @@ void subirArchivoGCode() {
         }
     }
 
+    void modoManual(){
+        int opcionManual;
+        while(true){
+            cout << "\n--- MODO MANUAL ---\n";
+            cout << "1. Enviar comando G-Code\n";
+            cout << "2. Salir del Modo Manual y volver al inicio (envÍa G28)\n";
+            cout << "Seleccione una opción: ";
+            cin >> opcionManual;
+
+            if (opcionManual == 1){
+                enviarComandoGCode();
+            } else if (opcionManual == 2){
+                enviarComando("G28");
+                cout <<  "Saliendo del Modo Manual y volviendo al inicio...\n";
+                break;
+            } else{
+                cout << "Opción inválida. Intente de nuevo.\n";
+            }
+        }
+    }
+
     // Método para mostrar el menú
     void mostrarMenu() {
         cout << "Menu de opciones:\n";
@@ -279,7 +300,7 @@ public:
                     cliente->mostrarOperacionesCliente();
                     break;
                 case 7:
-                    cliente->enviarComandoGCode();
+                    cliente->modoManual();
                     break;
                 case 8:
                     cliente->apagarServidor();
