@@ -35,6 +35,7 @@ bool ClienteRPC::esPosicionAlcanzable(double x, double y, double z) {
     return distancia <= longitudMaxima;
 }
 
+
 void ClienteRPC::subirArchivoGCode() {
     string rutaArchivo;
     cout << "Ingrese la ruta del archivo G-Code: ";
@@ -135,6 +136,7 @@ void ClienteRPC::conectarDesconectarRobot() {
     }
 }
 
+
 void ClienteRPC::enviarComando(const string& comando) {
     args[0] = comando;
     if (client.execute("recibir_comando_cliente", args, result)) {
@@ -172,11 +174,19 @@ void ClienteRPC::activarDesactivarMotores() {
     // Implementación vacía como en el código original
 }
 
+#include <regex> //libreria para comprobar que se ingrese GCode
 void ClienteRPC::enviarComandoGCode() {
     string comando;
     cout << "Ingrese el comando G-Code para el robot: ";
     getline(cin >> ws, comando);
 
+    std::regex gcode_regex("^[GM]\\d+"); //valida que el comanod empieza con G o M
+    if (!std::regex_match(comando, gcode_regex)) {
+    cerr << "Error: Comando inválido. Solo se permiten comandos en GCode.\n\n";
+    activarAlarma();
+    return;  // Salir del método sin enviar el comando
+    }
+    
     args[0] = XmlRpcValue(comando);//agregar proteccion de que no se puedan mandar opciones
     if (client.execute("recibir_comando_cliente", args, result)) {
         cout << "Comando G-Code enviado correctamente: " << result << "\n\n";
