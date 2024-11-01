@@ -3,6 +3,7 @@ from usuario import Usuario  # Asegúrate de tener la clase Usuario en un archiv
 from controlador import Controlador  # Clase que controla el robot, por ejemplo
 import csv
 import threading
+import interfazServidor
 
 class Servidor:
     def __init__(self):
@@ -22,7 +23,7 @@ class Servidor:
         """Asigna la instancia de InterfazServidor."""
         self.interfaz = interfaz
 
-    def iniciar_servidor(self, host="127.0.0.1", port=8080):
+    def iniciar_servidor(self, host="0.0.0.0", port=8080):
         """Inicia el servidor XML-RPC en un hilo separado."""
         print("Iniciando el servidor XML-RPC...")
         self.running = True
@@ -66,18 +67,7 @@ class Servidor:
 
     def iniciar_interfaz(self):
         """Inicia la interfaz de usuario en la terminal en un hilo separado."""
-        print("Iniciando interfaz de usuario en la terminal...")
-
-        def run_interface():
-            if self.interfaz:
-                self.interfaz.administrar_comandos()  # Llama al método para manejar comandos en la terminal
-            else:
-                print("Interfaz no asignada. Usa asignar_interfaz() antes de iniciar la interfaz.")
-
-        # Creación y arranque del hilo de la interfaz de usuario
-        self.interface_thread = threading.Thread(target=run_interface)
-        self.interface_thread.start()
-        print("Interfaz de usuario iniciada en un hilo separado.")
+        self.interfaz = Inter
 
     def apagar_servidor(self):
         """Apaga el servidor XML-RPC de forma controlada."""

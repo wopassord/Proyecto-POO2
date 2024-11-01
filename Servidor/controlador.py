@@ -7,7 +7,7 @@ class Controlador:
         self.estado_robot = False
         self.estado_motores = False
         self.baudrate = 115200
-        self.puerto_COM = 'COM3'
+        self.puerto_COM = 'COM7'
         self.arduino = None
 
     def get_estado_robot(self):
@@ -18,6 +18,7 @@ class Controlador:
     
     def cambiar_parametros_comunicacion(self, baudrate, puerto_COM):
         # Cerrar la conexión actual si está activa antes de cambiar los parámetros
+        baudrate = int(baudrate)
         if self.estado_robot:
             self.desconectar_robot()
 

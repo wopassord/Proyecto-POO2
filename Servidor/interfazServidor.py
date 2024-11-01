@@ -33,7 +33,7 @@ class InterfazServidor:
     def administrar_comandos(self, opcion_elegida = None):
         while True:
             try:
-                if opcion_elegida == None:
+                if opcion_elegida is None:
                     # Caso normal: se pide alguna accion desde el servidor
                     opcion_elegida = int(input("Ingrese la acción a realizar: "))
                     self.ejecucion_administrar_comando(opcion_elegida)
@@ -41,14 +41,14 @@ class InterfazServidor:
                     # Caso particular: se pide alguna accion desde el cliente
                     print(f"ACCION REALIZADA POR CLIENTE CON IP: {self.ip_cliente}")
                     respuesta = self.ejecucion_administrar_comando(opcion_elegida)
-                    opcion_elegida = None
                     return respuesta    
             except ValueError:
                 print("Por favor, ingrese un número válido.")
-                opcion_elegida = None
+            opcion_elegida = None
 
     def ejecucion_administrar_comando(self, opcion_elegida):
         # Ejecución de opciones
+        respuesta = None
         inicio = time.time()
         if opcion_elegida == 1:
             respuesta = self.activar_desactivar_robot()
@@ -85,10 +85,8 @@ class InterfazServidor:
             print("Opción no válida.")
         
         # Retornar respuesta (sirve para el cliente practicamente):
-        if respuesta not in None:
+        if respuesta is not None:
             return respuesta
-        
-        opcion_elegida = None
 
     # Métodos adicionales para manipular el robot y mostrar reportes
     def activar_desactivar_robot(self):
