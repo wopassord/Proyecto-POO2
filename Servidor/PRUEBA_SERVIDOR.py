@@ -3,7 +3,7 @@ import serial
 import time
 
 # Configurar el puerto serial (ajustar según el puerto usado por tu Arduino)
-puerto_serie = 'COM3'  # Cambiar a '/dev/ttyUSB0' en Linux
+puerto_serie = 'COM10'  # Cambiar a '/dev/ttyUSB0' en Linux
 velocidad_baudios = 115200
 
 try:

@@ -7,7 +7,7 @@ class Controlador:
         self.estado_robot = False
         self.estado_motores = False
         self.baudrate = 115200
-        self.puerto_COM = 'COM3'
+        self.puerto_COM = 'COM10'
         self.arduino = None
 
     def get_estado_robot(self):

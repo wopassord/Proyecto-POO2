@@ -85,19 +85,19 @@ class InterfazServidor:
             print("Opción no válida.")
         
         # Retornar respuesta (sirve para el cliente practicamente):
-        if respuesta not in None:
+        if respuesta is not None:
             return respuesta
         
         opcion_elegida = None
 
     # Métodos adicionales para manipular el robot y mostrar reportes
     def activar_desactivar_robot(self):
-        if self.controlador.get_estado_robot():
-            respuesta = self.controlador.desconectar_robot()
-            self.peticion = "Desconectar robot"
-        else:
+        if not self.controlador.get_estado_robot():  # Solo conectar si está desconectado
             respuesta = self.controlador.conectar_robot()
             self.peticion = "Conectar robot"
+        else:
+            respuesta = self.controlador.desconectar_robot()
+            self.peticion = "Desconectar robot"
         return respuesta
 
     def activar_desactivar_motores(self):

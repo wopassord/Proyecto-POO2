@@ -5,26 +5,32 @@ def main():
     # Crear instancia del servidor y de la interfaz
     servidor = Servidor()
     interfaz = InterfazServidor(servidor, modo_trabajo="manual", modo_coordenadas="absolutas")
-    servidor.asignar_interfaz(interfaz)  # Asignar la interfaz al servidor
 
     # Iniciar el servidor y la interfaz en hilos separados
-    servidor.iniciar_servidor()
+
+    servidor.iniciar_servidor() 
     servidor.iniciar_interfaz()  # Ya tienes acceso directo a la interfaz desde el servidor
 
     en_ejecucion = True
     while en_ejecucion:
-        if not servidor.sesion_iniciada:
+        # Menú principal para iniciar sesión o agregar usuario si no se ha iniciado sesión
+        while not servidor.sesion_iniciada:
             opcion = menu_principal()
             if opcion == 1:
                 servidor.iniciar_sesion()
                 if servidor.sesion_iniciada:
-                    interfaz.listar_comandos()
+                    interfaz.listar_comandos()  # Muestra los comandos tras iniciar sesión
             elif opcion == 2:
                 agregar_usuario(servidor)
-        else:
-            comando = interfaz.administrar_comandos()
-            if comando == 14:  # Comando para salir
-                en_ejecucion = False
+
+        
+        servidor.asignar_interfaz(interfaz)  # Asignar la interfaz al servidor
+        comando = int(input("Ingrese la acción a realizar: "))
+        resultado = interfaz.administrar_comandos(comando)
+        comando = None
+        # Verificar si el comando es 14 (salir) para terminar el bucle
+        if resultado == 14:
+            en_ejecucion = False
 
     # Apagar el servidor XML-RPC y finalizar el programa
     if servidor.get_estado_servidor():
