@@ -189,7 +189,11 @@ void ClienteRPC::mostrarOperacionesCliente() {
 }
 
 void ClienteRPC::activarDesactivarMotores() {
-    // Implementación vacía como en el código original
+    if (client.execute("recibir_comando_cliente", 2, result)) {
+        cout << "Respuesta del servidor: " << result << "\n\n";
+    } else {
+        cerr << "Error al enviar el comando al servidor\n\n";
+    }
 }
 
 #include <regex> //libreria para comprobar que se ingrese GCode
