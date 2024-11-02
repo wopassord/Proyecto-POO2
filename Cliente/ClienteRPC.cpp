@@ -12,11 +12,13 @@ void ClienteRPC::login_o_signin() {
     args[0] = nombre_usuario;
     args[1] = contrasena;
 
+    /*
     if (client.execute("login_o_signin", args, result)) {
         cout << static_cast<string>(result) << "\n";
     } else {
         cerr << "Error en la conexión al iniciar sesión o registrar el usuario.\n";
     }
+    */
 }
 
 

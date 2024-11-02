@@ -30,21 +30,31 @@ class InterfazServidor:
         print(" 13) Listar comandos nuevamente.")
         print(" 14) Apagar programa.")
 
+    def recibir_comando_cliente(self, comando):
+        # Recibe un comando desde el servidor (que lo recibe de cliente) y lo procesa.
+        if comando not in list(range(1, 5)):
+            respuesta = self.controlador.enviar_comando(comando)
+        else:
+            respuesta = self.administrar_comandos(comando)
+        return respuesta
+
     def administrar_comandos(self, opcion_elegida = None):
         while True:
             try:
                 if opcion_elegida is None:
                     # Caso normal: se pide alguna accion desde el servidor
                     opcion_elegida = int(input("Ingrese la acción a realizar: "))
-                    self.ejecucion_administrar_comando(opcion_elegida)
+                    respuesta = self.ejecucion_administrar_comando(opcion_elegida)
+                    break
                 else:
                     # Caso particular: se pide alguna accion desde el cliente
                     print(f"ACCION REALIZADA POR CLIENTE CON IP: {self.ip_cliente}")
-                    respuesta = self.ejecucion_administrar_comando(opcion_elegida)
-                    return respuesta    
+                    respuesta = self.ejecucion_administrar_comando(opcion_elegida)   
+                    break
             except ValueError:
                 print("Por favor, ingrese un número válido.")
             opcion_elegida = None
+        return respuesta
 
     def ejecucion_administrar_comando(self, opcion_elegida):
         # Ejecución de opciones
@@ -52,6 +62,8 @@ class InterfazServidor:
         inicio = time.time()
         if opcion_elegida == 1:
             respuesta = self.activar_desactivar_robot()
+            # Espera a mensaje inicial
+            time.sleep(1.5)
         elif opcion_elegida == 2:
             respuesta = self.activar_desactivar_motores()
         elif opcion_elegida == 3:
@@ -108,23 +120,40 @@ class InterfazServidor:
         return respuesta
 
     def mostrar_reporte_general(self):
-        Archivo.mostrar_info()  # Muestra información general
-        self.peticion = "Mostrar reporte general"
+        try:
+            Archivo.mostrar_info()  # Muestra información general
+            self.peticion = "Mostrar reporte general"
+        except FileNotFoundError:
+            print("Error: No se encontró el archivo requerido para mostrar el reporte general.")
+        except IOError:
+            print("Error: Hubo un problema al leer el archivo para el reporte general.")
+        except Exception as e:
+            print(f"Error inesperado: {e}")
 
     def mostrar_log_trabajo(self):
-        self.peticion= "Mostrar log de trabajo"
-        self.sesion = self.servidor.get_sesion()
-        self.usuarios = self.servidor.get_usuarios()
-        if self.sesion and 'nombre_usuario' in self.sesion:
-            nombre_usuario = self.sesion['nombre_usuario']
-            # Verificamos si el usuario tiene permisos de administrador
-            for usuario in self.usuarios:
-                if usuario.nombre_usuario == nombre_usuario and usuario.admin:
-                    LogTrabajo.leer_CSV()
-                    return
-            print("Acceso denegado. Solo los administradores pueden ver la lista de usuarios.")
-        else:
-            print("No hay ningún usuario en sesión.")
+        try:
+            self.peticion = "Mostrar log de trabajo"
+            self.sesion = self.servidor.get_sesion()
+            self.usuarios = self.servidor.get_usuarios()
+
+            if self.sesion and 'nombre_usuario' in self.sesion:
+                nombre_usuario = self.sesion['nombre_usuario']
+                
+                # Verificamos si el usuario tiene permisos de administrador
+                for usuario in self.usuarios:
+                    if usuario.nombre_usuario == nombre_usuario and usuario.admin:
+                        LogTrabajo.leer_CSV()
+                        return  # Salir del método si el log se muestra exitosamente
+                
+                print("Acceso denegado. Solo los administradores pueden ver la lista de usuarios.")
+            else:
+                print("No hay ningún usuario en sesión.")
+        except FileNotFoundError:
+            print("Error: El archivo de log de trabajo no se encuentra.")
+        except PermissionError:
+            print("Error: Permisos insuficientes para acceder al archivo de log de trabajo.")
+        except Exception as e:
+            print(f"Error inesperado: {e}")
 
     def seleccionar_modo_trabajo(self):
         if self.modo_trabajo == "manual":

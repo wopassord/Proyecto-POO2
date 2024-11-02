@@ -16,14 +16,13 @@ class Servidor:
         self.interface_thread = None  # Hilo para la interfaz de usuario
         self.ip_cliente = None  # Última IP de cliente conectada
         self.comando_recibido = None  # Último comando recibido de un cliente
-        self.controlador = Controlador()  # Instancia del controlador del robot
         self.interfaz = None  # InterfazServidor, se asignará desde main.py
 
     def asignar_interfaz(self, interfaz):
         """Asigna la instancia de InterfazServidor."""
         self.interfaz = interfaz
 
-    def iniciar_servidor(self, host="0.0.0.0", port=8080):
+    def iniciar_servidor(self, host="127.0.0.1", port=8080):
         """Inicia el servidor XML-RPC en un hilo separado."""
         print("Iniciando el servidor XML-RPC...")
         self.running = True
@@ -65,10 +64,6 @@ class Servidor:
             print(f"Error al leer el archivo: {e}")
             return []
 
-    def iniciar_interfaz(self):
-        """Inicia la interfaz de usuario en la terminal en un hilo separado."""
-        self.interfaz = Inter
-
     def apagar_servidor(self):
         """Apaga el servidor XML-RPC de forma controlada."""
         print("Apagando el servidor...")
@@ -79,35 +74,13 @@ class Servidor:
             self.server_thread.join()  # Espera a que el hilo del servidor termine, se puede seguir escribiendo en la terminal del "servidor"
         print("Servidor apagado")
 
-    def login_o_signin(self, nombre_usuario, contrasena):
-        usuario_existente = next((u for u in self.usuarios if u.nombre_usuario == nombre_usuario), None)
-
-        if usuario_existente:
-            if usuario_existente.contrasena == contrasena:
-                self.sesion_iniciada = True
-                self.sesion = {'nombre_usuario': nombre_usuario, 'admin': usuario_existente.admin}
-                if usuario_existente.admin:
-                    return f"Bienvendio, {nombre_usuario}. Tienes permisos de administrador."
-                else:
-                    return f"Bienvenido, {nombre_usuario}. No tiene permisos de administrador."
-            else:
-                return "Contrasena incorrecta. Por favor, intenta de nuevo"
-        else:
-            nuevo_usuario = Usuario(nombre_usuario, contrasena, False)
-            self.usuarios.append(nuevo_usuario)
-            self.guardar_usuarios_csv(nombre_usuario, contrasena, admin= False)
-            self.sesion_iniciada = True
-            self.sesion = {'nombre_usuario': nombre_usuario, 'admin':False}
-            return f"Usuario {nombre_usuario} registrado exitosamente. No tienes permisos de administrador"
-
     def guardar_usuario_csv(self, nombre_usuario, contrasena, admin=False, archivo='usuarios_servidor.csv'):
-            """Guarda un usuario nuevo en el archivo CSV."""
-            with open(archivo, mode='a', newline='') as csvfile:
-                writer = csv.writer(csvfile)
-                writer.writerow([nombre_usuario, contrasena, str(admin)])
-            print(f"Usuario {nombre_usuario} agregado al archivo CSV.")
+        """Guarda un usuario nuevo en el archivo CSV."""
+        with open(archivo, mode='a', newline='') as csvfile:
+            writer = csv.writer(csvfile)
+            writer.writerow([nombre_usuario, contrasena, str(admin)])
+        print(f"Usuario {nombre_usuario} agregado al archivo CSV.")
     
-
     # Métodos XML-RPC
     def saludo_personalizado(self, nombre):
         """Retorna un saludo personalizado al cliente."""
@@ -127,12 +100,10 @@ class Servidor:
 
     def recibir_comando_cliente(self, comando):
         """Recibe un comando desde el cliente y lo procesa."""
-        self.comando_recibido = comando
-        if comando not in list(range(1, 5)):
-            respuesta = self.controlador.enviar_comando(comando)
+        if self.interfaz:
+            return self.interfaz.recibir_comando_cliente(comando)
         else:
-            respuesta = self.interfaz.administrar_comandos(comando)
-        return respuesta
+            return "Error: Interfaz no disponible"
 
     # Clase para manejar solicitudes XML-RPC, obteniendo la IP del cliente
     class MyRequestHandler(SimpleXMLRPCRequestHandler):
