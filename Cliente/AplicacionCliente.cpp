@@ -18,24 +18,27 @@ void AplicacionCliente::ejecutar() {
         cin >> opcion;
 
         switch (opcion) {
-            case 2:
-                cliente->subirArchivoGCode();
-                break;
-            case 3:
+            
+            case 1:
                 cliente->conectarDesconectarRobot();
                 break;
-            case 4:
+            case 2:
                 cliente->activarDesactivarMotores();
                 break;
-            case 5:
+            case 3:
                 cliente->seleccionarModoTrabajo();
+                break;
+            case 4:
                 cliente->seleccionarModoCoordenadas();
                 break;
-            case 6:
+            case 5:
                 cliente->mostrarOperacionesCliente();
                 break;
-            case 7:
+            case 6:
                 cliente->modoManual();
+                break;
+            case 7:
+                cliente->subirArchivoGCode();
                 break;
             case 8:
                 cliente->apagarServidor();
