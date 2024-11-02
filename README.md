@@ -91,3 +91,7 @@ M18: Desactivar motores
     que se pueda seguir realizando con otros puertos, y no solamente en la misma computadora
     - El código permite mandar un saludo personalizado, y apagar el servidor, pero falta el subir el archivo G-CODE
     - Habría que ver como se puede acceder desde el cliente a todas las funciones que habíamos incorporado en el menú del servidor
+
+# Modificaciones 1/11 
+    - Se arregló el problema que no estaba andando la interfaz del servidor. Ahora queda más clean (se trabajó solo sobre main.py)
+    - Habría que ver que los mensajes de inicialización vayan en orden entre el hilo de xmlrpc e interfaz local del servidor
