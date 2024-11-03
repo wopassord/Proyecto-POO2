@@ -240,6 +240,7 @@ void ClienteRPC::modoManual() {
 }
 
 void ClienteRPC::mostrarMenu() {
+    cout << "jaja\n";
     cout << "Menu de opciones:\n";
     cout << "1. Conectar/desconectar robot.\n";
     cout << "2. Activar/desactivar motores del robot.\n";
