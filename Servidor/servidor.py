@@ -6,7 +6,6 @@ import interfazServidor
 import threading
 import csv
 import re
-from roboticstoolbox import DHRobot, RevoluteDH
 import numpy as np
 import matplotlib.pyplot as plt
 
@@ -80,30 +79,6 @@ def visualizar_movimientos(self):
     plt.legend()
     plt.show()
 
-    # Figura para el modelo ABB IRB 460
-    fig2 = plt.figure()
-    ax2 = fig2.add_subplot(111, projection='3d')
-
-    # Definir el ABB IRB 460 usando los parámetros DH
-    irb460 = DHRobot([
-        RevoluteDH(a=0, alpha=np.pi/2, d=0.8),     # Primer enlace
-        RevoluteDH(a=0.5, alpha=0, d=0),           # Segundo enlace
-        RevoluteDH(a=0.35, alpha=0, d=0),          # Tercer enlace
-        RevoluteDH(a=0, alpha=np.pi/2, d=0.2)      # Cuarto enlace
-    ], name='ABB IRB 460')
-
-    # Configuración de las articulaciones
-    q = [0, np.pi/4, -np.pi/4, np.pi/6]
-
-    # Plotear el modelo del robot en la configuración deseada
-    irb460.plot(q, block=False, ax=ax2)
-
-    # Configuración de los ejes
-    ax2.set_xlabel("X")
-    ax2.set_ylabel("Y")
-    ax2.set_zlabel("Z")
-    ax2.set_title("Modelo ABB IRB 460 en configuración deseada")
-    plt.show()
 
 class Servidor:
     def __init__(self):
