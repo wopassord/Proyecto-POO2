@@ -9,7 +9,7 @@ class Controlador:
         self.estado_robot = False
         self.estado_motores = False
         self.baudrate = 115200
-        self.puerto_COM = 'COM7'
+        self.puerto_COM = 'COM5'
         self.arduino = None
         self.cola_respuestas = queue.Queue()
 
