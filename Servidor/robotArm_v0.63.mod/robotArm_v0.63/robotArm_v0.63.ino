@@ -287,5 +287,7 @@ void homeSequence_UNO() {
     endstopZ.home(INVERSE_Z_STEPPER); //INDICATE STEPPER HOMING DIRECDTION
   }
   interpolator.setInterpolation(INITIAL_X, INITIAL_Y, INITIAL_Z, INITIAL_E0, INITIAL_X, INITIAL_Y, INITIAL_Z, INITIAL_E0);
-  Logger::logINFO("HOMING COMPLETE");
+  tiempo = float(random(2, 20)) / 2; //agregado generacion aleatoria de tiempo de homing
+  Logger::logINFO("HOMING COMPLETE t=" + String(tiempo, 2) + "s"); //agregado retorno de tiempo
+//  Logger::logINFO("HOMING COMPLETE");
 }

@@ -7,7 +7,7 @@ class Controlador:
         self.estado_robot = False
         self.estado_motores = False
         self.baudrate = 115200
-        self.puerto_COM = 'COM10'
+        self.puerto_COM = 'COM3'
         self.arduino = None
 
     def get_estado_robot(self):
@@ -29,6 +29,8 @@ class Controlador:
         try:
             self.arduino = serial.Serial(self.puerto_COM, self.baudrate, timeout=1)
             self.estado_robot = True
+            time.sleep(2)
+            self.arduino.reset_input_buffer()
             respuesta = f"Conexión establecida en {self.puerto_COM} con baudrate {self.baudrate}."
         except serial.SerialException:
             respuesta = f"Error al conectar: Verifique que el puerto {self.puerto_COM} esté disponible y correcto."
@@ -78,9 +80,9 @@ class Controlador:
     def enviar_comando(self, comando):
         if self.estado_robot:
             try:
-                self.arduino.write(comando.encode())  # Enviar comando en formato de bytes
-                time.sleep(1)  # Tiempo de espera para recibir respuesta
-                respuesta = self.arduino.readline().decode('utf-8').strip()  # Leer respuesta
+                self.arduino.write((comando + '\r\n').encode('latin-1'))  # Enviar comando en formato de bytes
+                time.sleep(0.1)  # Tiempo de espera para recibir respuesta
+                respuesta = self.leer_respuesta()
                 if respuesta:
                     print(f"Respuesta recibida: {respuesta}")
                 else:
@@ -93,3 +95,14 @@ class Controlador:
             print(respuesta)
         
         return respuesta
+    
+    def leer_respuesta(self):
+        """Lee y devuelve la respuesta completa del Arduino, reemplazando caracteres no decodificados correctamente."""
+        respuesta_completa = ""
+        if self.arduino and self.arduino.in_waiting > 0:
+            while self.arduino.in_waiting:
+                respuesta = self.arduino.read(self.arduino.in_waiting).decode('latin-1')
+                respuesta_completa += respuesta
+                return respuesta_completa.replace("ñ", "A").strip()
+            else:
+                return None

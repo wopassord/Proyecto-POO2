@@ -48,6 +48,8 @@ class InterfazServidor:
                 opcion_elegida = None
 
     def ejecucion_administrar_comando(self, opcion_elegida):
+        # Inicializar la variable 'respuesta' para evitar errores
+        respuesta = None
         # Ejecución de opciones
         inicio = time.time()
         if opcion_elegida == 1:
@@ -60,29 +62,40 @@ class InterfazServidor:
             respuesta = self.seleccionar_modo_coordenadas()
         elif opcion_elegida == 5:
             self.mostrar_operaciones_cliente()
+            respuesta = "Operaciones mostradas."
         elif opcion_elegida == 6:
             self.escribir_comando()
+            respuesta = "Comando escrito en modo manual."
         elif opcion_elegida == 7:
             self.mostrar_reporte_general()
+            respuesta = "Resporte general mostrado."
         elif opcion_elegida == 8:
             self.mostrar_log_trabajo()
+            respuesta = "Log de trabajo mostrado."
         elif opcion_elegida == 9:
             self.mostrar_usuarios()
+            respuesta = "Usuarios mostrados."
         elif opcion_elegida == 10:
             self.modificar_parametros_conexion()
+            respuesta = "Parámetros de conexión modificados."
         elif opcion_elegida == 11:
             if not self.servidor.get_estado_servidor():
                 self.servidor.iniciar_servidor()
+                respuesta = "Servidor iniciado."
             else:
                 self.servidor.apagar_servidor()
+                respuesta = "Servidor apagado."
         elif opcion_elegida == 12:
             self.servidor.cerrar_sesion()
+            respuesta = "Sesión cerrada."
         elif opcion_elegida == 13:
             self.listar_comandos()
+            respuesta = "Comandos listados nuevamente."
         elif opcion_elegida == 14:
             return 14
         else:
             print("Opción no válida.")
+            respuesta = "Opción inválida."
         
         # Retornar respuesta (sirve para el cliente practicamente):
         if respuesta is not None:
@@ -178,17 +191,16 @@ class InterfazServidor:
             print(f"Error al modificar los parámetros de conexión: {e}")
 
     def mostrar_operaciones_cliente(self):
-        print("Operaciones posibles a realizar por un cliente o por un operador en el servidor: \n")
-        print(" M3: Activar gripper \n")
-        print(" M5: Desactivar gripper \n")
-        print(" G28: Hacer homing \n")
-        print(" G1: Hacer un movimiento a una determinada posición \n")
-        print(" (Para enviar este comando, realizar lo siguiente: [G1 Xa Yb Zc], donde Xa, Yb y Zc son las posiciones a las que se debe mover.)")
-        print(" M114: Reporte de modo de coordenadas y posición actual \n")
-        print(" G90: Modo de coordenadas absolutas \n")
-        print(" G91: Modo de coordenadas relativas \n")
-        print(" M17: Activar motores \n")
-        print(" M18: Desactivar motores \n")        
+        print("\nOperaciones posibles a realizar por un cliente o por un operador en el servidor: \n")
+        print("M3: Activar gripper.")
+        print("M5: Desactivar gripper.")
+        print("G28: Hacer homing.")
+        print("G1: Hacer un movimiento a una determinada posición (para enviar este comando, realizar lo siguiente: [G1 Xa Yb Zc], donde Xa, Yb y Zc son las posiciones a las que se debe mover).")
+        print("M114: Reporte de modo de coordenadas y posición actual.")
+        print("G90: Modo de coordenadas absolutas.")
+        print("G91: Modo de coordenadas relativas.")
+        print("M17: Activar motores.")
+        print("M18: Desactivar motores.\n")        
 
     def escribir_comando(self):
         self.peticion = "Enviar comando"

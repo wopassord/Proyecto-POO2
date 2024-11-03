@@ -202,7 +202,7 @@ void ClienteRPC::enviarComandoGCode() {
     cout << "Ingrese el comando G-Code para el robot: ";
     getline(cin >> ws, comando);
 
-    std::regex gcode_regex("^[GM]\\d+"); //valida que el comanod empieza con G o M
+    std::regex gcode_regex("^[GM]\\d+"); //valida que el comando empieza con G o M
     if (!std::regex_match(comando, gcode_regex)) {
     cerr << "Error: Comando inválido. Solo se permiten comandos en GCode.\n\n";
     activarAlarma();

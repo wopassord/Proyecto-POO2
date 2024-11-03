@@ -25,11 +25,3 @@ class Usuario:
                 
         except Exception as e:
             print(f"Error al escribir el usuario: {e}")
-
-    
-
-
-
-
-
-
