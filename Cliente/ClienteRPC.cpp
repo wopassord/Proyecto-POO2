@@ -12,6 +12,8 @@ void ClienteRPC::login_o_signin() {
     args[0] = nombre_usuario;
     args[1] = contrasena;
 
+    cout << "Conexión Successful" << endl;
+
     /*
     if (client.execute("login_o_signin", args, result)) {
         cout << static_cast<string>(result) << "\n";
