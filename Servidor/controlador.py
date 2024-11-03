@@ -116,3 +116,10 @@ class Controlador:
                 return respuesta_completa.replace("ñ", "A").strip()
             else:
                 return None
+            
+
+    def procesar_respuestas_arduino(self):
+        # Procesar respuestas disponibles en la cola
+        while not self.cola_respuestas.empty():
+            respuesta = self.cola_respuestas.get()
+            print(f"Respuesta del Arduino: {respuesta}")
