@@ -12,11 +12,15 @@ void ClienteRPC::login_o_signin() {
     args[0] = nombre_usuario;
     args[1] = contrasena;
 
+    cout << "Conexión Successful" << endl;
+
+    /*
     if (client.execute("login_o_signin", args, result)) {
         cout << static_cast<string>(result) << "\n";
     } else {
         cerr << "Error en la conexión al iniciar sesión o registrar el usuario.\n";
     }
+    */
 }
 
 
@@ -202,7 +206,7 @@ void ClienteRPC::enviarComandoGCode() {
     cout << "Ingrese el comando G-Code para el robot: ";
     getline(cin >> ws, comando);
 
-    std::regex gcode_regex("^[GM]\\d+"); //valida que el comanod empieza con G o M
+    std::regex gcode_regex("^[GM]\\d+"); //valida que el comando empieza con G o M
     if (!std::regex_match(comando, gcode_regex)) {
     cerr << "Error: Comando inválido. Solo se permiten comandos en GCode.\n\n";
     activarAlarma();
@@ -240,6 +244,7 @@ void ClienteRPC::modoManual() {
 }
 
 void ClienteRPC::mostrarMenu() {
+    cout << "jaja\n";
     cout << "Menu de opciones:\n";
     cout << "1. Conectar/desconectar robot.\n";
     cout << "2. Activar/desactivar motores del robot.\n";

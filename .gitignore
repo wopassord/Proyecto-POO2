@@ -1,0 +1,6 @@
+Servidor/__pycache__/*
+Servidor\\__pycache__\\*
+Servidor\__pycache__\*
+Cliente/cliente.exe
+Cliente\cliente.exe
+Cliente\\cliente.exe
