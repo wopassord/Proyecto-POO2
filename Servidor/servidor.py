@@ -2,7 +2,108 @@ from xmlrpc.server import SimpleXMLRPCServer, SimpleXMLRPCRequestHandler
 from usuario import Usuario  # Asegúrate de tener la clase Usuario en un archivo separado llamado usuario.py
 from controlador import Controlador  # Clase que controla el robot, por ejemplo
 import csv
+import interfazServidor
 import threading
+import csv
+import re
+from roboticstoolbox import DHRobot, RevoluteDH
+import numpy as np
+import matplotlib.pyplot as plt
+
+
+class SimuladorRobot:
+    def __init__(self):
+        self.movimientos = []  # Lista para almacenar las posiciones de cada movimiento
+        self.posicion_actual = np.array([60, 0, 260])  # Posición inicial del robot en el origen
+
+    def procesar_gcode(self, contenido_gcode):
+        """
+        Lee y procesa el contenido de un archivo G-Code.
+        Extrae los comandos G1 con coordenadas X, Y, Z para determinar las posiciones del robot.
+        """
+        for linea in contenido_gcode.splitlines():
+            # Buscar el comando G1 que indica movimiento a una posición específica
+            if linea.startswith("G1"):
+                x = self.posicion_actual[0]
+                y = self.posicion_actual[1]
+                z = self.posicion_actual[2]
+                
+                # Extraer coordenadas X, Y, Z si están presentes en la línea
+                match_x = re.search(r"X([-+]?\d*\.\d+|\d+)", linea)
+                match_y = re.search(r"Y([-+]?\d*\.\d+|\d+)", linea)
+                match_z = re.search(r"Z([-+]?\d*\.\d+|\d+)", linea)
+
+                if match_x:
+                    x = float(match_x.group(1))
+                if match_y:
+                    y = float(match_y.group(1))
+                if match_z:
+                    z = float(match_z.group(1))
+                
+                # Actualizar la posición actual
+                nueva_posicion = np.array([x, y, z])
+                self.movimientos.append(nueva_posicion)
+                self.posicion_actual = nueva_posicion
+
+
+
+def visualizar_movimientos(self):
+    """
+    Crea una visualización en 3D de los movimientos del robot y del modelo ABB IRB 460.
+    """
+    # Figura para la trayectoria del robot
+    fig1 = plt.figure()
+    ax1 = fig1.add_subplot(111, projection='3d')
+
+    # Convertir la lista de movimientos en un array para fácil manipulación
+    movimientos_array = np.array(self.movimientos)
+
+    # Graficar la trayectoria del robot
+    ax1.plot(movimientos_array[:, 0], movimientos_array[:, 1], movimientos_array[:, 2], marker='o', label="Trayectoria")
+    
+    # Representar articulaciones como vectores unitarios (versores)
+    for i in range(1, len(movimientos_array)):
+        origen = movimientos_array[i - 1]
+        destino = movimientos_array[i]
+        vector = destino - origen
+        versor = vector / np.linalg.norm(vector)  # Normalizar para obtener el versor
+
+        # Dibujar el versor (articulación) con una flecha
+        ax1.quiver(origen[0], origen[1], origen[2], versor[0], versor[1], versor[2],
+                   length=1, color='r', normalize=True)
+
+    # Configuración de los ejes
+    ax1.set_xlabel("X")
+    ax1.set_ylabel("Y")
+    ax1.set_zlabel("Z")
+    ax1.set_title("Simulación de Movimientos del Robot")
+    plt.legend()
+    plt.show()
+
+    # Figura para el modelo ABB IRB 460
+    fig2 = plt.figure()
+    ax2 = fig2.add_subplot(111, projection='3d')
+
+    # Definir el ABB IRB 460 usando los parámetros DH
+    irb460 = DHRobot([
+        RevoluteDH(a=0, alpha=np.pi/2, d=0.8),     # Primer enlace
+        RevoluteDH(a=0.5, alpha=0, d=0),           # Segundo enlace
+        RevoluteDH(a=0.35, alpha=0, d=0),          # Tercer enlace
+        RevoluteDH(a=0, alpha=np.pi/2, d=0.2)      # Cuarto enlace
+    ], name='ABB IRB 460')
+
+    # Configuración de las articulaciones
+    q = [0, np.pi/4, -np.pi/4, np.pi/6]
+
+    # Plotear el modelo del robot en la configuración deseada
+    irb460.plot(q, block=False, ax=ax2)
+
+    # Configuración de los ejes
+    ax2.set_xlabel("X")
+    ax2.set_ylabel("Y")
+    ax2.set_zlabel("Z")
+    ax2.set_title("Modelo ABB IRB 460 en configuración deseada")
+    plt.show()
 
 class Servidor:
     def __init__(self):
@@ -15,7 +116,6 @@ class Servidor:
         self.interface_thread = None  # Hilo para la interfaz de usuario
         self.ip_cliente = None  # Última IP de cliente conectada
         self.comando_recibido = None  # Último comando recibido de un cliente
-        self.controlador = Controlador()  # Instancia del controlador del robot
         self.interfaz = None  # InterfazServidor, se asignará desde main.py
 
     def asignar_interfaz(self, interfaz):
@@ -45,7 +145,7 @@ class Servidor:
         self.server_thread.start()
         print("Servidor XML-RPC iniciado en un hilo separado.")
 
-    def leer_usuarios_csv(self, archivo='usuarios_servidor.csv'):
+    def leer_usuarios_csv(self, archivo='usuarios_servidor_uno.csv'):
         try:
             with open(archivo, mode='r', newline='') as csvfile:
                 reader = csv.reader(csvfile)
@@ -64,21 +164,6 @@ class Servidor:
             print(f"Error al leer el archivo: {e}")
             return []
 
-    def iniciar_interfaz(self):
-        """Inicia la interfaz de usuario en la terminal en un hilo separado."""
-        print("Iniciando interfaz de usuario en la terminal...")
-
-        def run_interface():
-            if self.interfaz:
-                self.interfaz.administrar_comandos()  # Llama al método para manejar comandos en la terminal
-            else:
-                print("Interfaz no asignada. Usa asignar_interfaz() antes de iniciar la interfaz.")
-
-        # Creación y arranque del hilo de la interfaz de usuario
-        self.interface_thread = threading.Thread(target=run_interface)
-        self.interface_thread.start()
-        print("Interfaz de usuario iniciada en un hilo separado.")
-
     def apagar_servidor(self):
         """Apaga el servidor XML-RPC de forma controlada."""
         print("Apagando el servidor...")
@@ -89,39 +174,20 @@ class Servidor:
             self.server_thread.join()  # Espera a que el hilo del servidor termine, se puede seguir escribiendo en la terminal del "servidor"
         print("Servidor apagado")
 
-    def login_o_signin(self, nombre_usuario, contrasena):
-        usuario_existente = next((u for u in self.usuarios if u.nombre_usuario == nombre_usuario), None)
-
-        if usuario_existente:
-            if usuario_existente.contrasena == contrasena:
-                self.sesion_iniciada = True
-                self.sesion = {'nombre_usuario': nombre_usuario, 'admin': usuario_existente.admin}
-                if usuario_existente.admin:
-                    return f"Bienvendio, {nombre_usuario}. Tienes permisos de administrador."
-                else:
-                    return f"Bienvenido, {nombre_usuario}. No tiene permisos de administrador."
-            else:
-                return "Contrasena incorrecta. Por favor, intenta de nuevo"
-        else:
-            nuevo_usuario = Usuario(nombre_usuario, contrasena, False)
-            self.usuarios.append(nuevo_usuario)
-            self.guardar_usuarios_csv(nombre_usuario, contrasena, admin= False)
-            self.sesion_iniciada = True
-            self.sesion = {'nombre_usuario': nombre_usuario, 'admin':False}
-            return f"Usuario {nombre_usuario} registrado exitosamente. No tienes permisos de administrador"
-
-    def guardar_usuario_csv(self, nombre_usuario, contrasena, admin=False, archivo='usuarios_servidor.csv'):
-            """Guarda un usuario nuevo en el archivo CSV."""
-            with open(archivo, mode='a', newline='') as csvfile:
-                writer = csv.writer(csvfile)
-                writer.writerow([nombre_usuario, contrasena, str(admin)])
-            print(f"Usuario {nombre_usuario} agregado al archivo CSV.")
+    def guardar_usuario_csv(self, nombre_usuario, contrasena, admin=False, archivo='usuarios_servidor_uno.csv'):
+        """Guarda un usuario nuevo en el archivo CSV."""
+        with open(archivo, mode='a', newline='') as csvfile:
+            writer = csv.writer(csvfile)
+            writer.writerow([nombre_usuario, contrasena, str(admin)])
+        print(f"Usuario {nombre_usuario} agregado al archivo CSV.")
     
-
     # Métodos XML-RPC
     def saludo_personalizado(self, nombre):
         """Retorna un saludo personalizado al cliente."""
         return f"Hola {nombre}, ¡conexión exitosa con el servidor XML-RPC!"
+
+    #Visualizacion 3D robot:
+
 
     def subir_archivo_gcode(self, nombre_archivo, contenido_archivo):
         """Guarda un archivo G-Code enviado por el cliente."""
@@ -130,19 +196,24 @@ class Servidor:
                 f.write(contenido_archivo)
             print(f"Archivo {nombre_archivo} recibido.")
             print(f"Contenido del archivo: \n{contenido_archivo}")
+
+            simulador = SimuladorRobot()
+            simulador.procesar_gcode(contenido_archivo)
+            simulador.visualizar_movimientos()
+
             return f"Archivo {nombre_archivo} recibido y almacenado correctamente."
+        
+            
         except Exception as e:
             print(f"Error al guardar el archivo: {str(e)}")
             return "Error al subir el archivo"
 
     def recibir_comando_cliente(self, comando):
         """Recibe un comando desde el cliente y lo procesa."""
-        self.comando_recibido = comando
-        if comando not in list(range(1, 5)):
-            respuesta = self.controlador.enviar_comando(comando)
+        if self.interfaz:
+            return self.interfaz.recibir_comando_cliente(comando)
         else:
-            respuesta = self.interfaz.administrar_comandos(comando)
-        return respuesta
+            return "Error: Interfaz no disponible"
 
     # Clase para manejar solicitudes XML-RPC, obteniendo la IP del cliente
     class MyRequestHandler(SimpleXMLRPCRequestHandler):
@@ -151,16 +222,16 @@ class Servidor:
             servidor.ip_cliente = self.client_address[0]
             super().handle()
 
-    # Métodos de gestión de usuarios
-    def agregar_usuario(self, nombre_usuario, contrasena, admin = False):
+    def agregar_usuario(self, nombre_usuario, contrasena, admin=False):
         """Agrega un usuario nuevo al sistema."""
-        if any(u.nombre_usuario == nombre_usuario for u in self.usuarios):
-            print("El usuario ingresado ya existe.")
-        else:
-            nuevo_usuario = Usuario(nombre_usuario, contrasena, admin)
-            self.usuarios.append(nuevo_usuario)
-            print(f"Usuario {nombre_usuario} agregado correctamente.")
-            nuevo_usuario.guardar_usuarios_csv()
+        nuevo_usuario = Usuario(nombre_usuario, contrasena, admin)
+        self.usuarios.append(nuevo_usuario)
+        print(f"Usuario {nombre_usuario} agregado correctamente.")
+
+        # Llamar a guardar_usuario_csv para escribir en el archivo CSV
+        self.guardar_usuario_csv(nombre_usuario, contrasena, admin)
+
+
 
     def iniciar_sesion(self):
         """Inicia una sesión de usuario."""
@@ -170,7 +241,10 @@ class Servidor:
                 print("Sesión cancelada.")
                 return None
 
-            # Buscar el usuario
+            # Leer usuarios desde el archivo CSV
+            self.usuarios = self.leer_usuarios_csv()
+
+            # Buscar el usuario en la lista obtenida del archivo CSV
             usuario_encontrado = next((u for u in self.usuarios if u.nombre_usuario == nombre_usuario), None)
             if not usuario_encontrado:
                 print("El usuario ingresado no existe, por favor, ingrese un usuario válido.")

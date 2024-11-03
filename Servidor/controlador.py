@@ -1,5 +1,7 @@
 import serial
 import time
+import threading
+import queue
 
 class Controlador:
 
@@ -9,6 +11,7 @@ class Controlador:
         self.baudrate = 115200
         self.puerto_COM = 'COM6'
         self.arduino = None
+        self.cola_respuestas = queue.Queue()
 
     def get_estado_robot(self):
         return self.estado_robot
@@ -18,6 +21,7 @@ class Controlador:
     
     def cambiar_parametros_comunicacion(self, baudrate, puerto_COM):
         # Cerrar la conexión actual si está activa antes de cambiar los parámetros
+        baudrate = int(baudrate)
         if self.estado_robot:
             self.desconectar_robot()
 
@@ -32,17 +36,23 @@ class Controlador:
             time.sleep(2)
             self.arduino.reset_input_buffer()
             respuesta = f"Conexión establecida en {self.puerto_COM} con baudrate {self.baudrate}."
+            print(respuesta)
+
+            # Iniciar hilo para leer respuestas
+            self.hilo_lectura = threading.Thread(target=self.leer_respuestas)
+            self.hilo_lectura.start()
+
         except serial.SerialException:
             respuesta = f"Error al conectar: Verifique que el puerto {self.puerto_COM} esté disponible y correcto."
         except Exception as e:
             respuesta = f"Error al conectar: {e}"
-        print(respuesta)
         return respuesta
 
     def desconectar_robot(self):
         if self.arduino and self.arduino.is_open:
-            self.arduino.close()
             self.estado_robot = False
+            self.hilo_lectura.join()
+            self.arduino.close()
             respuesta = "Robot desconectado."
         else:
             respuesta = "El robot ya está desconectado o no había conexión."
