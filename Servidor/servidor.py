@@ -163,7 +163,6 @@ class Servidor:
 
     #Visualizacion 3D robot:
 
-
     def subir_archivo_gcode(self, nombre_archivo, contenido_archivo):
         """Guarda un archivo G-Code enviado por el cliente."""
         try:

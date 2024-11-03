@@ -155,7 +155,7 @@ class InterfazServidor:
                 # Verificamos si el usuario tiene permisos de administrador
                 for usuario in self.usuarios:
                     if usuario.nombre_usuario == nombre_usuario and usuario.admin:
-                        logtrabajo = LogTrabajo()
+                        logtrabajo = LogTrabajo(self.servidor, peticiones="Mostrar Log de Trabajo",exitos=1)
                         logtrabajo.leer_CSV()
                         return  # Salir del método si el log se muestra exitosamente
                 
