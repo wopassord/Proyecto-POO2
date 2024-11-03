@@ -12,8 +12,16 @@ int main(int argc, char* argv[]) {
         return -1;
     }
 
-    std::string host = argv[1];
-    int port = std::atoi(argv[2]);
+
+    string host = argv[1];
+    int port = atoi(argv[2]);
+
+    // Crear la aplicación cliente y ejecutar el ciclo principal
+    AplicacionCliente app(host, port);
+    app.ejecutar();
+
+    return 0;
+}
 // '''
 //     QApplication app(argc, argv);
 
