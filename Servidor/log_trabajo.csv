@@ -145,3 +145,82 @@ Fecha y Hora,Peticiones,IP,Usuario,Fallos,Exitos,Tiempo de Ejecucion
 2024-11-04 13:04:48,Listar comandos nuevamente,127.0.0.1,Renzito,0,1,0.7653236389160156
 2024-11-04 13:07:56,Conectar robot,127.0.0.1,Renzito,0,1,3503.051519393921
 2024-11-04 13:08:17,Seleccionar modo automatico,127.0.0.1,Renzito,0,1,0.9977817535400391
+2024-11-04 15:19:39,Modificar parametros de conexion,127.0.0.1,Juan,0,1,7988.005638122559
+2024-11-04 15:19:47,Mostrar operaciones cliente,127.0.0.1,Juan,0,1,1.1518001556396484
+2024-11-04 15:19:49,Seleccionar modo de coordenadas relativas,127.0.0.1,Juan,0,1,101.14860534667969
+2024-11-04 15:19:51,Seleccionar modo de coordenadas absolutas,127.0.0.1,Juan,0,1,101.72128677368164
+2024-11-04 15:19:59,Escribir comando,127.0.0.1,Juan,0,1,2064.692974090576
+2024-11-04 15:20:03,Escribir comando,127.0.0.1,Juan,0,1,1370.0766563415527
+2024-11-04 15:20:08,Escribir comando,127.0.0.1,Juan,0,1,1770.5626487731934
+2024-11-04 16:05:40,Modificar parametros de conexion,127.0.0.1,Juan,0,1,7266.210317611694
+2024-11-04 16:05:49,Cargar y ejecutar archivo G-Code en modo automático.,127.0.0.1,Juan,0,1,0.36144256591796875
+2024-11-04 16:06:02,Seleccionar modo automatico,127.0.0.1,Juan,0,1,0.16570091247558594
+2024-11-04 16:06:21,Cargar y ejecutar archivo G-Code en modo automático.,127.0.0.1,Juan,0,1,15952.513933181763
+2024-11-04 16:06:36,Listar comandos nuevamente,127.0.0.1,Juan,0,1,2.9952526092529297
+2024-11-04 16:09:27,Seleccionar modo automatico,127.0.0.1,Juan,0,1,0.1308917999267578
+2024-11-04 16:09:44,Cargar y ejecutar archivo G-Code en modo automático.,127.0.0.1,Juan,0,1,11952.621221542358
+2024-11-04 16:10:41,Conectar robot,127.0.0.1,Juan,0,1,3503.2436847686768
+2024-11-04 16:10:46,Seleccionar modo automatico,127.0.0.1,Juan,0,1,0.23627281188964844
+2024-11-04 16:11:02,Cargar y ejecutar archivo G-Code en modo automático.,127.0.0.1,Juan,0,1,14005.863189697266
+2024-11-04 16:11:35,Escribir comando,127.0.0.1,Juan,0,1,0.2827644348144531
+2024-11-04 16:11:38,Seleccionado modo manual,127.0.0.1,Juan,0,1,0.13685226440429688
+2024-11-04 16:11:46,Escribir comando,127.0.0.1,Juan,0,1,6779.146671295166
+2024-11-04 16:16:01,Activar motores,127.0.0.1,Juan,0,1,0.2694129943847656
+2024-11-04 16:16:04,Conectar robot,127.0.0.1,Juan,0,1,1500.6303787231445
+2024-11-04 16:16:23,Conectar robot,127.0.0.1,Juan,0,1,3503.058910369873
+2024-11-04 16:16:23,Seleccionar modo automatico,127.0.0.1,Juan,0,1,0.1366138458251953
+2024-11-04 16:16:47,Cargar y ejecutar archivo G-Code en modo automático.,127.0.0.1,Juan,0,1,20245.429754257202
+2024-11-04 16:18:28,Seleccionado modo manual,127.0.0.1,Juan,0,1,0.3323554992675781
+2024-11-04 16:18:34,Escribir comando,127.0.0.1,Juan,0,1,3194.1323280334473
+2024-11-04 16:18:39,Escribir comando,127.0.0.1,Juan,0,1,1062.986135482788
+2024-11-04 16:21:55,Conectar robot,127.0.0.1,Juan,0,1,3504.391670227051
+2024-11-04 16:21:55,Seleccionar modo automatico,127.0.0.1,Juan,0,1,0.31948089599609375
+2024-11-04 16:21:58,Seleccionado modo manual,127.0.0.1,Juan,0,1,0.32830238342285156
+2024-11-04 16:22:05,Escribir comando,127.0.0.1,Juan,0,1,5702.981948852539
+2024-11-04 16:22:08,Escribir comando,127.0.0.1,Juan,0,1,975.7726192474365
+2024-11-04 16:22:39,Conectar robot,127.0.0.1,Juan,0,1,3504.070520401001
+2024-11-04 16:22:40,Seleccionar modo automatico,127.0.0.1,Juan,0,1,0.1800060272216797
+2024-11-04 16:22:56,Cargar y ejecutar archivo G-Code en modo automático.,127.0.0.1,Juan,0,1,15502.72536277771
+2024-11-04 16:26:51,Conectar robot,127.0.0.1,Juan,0,1,3503.415822982788
+2024-11-04 16:26:51,Seleccionar modo automatico,127.0.0.1,Juan,0,1,0.274658203125
+2024-11-04 16:27:06,Cargar y ejecutar archivo G-Code en modo automático.,127.0.0.1,Juan,0,1,13869.630336761475
+2024-11-04 16:27:48,Conectar robot,127.0.0.1,Juan,0,1,3503.5459995269775
+2024-11-04 16:27:48,Seleccionar modo automatico,127.0.0.1,Juan,0,1,0.2720355987548828
+2024-11-04 16:28:03,Cargar y ejecutar archivo G-Code en modo automático.,127.0.0.1,Juan,0,1,13097.698211669922
+2024-11-04 16:35:56,Conectar robot,127.0.0.1,Juan,0,1,3504.281997680664
+2024-11-04 16:35:57,Seleccionar modo automatico,127.0.0.1,Juan,0,1,0.3266334533691406
+2024-11-04 16:36:12,Cargar y ejecutar archivo G-Code en modo automático.,127.0.0.1,Juan,0,1,14285.210132598877
+2024-11-04 16:42:57,Conectar robot,127.0.0.1,Juan,0,1,3504.183053970337
+2024-11-04 16:42:57,Seleccionar modo automatico,127.0.0.1,Juan,0,1,0.17881393432617188
+2024-11-04 16:43:25,Cargar y ejecutar archivo G-Code en modo automático.,127.0.0.1,Juan,0,1,25555.614471435547
+2024-11-04 16:50:12,Conectar robot,127.0.0.1,Juan,0,1,3504.152297973633
+2024-11-04 16:50:14,Seleccionar modo automatico,127.0.0.1,Juan,0,1,0.3001689910888672
+2024-11-04 16:50:34,Cargar y ejecutar archivo G-Code en modo automático.,127.0.0.1,Juan,0,1,16600.902557373047
+2024-11-04 16:52:50,Conectar robot,127.0.0.1,Juan,0,1,3503.129482269287
+2024-11-04 16:52:53,Seleccionar modo automatico,127.0.0.1,Juan,0,1,0.20003318786621094
+2024-11-04 16:53:14,Cargar y ejecutar archivo G-Code en modo automático.,127.0.0.1,Juan,0,1,13690.242767333984
+2024-11-04 16:58:02,Conectar robot,127.0.0.1,Juan,0,1,3504.2386054992676
+2024-11-04 16:58:05,Seleccionar modo automatico,127.0.0.1,Juan,0,1,0.14591217041015625
+2024-11-04 16:58:21,Cargar y ejecutar archivo G-Code en modo automático.,127.0.0.1,Juan,0,1,14632.670402526855
+2024-11-04 17:03:44,Seleccionar modo automatico,127.0.0.1,Juan,0,1,0.13875961303710938
+2024-11-04 17:04:00,Cargar y ejecutar archivo G-Code en modo automático.,127.0.0.1,Juan,0,1,15136.273622512817
+2024-11-04 17:04:05,Conectar robot,127.0.0.1,Juan,0,1,3504.3628215789795
+2024-11-04 17:04:22,Cargar y ejecutar archivo G-Code en modo automático.,127.0.0.1,Juan,0,1,16127.24757194519
+2024-11-04 17:06:33,Seleccionar modo automatico,127.0.0.1,Juan,0,1,0.2741813659667969
+2024-11-04 17:06:40,Conectar robot,127.0.0.1,Juan,0,1,3504.3694972991943
+2024-11-04 17:06:55,Cargar y ejecutar archivo G-Code en modo automático.,127.0.0.1,Juan,0,1,13802.711963653564
+2024-11-04 17:08:30,Conectar robot,127.0.0.1,Juan,0,1,3503.80802154541
+2024-11-04 17:08:31,Seleccionar modo automatico,127.0.0.1,Juan,0,1,0.17786026000976562
+2024-11-04 17:08:47,Cargar y ejecutar archivo G-Code en modo automático.,127.0.0.1,Juan,0,1,14933.07375907898
+2024-11-04 17:10:41,Conectar robot,127.0.0.1,Juan,0,1,3504.7473907470703
+2024-11-04 17:10:42,Seleccionar modo automatico,127.0.0.1,Juan,0,1,0.17309188842773438
+2024-11-04 17:11:05,Cargar y ejecutar archivo G-Code en modo automático.,127.0.0.1,Juan,0,1,22025.76470375061
+2024-11-04 17:14:24,Conectar robot,127.0.0.1,Juan,0,1,3504.004716873169
+2024-11-04 17:14:26,Seleccionar modo automatico,127.0.0.1,Juan,0,1,0.11539459228515625
+2024-11-04 17:14:41,Cargar y ejecutar archivo G-Code en modo automático.,127.0.0.1,Juan,0,1,13623.626232147217
+2024-11-04 17:15:11,Conectar robot,127.0.0.1,Juan,0,1,3504.3132305145264
+2024-11-04 17:15:12,Seleccionar modo automatico,127.0.0.1,Juan,0,1,0.1747608184814453
+2024-11-04 17:15:30,Cargar y ejecutar archivo G-Code en modo automático.,127.0.0.1,Juan,0,1,17024.080514907837
+2024-11-04 17:25:35,Conectar robot,127.0.0.1,Juan,0,1,3504.0102005004883
+2024-11-04 17:25:36,Seleccionar modo automatico,127.0.0.1,Juan,0,1,0.2448558807373047
+2024-11-04 17:25:58,Cargar y ejecutar archivo G-Code en modo automático.,127.0.0.1,Juan,0,1,20395.476818084717

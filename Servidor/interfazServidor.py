@@ -26,18 +26,19 @@ class InterfazServidor:
         print("Comandos posibles a realizar: \n")
         print(" 1) Conectar/desconectar robot.")
         print(" 2) Activar/desactivar motores del robot.")
-        print(" 3) Seleccionar los modos de trabajo (manual o automatico)")
-        print(" 4) Seleccionar los modos de coordenadas (absolutas o relativas)")
+        print(" 3) Seleccionar los modos de trabajo (manual o automatico).")
+        print(" 4) Seleccionar los modos de coordenadas (absolutas o relativas).")
         print(" 5) Mostrar operaciones posibles a realizar por un cliente o un operador en el servidor.")
         print(" 6) [SOLO MODO MANUAL] Enviar comandos en formato G-Code para accionar robot.")
-        print(" 7) Mostrar reporte de informacion general.")
-        print(" 8) [SOLO ADMIN] Mostrar reporte de log de trabajo del servidor.")
-        print(" 9) [SOLO ADMIN] Mostrar usuarios.")
-        print(" 10) [SOLO ADMIN] Mostrar/editar los parametros de conexion del robot.")
-        print(" 11) [SOLO ADMIN] Encender/apagar servidor.")
-        print(" 12) Cerrar sesion.")
-        print(" 13) Listar comandos nuevamente.")
-        print(" 14) Apagar programa.")
+        print(" 7) [MODO AUTOMÁTICO] Cargar y ejecutar un archivo en formado G-Code.")
+        print(" 8) Mostrar reporte de informacion general.")
+        print(" 9) [SOLO ADMIN] Mostrar reporte de log de trabajo del servidor.")
+        print(" 10) [SOLO ADMIN] Mostrar usuarios.")
+        print(" 11) [SOLO ADMIN] Mostrar/editar los parametros de conexion del robot.")
+        print(" 12) [SOLO ADMIN] Encender/apagar servidor.")
+        print(" 13) Cerrar sesion.")
+        print(" 14) Listar comandos nuevamente.")
+        print(" 15) Apagar programa.")
 
     def recibir_comando_cliente(self, comando):
         # Recibe un comando desde el servidor (que lo recibe de cliente) y lo procesa.
@@ -95,24 +96,27 @@ class InterfazServidor:
             self.escribir_comando()
             respuesta = "Comando escrito en modo manual."
         elif opcion_elegida == 7:
+            self.peticion = "Cargar y ejecutar archivo G-Code en modo automático."
+            respuesta = self.cargar_y_ejecutar_archivo_gcode()
+        elif opcion_elegida == 8:
             self.peticion = "Mostrar reporte general"
             self.mostrar_reporte_general()
             respuesta = "Resporte general mostrado."
-        elif opcion_elegida == 8:
+        elif opcion_elegida == 9:
             self.peticion = "Mostrar log de trabajo"
             duracion = (time.time() - inicio)*1000  # Calcular el tiempo de ejecución
             self.registrar_log_csv(peticion=self.peticion, tiempo_ejecucion=duracion,IP=self.ip_cliente)
             self.mostrar_log_trabajo()
             respuesta = "Log de trabajo mostrado."
-        elif opcion_elegida == 9:
+        elif opcion_elegida == 10:
             self.peticion = "Mostrar usuarios"
             self.mostrar_usuarios()
             respuesta = "Usuarios mostrados."
-        elif opcion_elegida == 10:
+        elif opcion_elegida == 11:
             self.peticion = "Modificar parámetros de conexión"
             self.modificar_parametros_conexion()
             respuesta = "Parámetros de conexión modificados."
-        elif opcion_elegida == 11:
+        elif opcion_elegida == 12:
             self.peticion = "Encender/apagar servidor"
             if not self.servidor.get_estado_servidor():
                 self.servidor.iniciar_servidor()
@@ -120,15 +124,15 @@ class InterfazServidor:
             else:
                 self.servidor.apagar_servidor()
                 respuesta = "Servidor apagado."
-        elif opcion_elegida == 12:
+        elif opcion_elegida == 13:
             self.peticion = "Cerrar sesión"
             self.servidor.cerrar_sesion()
             respuesta = "Sesión cerrada."
-        elif opcion_elegida == 13:
+        elif opcion_elegida == 14:
             self.peticion = "Listar comandos nuevamente"
             self.listar_comandos()
             respuesta = "Comandos listados nuevamente."
-        elif opcion_elegida == 14:
+        elif opcion_elegida == 15:
             self.peticion = "Apagar programa"
             return 14
         else:
@@ -268,3 +272,22 @@ class InterfazServidor:
         else:
             print("No hay ningún usuario en sesión.")
             return False
+        
+    def cargar_y_ejecutar_archivo_gcode(self):
+        if self.modo_trabajo != "automatico":
+            print("Esta acción solo está disponible en modo automático. Cambie el modo de trabajo a automático para proceder.")
+            return
+        nombre_archivo = input("Ingrese el nombre del archivo G-Code a cargar (con extensión): ")
+        try:
+            with open(nombre_archivo, 'r', encoding = 'latin-1') as archivo:
+                print(f"Ejecutando comandos en {nombre_archivo}...")
+                for linea in archivo:
+                    comando = linea.split(";")[0].strip()
+                    if comando:
+                        self.controlador.enviar_comando(comando)
+                        time.sleep(0.5)
+                print(f"Archivo {nombre_archivo} ejecutado correctamente.")
+        except FileNotFoundError:
+            print(f"Error: No se pudo encontrar el archivo {nombre_archivo}. Verifique la ruta y el nombre.")
+        except Exception as e:
+            print(f"Error al ejecutar el archivo: {e}")
