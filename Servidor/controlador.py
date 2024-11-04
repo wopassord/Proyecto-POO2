@@ -8,7 +8,7 @@ class Controlador:
         self.estado_robot = False
         self.estado_motores = False
         self.baudrate = 115200
-        self.puerto_COM = 'COM7'
+        self.puerto_COM = 'COM3'
         self.arduino = None
         self.hilo_lectura = None
         self.cola_respuestas = queue.Queue()
@@ -95,8 +95,11 @@ class Controlador:
     def enviar_comando(self, comando):
         if self.estado_robot:
             try:
+                if comando =='G21':
+                    respuesta = "Unidades establecidas en milímetros."
+                    print(respuesta)
                 # Verifica si el comando es 'M17' o 'M18' para evitar mostrar "No se recibió respuesta"
-                if comando in ['M17', 'M18']:
+                elif comando in ['M17', 'M18']:
                     if comando == 'M17':
                         respuesta = "MOTORES ACTIVADOS."
                         exito = 1
