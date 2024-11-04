@@ -13,6 +13,8 @@ class InterfazServidor:
         self.peticion = None
         self.ip_cliente = "127.0.0.1"
         self.log_trabajo = LogTrabajo(servidor=servidor)
+        self.fallos = None
+        self.exitos = None
 
     def registrar_log_csv(self, peticion, fallos=0, exitos=1, tiempo_ejecucion=0.0, IP="127.0.01"):
         sesion = self.servidor.get_sesion()
