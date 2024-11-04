@@ -8,7 +8,7 @@ class Controlador:
         self.estado_robot = False
         self.estado_motores = False
         self.baudrate = 115200
-        self.puerto_COM = 'COM6'
+        self.puerto_COM = 'COM7'
         self.arduino = None
         self.hilo_lectura = None
         self.cola_respuestas = queue.Queue()
@@ -36,7 +36,7 @@ class Controlador:
             print(respuesta)
 
             # Iniciar hilo para leer respuestas
-            self.hilo_lectura = threading.Thread(target=self.leer_respuestas)
+            self.hilo_lectura = threading.Thread(target=self.leer_respuesta)
             self.hilo_lectura.start()
 
         except serial.SerialException:
@@ -62,25 +62,28 @@ class Controlador:
     def activar_motores(self):
         if self.estado_robot:
             # Enviar el comando M17 al Arduino sin esperar respuesta
-            self.enviar_comando('M17')
+            respuesta = self.enviar_comando('M17')
             self.estado_motores = True
         else:
-            print("No se pueden activar los motores. El robot no está conectado.")
+            respuesta = "No se pueden activar los motores. El robot no está conectado."
+            print(respuesta)
+        return respuesta
     
     def desactivar_motores(self):
         if self.estado_robot:
             # Enviar el comando M18 al Arduino sin esperar respuesta
-            self.enviar_comando('M18')
+            respuesta = self.enviar_comando('M18')
             self.estado_motores = False
         else:
-            print("No se pueden desactivar los motores. El robot no está conectado.")
+            respuesta = "No se pueden desactivar los motores. El robot no está conectado."
+            print(respuesta)
+        return respuesta
 
     def enviar_comando(self, comando):
         if self.estado_robot:
             try:
                 # Verifica si el comando es 'M17' o 'M18' para evitar mostrar "No se recibió respuesta"
                 if comando in ['M17', 'M18']:
-                    self.arduino.write((comando + '\r\n').encode('latin-1')) # Enviar comando sin esperar respuesta
                     if comando == 'M17':
                         respuesta = "MOTORES ACTIVADOS."
                         print("MOTORES ACTIVADOS.")
@@ -105,26 +108,16 @@ class Controlador:
         return respuesta
     
     def leer_respuesta(self):
-        respuesta_completa = ""
-        while self.arduino and self.arduino.in_waiting > 0:
-            respuesta = self.arduino.read(self.arduino.in_waiting).decode('latin-1')
-            respuesta_completa += respuesta
-        return respuesta_completa.replace("ñ", "A").strip() if respuesta_completa else None
-
-    def leer_respuestas(self):
-        while self.estado_robot:
-            try:
-                if self.arduino.in_waiting > 0:
-                    respuesta = self.arduino.readline().decode('latin-1').strip()
-                    self.cola_respuestas.put(respuesta)
-                    print(f"Respuesta del robot: {respuesta}")
-                else:
-                    time.sleep(0.1)
-            except serial.SerialException as e:
-                print(f"Error de comunicación: {e}")
-                break
-            except Exception as e:
-                print(f"Error inesperado al leer respuestas: {e}")
+        try:
+            respuesta_completa = ""
+            while self.arduino and self.arduino.in_waiting > 0:
+                respuesta = self.arduino.read(self.arduino.in_waiting).decode('latin-1')
+                respuesta_completa += respuesta
+            return respuesta_completa.replace("ñ", "A").strip() if respuesta_completa else None
+        except serial.SerialException as e:
+            print(f"Error de comunicación: {e}")
+        except Exception as e:
+            print(f"Error inesperado al leer respuestas: {e}")
 
     def procesar_respuestas_arduino(self):
         while not self.cola_respuestas.empty():
