@@ -259,3 +259,5 @@ Fecha y Hora,Peticiones,IP,Usuario,Fallos,Exitos,Tiempo de Ejecucion
 2024-11-04 17:22:52,Activar motores,127.0.0.1,Juan,0,1,0.0
 2024-11-04 17:22:52,Desactivar motores,127.0.0.1,Juan,0,1,0.0
 2024-11-04 17:22:54,Mostrar log de trabajo,127.0.0.1,Juan,0,1,0.0
+2024-11-04 17:53:53,Iniciar Sesión,127.0.0.1,Juan,0,1,0.0
+2024-11-04 17:53:55,Mostrar log de trabajo,127.0.0.1,Juan,0,1,0.0

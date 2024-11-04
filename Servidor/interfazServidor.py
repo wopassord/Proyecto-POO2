@@ -15,6 +15,8 @@ class InterfazServidor:
         self.log_trabajo = LogTrabajo(servidor=servidor)
         self.fallos = 0
         self.exitos = 0
+        self.archivo = Archivo(estado_conexion=self.servidor.get_estado_servidor(),
+                        posicion="Inicio", estado_actividad="Inactiva")
 
     def registrar_log_csv(self, peticion, fallos=0, exitos=1, tiempo_ejecucion=0.0, IP="127.0.01"):
         sesion = self.servidor.get_sesion()

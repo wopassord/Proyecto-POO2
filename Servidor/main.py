@@ -42,6 +42,7 @@ def init_rpc_server():
                     if opcion == 1:
                         servidor.iniciar_sesion()
                         if servidor.sesion_iniciada:
+                            interfaz.registrar_log_csv(peticion="Iniciar Sesión",fallos=0, exitos=1, tiempo_ejecucion=0,IP=servidor.ip_cliente)
                             servidor.iniciar_servidor()
                             interfaz.listar_comandos()
                     # Se agrega un usuario
