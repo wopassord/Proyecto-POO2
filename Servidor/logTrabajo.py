@@ -60,16 +60,19 @@ class LogTrabajo:
                 rows = list(reader)
                 
                 # Definir los anchos de columna
-                col_widths = [20, 30, 15, 20, 10, 10, 20]  # Puedes ajustar los valores según sea necesario
+                col_widths = [20, 35, 15, 20, 10, 10, 20]  # Puedes ajustar los valores según sea necesario
                 
+                num_rows_to_show = min(len(rows) - 1, 100)
                 # Imprimir cabecera alineada
                 header = rows[0]
                 for i, col in enumerate(header):
                     print(col.ljust(col_widths[i]), end=" | ")
                 print("\n" + "-" * (sum(col_widths) + len(col_widths) * 3))
 
+                rows_to_display = rows[-num_rows_to_show:]
+
                 # Imprimir cada fila de datos alineada
-                for row in rows[1:]:
+                for row in rows_to_display:
                     for i, col in enumerate(row):
                         # Convertir el tiempo de ejecución a milisegundos con formato adecuado
                         if i == 6:  # Índice de la columna de tiempo de ejecución
