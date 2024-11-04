@@ -173,28 +173,18 @@ class InterfazServidor:
             print(f"Error inesperado: {e}")
 
     def mostrar_log_trabajo(self):
-        try:
-            self.sesion = self.servidor.get_sesion()
-            self.usuarios = self.servidor.get_usuarios()
+        self.peticion = "Mostrar log de trabajo"
+        if self.verificar_sesion_admin() == True:
+            try:
+                self.log_trabajo.leer_CSV()  
+            except FileNotFoundError:
+                print("Error: El archivo de log de trabajo no se encuentra.")
+            except PermissionError:
+                print("Error: Permisos insuficientes para acceder al archivo de log de trabajo.")
+            except Exception as e:
+                print(f"Error inesperado: {e}")
+        
 
-            if self.sesion and 'nombre_usuario' in self.sesion:
-                nombre_usuario = self.sesion['nombre_usuario']
-                
-                # Verificamos si el usuario tiene permisos de administrador
-                for usuario in self.usuarios:
-                    if usuario.nombre_usuario == nombre_usuario and usuario.admin:
-                        self.log_trabajo.leer_CSV()
-                        return  # Salir del método si el log se muestra exitosamente
-                
-                print("Acceso denegado. Solo los administradores pueden ver la lista de usuarios.")
-            else:
-                print("No hay ningún usuario en sesión.")
-        except FileNotFoundError:
-            print("Error: El archivo de log de trabajo no se encuentra.")
-        except PermissionError:
-            print("Error: Permisos insuficientes para acceder al archivo de log de trabajo.")
-        except Exception as e:
-            print(f"Error inesperado: {e}")
 
     def seleccionar_modo_trabajo(self):
         if self.modo_trabajo == "manual":
@@ -219,31 +209,23 @@ class InterfazServidor:
         return respuesta
 
     def mostrar_usuarios(self):
-        self.peticion= "Mostrar usuarios"
-        self.sesion = self.servidor.get_sesion()
-        self.usuarios = self.servidor.get_usuarios()
-        if self.sesion and 'nombre_usuario' in self.sesion:
-            nombre_usuario = self.sesion['nombre_usuario']
-            # Verificamos si el usuario tiene permisos de administrador
-            for usuario in self.usuarios:
-                if usuario.nombre_usuario == nombre_usuario and usuario.admin:
-                    print("Usuarios registrados:")
-                    for u in self.usuarios:
-                        print(u.nombre_usuario)  # Muestra el nombre del usuario
-                    return
-            print("Acceso denegado. Solo los administradores pueden ver la lista de usuarios.")
-        else:
-            print("No hay ningún usuario en sesión.")
+        self.peticion = "Mostrar usuarios"
+        if self.verificar_sesion_admin() == True:
+            for u in self.usuarios:
+                print(u.nombre_usuario)  # Muestra el nombre del usuario
+            return
+            
 
     def modificar_parametros_conexion(self):
         self.peticion = "Modificar parametros de conexion"
-        try:
-            puerto_COM = input('Ingrese el nuevo puerto de COM al que se quiere conectar: ')
-            baudrate = int(input('Ingrese la velocidad de comunicacion (baudrate): '))
-            self.controlador.cambiar_parametros_comunicacion(baudrate, puerto_COM)
-            self.controlador.conectar_robot()
-        except Exception as e:
-            print(f"Error al modificar los parámetros de conexión: {e}")
+        if self.verificar_sesion_admin() == True:
+            try:
+                puerto_COM = input('Ingrese el nuevo puerto de COM al que se quiere conectar: ')
+                baudrate = int(input('Ingrese la velocidad de comunicacion (baudrate): '))
+                self.controlador.cambiar_parametros_comunicacion(baudrate, puerto_COM)
+                self.controlador.conectar_robot()
+            except Exception as e:
+                print(f"Error al modificar los parámetros de conexión: {e}")
 
     def mostrar_operaciones_cliente(self):
         print("\nOperaciones posibles a realizar por un cliente o por un operador en el servidor: \n")
@@ -267,3 +249,22 @@ class InterfazServidor:
                 print(f"Error al enviar el comando: {e} ")
         else: 
             print("El modo de trabajo no es manual. Por favor, cambie el modo de trabajo antes de realizar esta accion.")
+
+    def verificar_sesion_admin(self):
+        self.sesion = self.servidor.get_sesion()
+        self.usuarios = self.servidor.get_usuarios()
+
+        if self.sesion and 'nombre_usuario' in self.sesion:
+                nombre_usuario = self.sesion['nombre_usuario']
+                
+                # Verificamos si el usuario tiene permisos de administrador
+                for usuario in self.usuarios:
+                    if usuario.nombre_usuario == nombre_usuario and usuario.admin:
+                        # Seguir la funcion si el usuario tiene permisos de administrador
+                        return True
+    
+                print("Acceso denegado. Solo los administradores pueden realizar esta accion")
+                return False
+        else:
+            print("No hay ningún usuario en sesión.")
+            return False

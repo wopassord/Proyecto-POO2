@@ -15,8 +15,8 @@ def init_rpc_server():
     )
 
     # Iniciar el servidor y la interfaz de usuario en hilos separados
-    servidor.iniciar_servidor()
-    servidor.asignar_interfaz(interfaz)
+    servidor.asignar_interfaz(interfaz) 
+
 
     # Leer usuarios disponibles
     servidor.leer_usuarios_csv()
@@ -42,6 +42,7 @@ def init_rpc_server():
                     if opcion == 1:
                         servidor.iniciar_sesion()
                         if servidor.sesion_iniciada:
+                            servidor.iniciar_servidor()
                             interfaz.listar_comandos()
                     # Se agrega un usuario
                     elif opcion == 2:
