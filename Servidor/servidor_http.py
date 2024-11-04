@@ -17,7 +17,7 @@ class LoginData(BaseModel):
 
 @app.get("/")
 async def index_page():
-    html_path = "Servidor/interfaz_web/index.html"
+    html_path = os.path.join("Servidor", "interfaz_web", "index.html")
     if os.path.exists(html_path):
         return FileResponse(html_path)
     else:
@@ -27,7 +27,7 @@ async def index_page():
 # Ruta para mostrar el formulario de inicio de sesión
 @app.get("/login")
 async def login_form():
-    html_path = "Servidor/interfaz_web/login.html"
+    html_path = os.path.join("Servidor", "interfaz_web", "login.html")
     if os.path.exists(html_path):
         return FileResponse(html_path)
     else:
@@ -47,7 +47,7 @@ async def login(username: str = Form(...), password: str = Form(...)):
 @app.get("/dashboard")
 async def dashboard():
     # Ruta al archivo dashboard.html
-    dashboard_path = "Servidor/interfaz_web/dashboard.html"
+    dashboard_path = os.path.join("Servidor", "interfaz_web", "dashboard.html")
     if os.path.exists(dashboard_path):
         return FileResponse(dashboard_path)
     else:
@@ -78,13 +78,14 @@ async def upload_file(file: UploadFile = File(...)):
 
 # Cargar el archivo HTML como plantilla
 def load_html_template():
-    with open("Servidor/interfaz_web/ver_imagen.html", "r") as f:
+    template_path = os.path.join("Servidor", "interfaz_web", "ver_imagen.html")
+    with open(template_path, "r") as f:
         return f.read()
 
 
 @app.get("/ver-imagen")
 async def ver_imagen(image: str = Query(...)):
-    image_path = f"Servidor/imagenes/{image}"
+    image_path = os.path.join("Servidor", "imagenes", image)
     # Asegurarse de que el archivo existe antes de enviarlo al HTML
     if not os.path.exists(image_path):
         raise HTTPException(status_code=404, detail="Imagen no encontrada")
@@ -97,7 +98,7 @@ async def ver_imagen(image: str = Query(...)):
 
 @app.get("/imagenes/{path}")
 async def get_image(path: str):
-    image_path = os.path.join("Servidor/imagenes", path)
+    image_path = os.path.join("Servidor", "imagenes", path)
 
     # Verificar si el archivo existe en el sistema de archivos
     if not os.path.isfile(image_path):
