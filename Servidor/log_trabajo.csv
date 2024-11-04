@@ -1,160 +1,84 @@
 Fecha y Hora,Peticiones,IP,Usuario,Fallos,Exitos,Tiempo de Ejecucion
-2024-11-04 11:01:28,Seleccionar modo automatico,127.0.0.1,Juan,0,1,0.0
-2024-11-04 11:01:28,Seleccionado modo manual,127.0.0.1,Juan,0,1,0.0
-2024-11-04 11:01:28,Seleccionar modo automatico,127.0.0.1,Juan,0,1,1.001596450805664
-2024-11-04 11:01:31,Mostrar log de trabajo,127.0.0.1,Juan,0,1,0.0
-2024-11-04 11:02:04,Conectar robot,127.0.0.1,Juan,0,1,1501.0755062103271
-2024-11-04 11:02:53,Mostrar log de trabajo,127.0.0.1,Juan,0,1,0.0
-2024-11-04 11:03:13,Conectar robot,127.0.0.1,Juan,0,1,3521.0514068603516
-2024-11-04 11:03:16,Mostrar log de trabajo,127.0.0.1,Juan,0,1,0.0
-2024-11-04 11:03:21,Desconectar robot,127.0.0.1,Juan,0,1,1537.8847122192383
-2024-11-04 11:03:22,Mostrar log de trabajo,127.0.0.1,Juan,0,1,0.0
-2024-11-04 11:03:47,Conectar robot,127.0.0.1,Juan,0,1,3517.7924633026123
-2024-11-04 11:03:47,Activar motores,127.0.0.1,Juan,0,1,1.0006427764892578
-2024-11-04 11:03:48,Desactivar motores,127.0.0.1,Juan,0,1,0.0
-2024-11-04 11:03:51,Mostrar log de trabajo,127.0.0.1,Juan,0,1,0.0
-2024-11-04 11:04:48,Mostrar log de trabajo,127.0.0.1,Juan,0,1,0.0
-2024-11-04 11:04:53,Mostrar usuarios,127.0.0.1,Juan,0,1,0.0
-2024-11-04 11:05:11,Modificar parametros de conexion,127.0.0.1,Juan,0,1,9884.75775718689
-2024-11-04 11:05:21,Encender/apagar servidor,127.0.0.1,Juan,0,1,0.0
-2024-11-04 11:06:16,Mostrar log de trabajo,127.0.0.1,Magdalena,0,1,0.0
-2024-11-04 11:06:19,Mostrar usuarios,127.0.0.1,Magdalena,0,1,0.0
-2024-11-04 11:06:21,Modificar parametros de conexion,127.0.0.1,Magdalena,0,1,1.0063648223876953
-2024-11-04 11:06:22,Encender/apagar servidor,127.0.0.1,Magdalena,0,1,0.0
-2024-11-04 12:02:15,Mostrar log de trabajo,127.0.0.1,Juan,0,1,0.003814697265625
-2024-11-04 12:03:02,Seleccionar modo automatico,127.0.0.1,Juan,0,1,0.2071857452392578
-2024-11-04 12:03:03,Seleccionado modo manual,127.0.0.1,Juan,0,1,0.1590251922607422
-2024-11-04 12:03:03,Seleccionar modo automatico,127.0.0.1,Juan,0,1,0.14162063598632812
-2024-11-04 12:03:03,Seleccionado modo manual,127.0.0.1,Juan,0,1,0.24652481079101562
-2024-11-04 12:03:04,Seleccionar modo automatico,127.0.0.1,Juan,0,1,0.1380443572998047
-2024-11-04 12:03:04,Seleccionado modo manual,127.0.0.1,Juan,0,1,0.18787384033203125
-2024-11-04 12:03:04,Seleccionar modo automatico,127.0.0.1,Juan,0,1,0.21457672119140625
-2024-11-04 12:03:04,Seleccionado modo manual,127.0.0.1,Juan,0,1,0.24175643920898438
-2024-11-04 12:03:05,Seleccionar modo automatico,127.0.0.1,Juan,0,1,0.14472007751464844
-2024-11-04 12:03:05,Seleccionado modo manual,127.0.0.1,Juan,0,1,0.23865699768066406
-2024-11-04 12:03:05,Seleccionar modo automatico,127.0.0.1,Juan,0,1,0.20051002502441406
-2024-11-04 12:03:05,Seleccionado modo manual,127.0.0.1,Juan,0,1,0.25391578674316406
-2024-11-04 12:03:05,Seleccionar modo automatico,127.0.0.1,Juan,0,1,0.164031982421875
-2024-11-04 12:03:06,Seleccionado modo manual,127.0.0.1,Juan,0,1,0.15115737915039062
-2024-11-04 12:03:06,Seleccionar modo automatico,127.0.0.1,Juan,0,1,0.2009868621826172
-2024-11-04 12:03:06,Seleccionado modo manual,127.0.0.1,Juan,0,1,0.15687942504882812
-2024-11-04 12:03:06,Seleccionar modo automatico,127.0.0.1,Juan,0,1,0.20074844360351562
-2024-11-04 12:03:07,Seleccionado modo manual,127.0.0.1,Juan,0,1,0.2048015594482422
-2024-11-04 12:03:07,Seleccionar modo automatico,127.0.0.1,Juan,0,1,0.19288063049316406
-2024-11-04 12:03:07,Seleccionado modo manual,127.0.0.1,Juan,0,1,0.1518726348876953
-2024-11-04 12:03:07,Seleccionar modo automatico,127.0.0.1,Juan,0,1,0.14257431030273438
-2024-11-04 12:03:07,Seleccionado modo manual,127.0.0.1,Juan,0,1,0.19049644470214844
-2024-11-04 12:03:08,Seleccionar modo automatico,127.0.0.1,Juan,0,1,0.2529621124267578
-2024-11-04 12:03:08,Seleccionado modo manual,127.0.0.1,Juan,0,1,0.14138221740722656
-2024-11-04 12:03:08,Seleccionar modo automatico,127.0.0.1,Juan,0,1,0.15473365783691406
-2024-11-04 12:03:08,Seleccionado modo manual,127.0.0.1,Juan,0,1,0.1933574676513672
-2024-11-04 12:03:09,Seleccionar modo automatico,127.0.0.1,Juan,0,1,0.20575523376464844
-2024-11-04 12:03:09,Seleccionado modo manual,127.0.0.1,Juan,0,1,0.2148151397705078
-2024-11-04 12:03:09,Seleccionar modo automatico,127.0.0.1,Juan,0,1,0.1647472381591797
-2024-11-04 12:03:09,Seleccionado modo manual,127.0.0.1,Juan,0,1,0.15473365783691406
-2024-11-04 12:03:09,Seleccionar modo automatico,127.0.0.1,Juan,0,1,0.37479400634765625
-2024-11-04 12:03:10,Seleccionado modo manual,127.0.0.1,Juan,0,1,0.2734661102294922
-2024-11-04 12:03:10,Seleccionar modo automatico,127.0.0.1,Juan,0,1,0.17547607421875
-2024-11-04 12:03:10,Seleccionado modo manual,127.0.0.1,Juan,0,1,0.152587890625
-2024-11-04 12:03:10,Seleccionar modo automatico,127.0.0.1,Juan,0,1,0.14901161193847656
-2024-11-04 12:03:11,Seleccionado modo manual,127.0.0.1,Juan,0,1,0.20956993103027344
-2024-11-04 12:03:11,Seleccionar modo automatico,127.0.0.1,Juan,0,1,0.1671314239501953
-2024-11-04 12:03:11,Seleccionado modo manual,127.0.0.1,Juan,0,1,0.16427040100097656
-2024-11-04 12:03:11,Seleccionar modo automatico,127.0.0.1,Juan,0,1,0.16164779663085938
-2024-11-04 12:03:11,Seleccionado modo manual,127.0.0.1,Juan,0,1,0.16069412231445312
-2024-11-04 12:03:12,Seleccionar modo automatico,127.0.0.1,Juan,0,1,0.1785755157470703
-2024-11-04 12:03:12,Seleccionado modo manual,127.0.0.1,Juan,0,1,0.22745132446289062
-2024-11-04 12:03:12,Seleccionar modo automatico,127.0.0.1,Juan,0,1,0.19788742065429688
-2024-11-04 12:03:12,Seleccionado modo manual,127.0.0.1,Juan,0,1,0.1575946807861328
-2024-11-04 12:03:13,Seleccionar modo automatico,127.0.0.1,Juan,0,1,0.19168853759765625
-2024-11-04 12:03:13,Seleccionado modo manual,127.0.0.1,Juan,0,1,0.19979476928710938
-2024-11-04 12:03:13,Seleccionar modo automatico,127.0.0.1,Juan,0,1,0.15163421630859375
-2024-11-04 12:03:13,Seleccionado modo manual,127.0.0.1,Juan,0,1,0.1583099365234375
-2024-11-04 12:03:13,Seleccionar modo automatico,127.0.0.1,Juan,0,1,0.12540817260742188
-2024-11-04 12:03:14,Seleccionado modo manual,127.0.0.1,Juan,0,1,0.20956993103027344
-2024-11-04 12:03:14,Seleccionar modo automatico,127.0.0.1,Juan,0,1,0.17547607421875
-2024-11-04 12:03:14,Seleccionado modo manual,127.0.0.1,Juan,0,1,0.30231475830078125
-2024-11-04 12:03:14,Seleccionar modo automatico,127.0.0.1,Juan,0,1,0.1690387725830078
-2024-11-04 12:03:14,Seleccionado modo manual,127.0.0.1,Juan,0,1,0.2028942108154297
-2024-11-04 12:03:14,Seleccionar modo automatico,127.0.0.1,Juan,0,1,0.17261505126953125
-2024-11-04 12:03:15,Seleccionado modo manual,127.0.0.1,Juan,0,1,0.20313262939453125
-2024-11-04 12:03:15,Seleccionar modo automatico,127.0.0.1,Juan,0,1,0.1876354217529297
-2024-11-04 12:03:15,Seleccionado modo manual,127.0.0.1,Juan,0,1,0.1354217529296875
-2024-11-04 12:03:15,Seleccionar modo automatico,127.0.0.1,Juan,0,1,0.17786026000976562
-2024-11-04 12:03:15,Seleccionado modo manual,127.0.0.1,Juan,0,1,0.179290771484375
-2024-11-04 12:03:15,Seleccionar modo automatico,127.0.0.1,Juan,0,1,0.133514404296875
-2024-11-04 12:03:16,Seleccionado modo manual,127.0.0.1,Juan,0,1,0.13899803161621094
-2024-11-04 12:03:16,Seleccionar modo automatico,127.0.0.1,Juan,0,1,0.14352798461914062
-2024-11-04 12:03:16,Seleccionado modo manual,127.0.0.1,Juan,0,1,0.14019012451171875
-2024-11-04 12:03:16,Seleccionar modo automatico,127.0.0.1,Juan,0,1,0.15020370483398438
-2024-11-04 12:03:16,Seleccionado modo manual,127.0.0.1,Juan,0,1,0.18477439880371094
-2024-11-04 12:03:16,Seleccionar modo automatico,127.0.0.1,Juan,0,1,0.1735687255859375
-2024-11-04 12:03:17,Seleccionado modo manual,127.0.0.1,Juan,0,1,0.20694732666015625
-2024-11-04 12:03:17,Seleccionar modo automatico,127.0.0.1,Juan,0,1,0.16736984252929688
-2024-11-04 12:03:17,Seleccionado modo manual,127.0.0.1,Juan,0,1,0.15306472778320312
-2024-11-04 12:03:17,Seleccionar modo automatico,127.0.0.1,Juan,0,1,0.2040863037109375
-2024-11-04 12:03:17,Seleccionado modo manual,127.0.0.1,Juan,0,1,0.171661376953125
-2024-11-04 12:03:17,Seleccionar modo automatico,127.0.0.1,Juan,0,1,0.15497207641601562
-2024-11-04 12:03:18,Seleccionado modo manual,127.0.0.1,Juan,0,1,0.17333030700683594
-2024-11-04 12:03:18,Seleccionar modo automatico,127.0.0.1,Juan,0,1,0.14901161193847656
-2024-11-04 12:03:18,Seleccionado modo manual,127.0.0.1,Juan,0,1,0.1552104949951172
-2024-11-04 12:03:18,Seleccionar modo automatico,127.0.0.1,Juan,0,1,0.18286705017089844
-2024-11-04 12:03:18,Seleccionado modo manual,127.0.0.1,Juan,0,1,0.1735687255859375
-2024-11-04 12:03:18,Seleccionar modo automatico,127.0.0.1,Juan,0,1,0.1704692840576172
-2024-11-04 12:03:19,Seleccionado modo manual,127.0.0.1,Juan,0,1,0.1850128173828125
-2024-11-04 12:03:19,Seleccionar modo automatico,127.0.0.1,Juan,0,1,0.17523765563964844
-2024-11-04 12:03:19,Seleccionado modo manual,127.0.0.1,Juan,0,1,0.2532005310058594
-2024-11-04 12:03:19,Seleccionar modo automatico,127.0.0.1,Juan,0,1,0.1671314239501953
-2024-11-04 12:03:19,Seleccionado modo manual,127.0.0.1,Juan,0,1,0.17905235290527344
-2024-11-04 12:03:20,Seleccionar modo automatico,127.0.0.1,Juan,0,1,0.1621246337890625
-2024-11-04 12:03:20,Seleccionado modo manual,127.0.0.1,Juan,0,1,0.17404556274414062
-2024-11-04 12:03:20,Seleccionar modo automatico,127.0.0.1,Juan,0,1,0.13446807861328125
-2024-11-04 12:03:20,Seleccionado modo manual,127.0.0.1,Juan,0,1,0.19049644470214844
-2024-11-04 12:03:20,Seleccionar modo automatico,127.0.0.1,Juan,0,1,0.14543533325195312
-2024-11-04 12:03:21,Seleccionado modo manual,127.0.0.1,Juan,0,1,0.14066696166992188
-2024-11-04 12:03:21,Seleccionar modo automatico,127.0.0.1,Juan,0,1,0.15997886657714844
-2024-11-04 12:03:21,Seleccionado modo manual,127.0.0.1,Juan,0,1,0.17213821411132812
-2024-11-04 12:03:21,Seleccionar modo automatico,127.0.0.1,Juan,0,1,0.1442432403564453
-2024-11-04 12:03:21,Seleccionado modo manual,127.0.0.1,Juan,0,1,0.14162063598632812
-2024-11-04 12:03:21,Seleccionar modo automatico,127.0.0.1,Juan,0,1,0.18310546875
-2024-11-04 12:03:22,Seleccionado modo manual,127.0.0.1,Juan,0,1,0.16808509826660156
-2024-11-04 12:03:22,Seleccionar modo automatico,127.0.0.1,Juan,0,1,0.3399848937988281
-2024-11-04 12:03:22,Seleccionado modo manual,127.0.0.1,Juan,0,1,0.1785755157470703
-2024-11-04 12:03:22,Seleccionar modo automatico,127.0.0.1,Juan,0,1,0.16546249389648438
-2024-11-04 12:03:22,Seleccionado modo manual,127.0.0.1,Juan,0,1,0.21004676818847656
-2024-11-04 12:03:23,Seleccionar modo automatico,127.0.0.1,Juan,0,1,0.17499923706054688
-2024-11-04 12:03:23,Seleccionado modo manual,127.0.0.1,Juan,0,1,0.17499923706054688
-2024-11-04 12:03:23,Seleccionar modo automatico,127.0.0.1,Juan,0,1,0.16379356384277344
-2024-11-04 12:03:23,Seleccionado modo manual,127.0.0.1,Juan,0,1,0.1270771026611328
-2024-11-04 12:03:23,Seleccionar modo automatico,127.0.0.1,Juan,0,1,0.1976490020751953
-2024-11-04 12:03:24,Seleccionado modo manual,127.0.0.1,Juan,0,1,0.22363662719726562
-2024-11-04 12:03:24,Seleccionar modo automatico,127.0.0.1,Juan,0,1,0.16117095947265625
-2024-11-04 12:03:24,Seleccionado modo manual,127.0.0.1,Juan,0,1,0.14734268188476562
-2024-11-04 12:03:24,Seleccionar modo automatico,127.0.0.1,Juan,0,1,0.16880035400390625
-2024-11-04 12:03:24,Seleccionado modo manual,127.0.0.1,Juan,0,1,0.15306472778320312
-2024-11-04 12:03:25,Seleccionar modo automatico,127.0.0.1,Juan,0,1,0.15163421630859375
-2024-11-04 12:03:25,Seleccionado modo manual,127.0.0.1,Juan,0,1,0.19359588623046875
-2024-11-04 12:03:25,Seleccionar modo automatico,127.0.0.1,Juan,0,1,0.20122528076171875
-2024-11-04 12:03:25,Seleccionado modo manual,127.0.0.1,Juan,0,1,0.1418590545654297
-2024-11-04 12:03:25,Seleccionar modo automatico,127.0.0.1,Juan,0,1,0.148773193359375
-2024-11-04 12:03:26,Seleccionado modo manual,127.0.0.1,Juan,0,1,0.16927719116210938
-2024-11-04 12:03:26,Seleccionar modo automatico,127.0.0.1,Juan,0,1,0.16689300537109375
-2024-11-04 12:03:26,Seleccionado modo manual,127.0.0.1,Juan,0,1,0.15497207641601562
-2024-11-04 12:03:26,Seleccionar modo automatico,127.0.0.1,Juan,0,1,0.15664100646972656
-2024-11-04 12:03:27,Seleccionado modo manual,127.0.0.1,Juan,0,1,0.14781951904296875
-2024-11-04 12:03:27,Seleccionar modo automatico,127.0.0.1,Juan,0,1,0.2052783966064453
-2024-11-04 12:03:27,Seleccionado modo manual,127.0.0.1,Juan,0,1,0.1316070556640625
-2024-11-04 12:03:27,Seleccionar modo automatico,127.0.0.1,Juan,0,1,0.13756752014160156
-2024-11-04 12:03:27,Seleccionado modo manual,127.0.0.1,Juan,0,1,0.13899803161621094
-2024-11-04 12:03:28,Seleccionar modo automatico,127.0.0.1,Juan,0,1,0.1671314239501953
-2024-11-04 12:03:28,Seleccionado modo manual,127.0.0.1,Juan,0,1,0.14448165893554688
-2024-11-04 12:03:28,Seleccionar modo automatico,127.0.0.1,Juan,0,1,0.17213821411132812
-2024-11-04 12:03:28,Seleccionado modo manual,127.0.0.1,Juan,0,1,0.1804828643798828
-2024-11-04 12:03:28,Seleccionar modo automatico,127.0.0.1,Juan,0,1,0.1780986785888672
-2024-11-04 12:03:29,Seleccionado modo manual,127.0.0.1,Juan,0,1,0.15807151794433594
-2024-11-04 12:03:29,Seleccionar modo automatico,127.0.0.1,Juan,0,1,0.16880035400390625
-2024-11-04 12:05:18,Mostrar log de trabajo,127.0.0.1,Juan,0,1,0.00762939453125
-2024-11-04 12:06:25,Mostrar log de trabajo,127.0.0.1,Juan,0,1,0.16832351684570312
-2024-11-04 12:06:29,Mostrar log de trabajo,127.0.0.1,Juan,0,1,0.0021457672119140625
-2024-11-04 12:06:51,Mostrar log de trabajo,127.0.0.1,Juan,0,1,0.19931793212890625
-2024-11-04 12:06:55,Mostrar log de trabajo,127.0.0.1,Juan,0,1,0.002384185791015625
+2024-11-04 13:12:47,Conectar robot,127.0.0.1,Juan,0,1,3518.9902782440186
+2024-11-04 13:21:33,Seleccionar modo automatico,127.0.0.1,Juan,0,1,0.0
+2024-11-04 13:21:33,Seleccionado modo manual,127.0.0.1,Juan,0,1,0.0
+2024-11-04 13:21:34,Mostrar log de trabajo,127.0.0.1,Juan,0,1,0.0
+2024-11-04 13:21:42,Seleccionar modo de coordenadas relativas,127.0.0.1,Juan,0,1,1.0001659393310547
+2024-11-04 13:21:49,Conectar robot,127.0.0.1,Juan,0,1,3520.484685897827
+2024-11-04 13:21:50,Seleccionar modo de coordenadas absolutas,127.0.0.1,Juan,0,1,102.11706161499023
+2024-11-04 13:21:55,Mostrar log de trabajo,127.0.0.1,Juan,0,1,0.0
+2024-11-04 13:24:20,Seleccionar modo de coordenadas relativas,127.0.0.1,Juan,0,1,0.0
+2024-11-04 13:24:26,Conectar robot,127.0.0.1,Juan,0,1,3518.3632373809814
+2024-11-04 13:25:13,Seleccionar modo de coordenadas relativas,127.0.0.1,Juan,0,1,0.0
+2024-11-04 13:25:18,Conectar robot,127.0.0.1,Juan,0,1,3518.95809173584
+2024-11-04 13:25:18,Seleccionar modo de coordenadas absolutas,127.0.0.1,Juan,1,0,100.61979293823242
+2024-11-04 13:25:25,Seleccionar modo de coordenadas relativas,127.0.0.1,Juan,0,1,101.26638412475586
+2024-11-04 13:25:29,Mostrar log de trabajo,127.0.0.1,Juan,0,1,0.0
+2024-11-04 13:26:25,Seleccionar modo de coordenadas relativas,127.0.0.1,Juan,0,1,0.0
+2024-11-04 13:26:30,Conectar robot,127.0.0.1,Juan,0,1,3519.1423892974854
+2024-11-04 13:26:30,Seleccionar modo de coordenadas absolutas,127.0.0.1,Juan,1,0,101.25064849853516
+2024-11-04 13:26:40,Seleccionar modo de coordenadas relativas,127.0.0.1,Juan,1,0,101.06110572814941
+2024-11-04 13:26:42,Mostrar log de trabajo,127.0.0.1,Juan,0,1,0.0
+2024-11-04 13:27:01,Mostrar operaciones cliente,127.0.0.1,Juan,0,1,1.9998550415039062
+2024-11-04 13:27:04,Mostrar log de trabajo,127.0.0.1,Juan,0,1,0.0
+2024-11-04 13:27:23,Escribir comando,127.0.0.1,Juan,0,1,3617.534637451172
+2024-11-04 13:27:39,Mostrar log de trabajo,127.0.0.1,Juan,0,1,0.0
+2024-11-04 13:27:49,Escribir comando,127.0.0.1,Juan,0,1,2112.460136413574
+2024-11-04 13:27:52,Mostrar log de trabajo,127.0.0.1,Juan,0,1,0.0
+2024-11-04 13:28:15,Escribir comando,127.0.0.1,Juan,0,1,6308.406591415405
+2024-11-04 13:28:49,Mostrar log de trabajo,127.0.0.1,Juan,0,1,0.0
+2024-11-04 13:29:33,Escribir comando,127.0.0.1,Juan,0,1,2812.966823577881
+2024-11-04 13:29:38,Conectar robot,127.0.0.1,Juan,0,1,3519.3865299224854
+2024-11-04 13:29:41,Escribir comando,127.0.0.1,Juan,1,0,1722.499132156372
+2024-11-04 13:29:43,Mostrar log de trabajo,127.0.0.1,Juan,0,1,0.0
+2024-11-04 13:31:06,Mostrar reporte general,127.0.0.1,Juan,1,0,0.0
+2024-11-04 13:31:17,Mostrar reporte general,127.0.0.1,Juan,1,0,0.0
+2024-11-04 13:31:24,Mostrar log de trabajo,127.0.0.1,Juan,0,1,0.0
+2024-11-04 13:31:44,Mostrar reporte general,127.0.0.1,Juan,1,0,0.0
+2024-11-04 13:31:58,Mostrar log de trabajo,127.0.0.1,Juan,0,1,0.0
+2024-11-04 13:33:00,Mostrar usuarios,127.0.0.1,Juan,0,1,1.0004043579101562
+2024-11-04 13:33:02,Mostrar log de trabajo,127.0.0.1,Juan,0,1,0.0
+2024-11-04 13:33:11,Mostrar usuarios,127.0.0.1,Juan,0,1,0.0
+2024-11-04 13:33:25,Mostrar usuarios,127.0.0.1,Juan,0,1,1.0004043579101562
+2024-11-04 13:33:33,Mostrar usuarios,127.0.0.1,Juan,0,1,0.0
+2024-11-04 13:33:55,Mostrar usuarios,127.0.0.1,Juan,0,1,0.0
+2024-11-04 13:33:56,Mostrar usuarios,127.0.0.1,Juan,0,1,0.0
+2024-11-04 13:36:05,Mostrar usuarios,127.0.0.1,Pepe,1,0,0.0
+2024-11-04 13:36:06,Mostrar usuarios,127.0.0.1,Pepe,1,0,0.0
+2024-11-04 13:36:21,Modificar parametros de conexion,127.0.0.1,Pepe,1,0,0.0
+2024-11-04 13:36:24,Encender/apagar servidor,127.0.0.1,Pepe,1,,1.001596450805664
+2024-11-04 13:39:28,Encender/apagar servidor,127.0.0.1,Juan,0,1,1.0025501251220703
+2024-11-04 13:42:55,Encender/apagar servidor,127.0.0.1,Pepe,1,,0.0
+2024-11-04 13:43:47,Encender/apagar servidor,127.0.0.1,Pepe,1,,1.0111331939697266
+2024-11-04 13:43:56,Encender/apagar servidor,127.0.0.1,Pepe,1,,0.9977817535400391
+2024-11-04 13:44:06,Mostrar log de trabajo,127.0.0.1,Pepe,0,1,0.0
+2024-11-04 13:47:03,Mostrar log de trabajo,127.0.0.1,Pepe,0,1,0.0
+2024-11-04 13:48:13,Mostrar log de trabajo,127.0.0.1,Pepe,0,1,0.0
+2024-11-04 13:48:18,Mostrar log de trabajo,127.0.0.1,Pepe,0,1,0.0
+2024-11-04 13:48:20,Mostrar log de trabajo,127.0.0.1,Pepe,0,1,0.0
+2024-11-04 13:48:21,Mostrar log de trabajo,127.0.0.1,Pepe,0,1,0.0
+2024-11-04 13:55:04,Mostrar log de trabajo,127.0.0.1,Pepe,1,1,0.0
+2024-11-04 13:56:23,Encender/apagar servidor,127.0.0.1,Pepe,1,,1.0025501251220703
+2024-11-04 14:04:45,Mostrar log de trabajo,127.0.0.1,Pepe,1,0,0.0
+2024-11-04 14:05:09,Mostrar log de trabajo,127.0.0.1,Pepe,1,0,0.0
+2024-11-04 14:07:23,Mostrar log de trabajo,127.0.0.1,Pepe,1,0,0.0
+2024-11-04 14:13:34,Mostrar log de trabajo,127.0.0.1,Pepe,1,0,0.0
+2024-11-04 14:15:17,Mostrar log de trabajo,127.0.0.1,Pepe,1,0,0.0
+2024-11-04 14:15:19,Mostrar log de trabajo,127.0.0.1,Pepe,1,0,0.0
+2024-11-04 14:15:19,Mostrar log de trabajo,127.0.0.1,Pepe,1,0,0.0
+2024-11-04 14:16:10,Mostrar usuarios,127.0.0.1,Pepe,1,0,0.0
+2024-11-04 14:16:12,Modificar parametros de conexion,127.0.0.1,Pepe,1,0,0.0
+2024-11-04 14:16:13,Encender/apagar servidor,127.0.0.1,Pepe,1,,0.0
+2024-11-04 14:16:35,Encender/apagar servidor,127.0.0.1,Pepe,1,,0.0
+2024-11-04 14:19:54,Mostrar log de trabajo,127.0.0.1,Pepe,1,0,1.0111331939697266
+2024-11-04 14:19:55,Mostrar usuarios,127.0.0.1,Pepe,1,0,0.0
+2024-11-04 14:19:58,Modificar parametros de conexion,127.0.0.1,Pepe,1,0,0.0
+2024-11-04 14:20:24,Encender/apagar servidor,127.0.0.1,Pepe,1,,0.0
+2024-11-04 14:20:36,Mostrar log de trabajo,127.0.0.1,Pepe,1,0,0.0
+2024-11-04 14:20:38,Mostrar usuarios,127.0.0.1,Pepe,1,0,0.0
+2024-11-04 14:20:40,Modificar parametros de conexion,127.0.0.1,Pepe,1,0,0.0
+2024-11-04 14:20:42,Encender/apagar servidor,127.0.0.1,Pepe,1,,0.0
+2024-11-04 14:22:20,Mostrar log de trabajo,127.0.0.1,Pepe,1,0,0.0
+2024-11-04 14:22:27,Encender/apagar servidor,127.0.0.1,Pepe,1,,0.0
+2024-11-04 14:24:43,Encender/apagar servidor,127.0.0.1,Juan,0,1,1.012563705444336
+2024-11-04 14:26:51,Encender/apagar servidor,127.0.0.1,Pepe,1,0,0.0
