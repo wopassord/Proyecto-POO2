@@ -1,5 +1,3 @@
-from fastapi import FastAPI, HTTPException, UploadFile, File
-from pydantic import BaseModel
 from xmlrpc.server import SimpleXMLRPCServer, SimpleXMLRPCRequestHandler
 from usuario import (
     Usuario,

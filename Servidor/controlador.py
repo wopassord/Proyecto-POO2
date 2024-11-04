@@ -9,8 +9,9 @@ class Controlador:
         self.estado_robot = False
         self.estado_motores = False
         self.baudrate = 115200
-        self.puerto_COM = 'COM6'
+        self.puerto_COM = 'COM7'
         self.arduino = None
+        self.hilo_lectura = None
         self.cola_respuestas = queue.Queue()
 
     def get_estado_robot(self):
@@ -51,7 +52,9 @@ class Controlador:
     def desconectar_robot(self):
         if self.arduino and self.arduino.is_open:
             self.estado_robot = False
-            self.hilo_lectura.join()
+            # Esperar que el hilo de lectura termine si existe y está en ejecución
+            if self.hilo_lectura and self.hilo_lectura.is_alive():
+                self.hilo_lectura.join()
             self.arduino.close()
             respuesta = "Robot desconectado."
         else:

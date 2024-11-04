@@ -155,7 +155,8 @@ class InterfazServidor:
                 # Verificamos si el usuario tiene permisos de administrador
                 for usuario in self.usuarios:
                     if usuario.nombre_usuario == nombre_usuario and usuario.admin:
-                        LogTrabajo.leer_CSV()
+                        logtrabajo = LogTrabajo()
+                        logtrabajo.leer_CSV()
                         return  # Salir del método si el log se muestra exitosamente
                 
                 print("Acceso denegado. Solo los administradores pueden ver la lista de usuarios.")

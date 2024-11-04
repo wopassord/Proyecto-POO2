@@ -2,7 +2,7 @@ from datetime import datetime
 import csv
 
 class LogTrabajo:
-    def __init__(self, peticiones: str, usuario: str, fallos: int, exitos: int, tiempo_ejecucion: float, IP: str="127.0.0.1"):
+    def __init__(self, peticiones: str = None, usuario: str = None, fallos: int = 0, exitos: int = 0, tiempo_ejecucion: float = 0.0, IP: str = "127.0.0.1"):
         self.peticiones = peticiones
         self.IP = IP
         self.usuario = usuario
