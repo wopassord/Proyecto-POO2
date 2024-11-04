@@ -1,4 +1,96 @@
 Fecha y Hora,Peticiones,IP,Usuario,Fallos,Exitos,Tiempo de Ejecucion
+2024-11-04 13:12:47,Conectar robot,127.0.0.1,Juan,0,1,3518.9902782440186
+2024-11-04 13:21:33,Seleccionar modo automatico,127.0.0.1,Juan,0,1,0.0
+2024-11-04 13:21:33,Seleccionado modo manual,127.0.0.1,Juan,0,1,0.0
+2024-11-04 13:21:34,Mostrar log de trabajo,127.0.0.1,Juan,0,1,0.0
+2024-11-04 13:21:42,Seleccionar modo de coordenadas relativas,127.0.0.1,Juan,0,1,1.0001659393310547
+2024-11-04 13:21:49,Conectar robot,127.0.0.1,Juan,0,1,3520.484685897827
+2024-11-04 13:21:50,Seleccionar modo de coordenadas absolutas,127.0.0.1,Juan,0,1,102.11706161499023
+2024-11-04 13:21:55,Mostrar log de trabajo,127.0.0.1,Juan,0,1,0.0
+2024-11-04 13:24:20,Seleccionar modo de coordenadas relativas,127.0.0.1,Juan,0,1,0.0
+2024-11-04 13:24:26,Conectar robot,127.0.0.1,Juan,0,1,3518.3632373809814
+2024-11-04 13:25:13,Seleccionar modo de coordenadas relativas,127.0.0.1,Juan,0,1,0.0
+2024-11-04 13:25:18,Conectar robot,127.0.0.1,Juan,0,1,3518.95809173584
+2024-11-04 13:25:18,Seleccionar modo de coordenadas absolutas,127.0.0.1,Juan,1,0,100.61979293823242
+2024-11-04 13:25:25,Seleccionar modo de coordenadas relativas,127.0.0.1,Juan,0,1,101.26638412475586
+2024-11-04 13:25:29,Mostrar log de trabajo,127.0.0.1,Juan,0,1,0.0
+2024-11-04 13:26:25,Seleccionar modo de coordenadas relativas,127.0.0.1,Juan,0,1,0.0
+2024-11-04 13:26:30,Conectar robot,127.0.0.1,Juan,0,1,3519.1423892974854
+2024-11-04 13:26:30,Seleccionar modo de coordenadas absolutas,127.0.0.1,Juan,1,0,101.25064849853516
+2024-11-04 13:26:40,Seleccionar modo de coordenadas relativas,127.0.0.1,Juan,1,0,101.06110572814941
+2024-11-04 13:26:42,Mostrar log de trabajo,127.0.0.1,Juan,0,1,0.0
+2024-11-04 13:27:01,Mostrar operaciones cliente,127.0.0.1,Juan,0,1,1.9998550415039062
+2024-11-04 13:27:04,Mostrar log de trabajo,127.0.0.1,Juan,0,1,0.0
+2024-11-04 13:27:23,Escribir comando,127.0.0.1,Juan,0,1,3617.534637451172
+2024-11-04 13:27:39,Mostrar log de trabajo,127.0.0.1,Juan,0,1,0.0
+2024-11-04 13:27:49,Escribir comando,127.0.0.1,Juan,0,1,2112.460136413574
+2024-11-04 13:27:52,Mostrar log de trabajo,127.0.0.1,Juan,0,1,0.0
+2024-11-04 13:28:15,Escribir comando,127.0.0.1,Juan,0,1,6308.406591415405
+2024-11-04 13:28:49,Mostrar log de trabajo,127.0.0.1,Juan,0,1,0.0
+2024-11-04 13:29:33,Escribir comando,127.0.0.1,Juan,0,1,2812.966823577881
+2024-11-04 13:29:38,Conectar robot,127.0.0.1,Juan,0,1,3519.3865299224854
+2024-11-04 13:29:41,Escribir comando,127.0.0.1,Juan,1,0,1722.499132156372
+2024-11-04 13:29:43,Mostrar log de trabajo,127.0.0.1,Juan,0,1,0.0
+2024-11-04 13:31:06,Mostrar reporte general,127.0.0.1,Juan,1,0,0.0
+2024-11-04 13:31:17,Mostrar reporte general,127.0.0.1,Juan,1,0,0.0
+2024-11-04 13:31:24,Mostrar log de trabajo,127.0.0.1,Juan,0,1,0.0
+2024-11-04 13:31:44,Mostrar reporte general,127.0.0.1,Juan,1,0,0.0
+2024-11-04 13:31:58,Mostrar log de trabajo,127.0.0.1,Juan,0,1,0.0
+2024-11-04 13:33:00,Mostrar usuarios,127.0.0.1,Juan,0,1,1.0004043579101562
+2024-11-04 13:33:02,Mostrar log de trabajo,127.0.0.1,Juan,0,1,0.0
+2024-11-04 13:33:11,Mostrar usuarios,127.0.0.1,Juan,0,1,0.0
+2024-11-04 13:33:25,Mostrar usuarios,127.0.0.1,Juan,0,1,1.0004043579101562
+2024-11-04 13:33:33,Mostrar usuarios,127.0.0.1,Juan,0,1,0.0
+2024-11-04 13:33:55,Mostrar usuarios,127.0.0.1,Juan,0,1,0.0
+2024-11-04 13:33:56,Mostrar usuarios,127.0.0.1,Juan,0,1,0.0
+2024-11-04 13:36:05,Mostrar usuarios,127.0.0.1,Pepe,1,0,0.0
+2024-11-04 13:36:06,Mostrar usuarios,127.0.0.1,Pepe,1,0,0.0
+2024-11-04 13:36:21,Modificar parametros de conexion,127.0.0.1,Pepe,1,0,0.0
+2024-11-04 13:36:24,Encender/apagar servidor,127.0.0.1,Pepe,1,,1.001596450805664
+2024-11-04 13:39:28,Encender/apagar servidor,127.0.0.1,Juan,0,1,1.0025501251220703
+2024-11-04 13:42:55,Encender/apagar servidor,127.0.0.1,Pepe,1,,0.0
+2024-11-04 13:43:47,Encender/apagar servidor,127.0.0.1,Pepe,1,,1.0111331939697266
+2024-11-04 13:43:56,Encender/apagar servidor,127.0.0.1,Pepe,1,,0.9977817535400391
+2024-11-04 13:44:06,Mostrar log de trabajo,127.0.0.1,Pepe,0,1,0.0
+2024-11-04 13:47:03,Mostrar log de trabajo,127.0.0.1,Pepe,0,1,0.0
+2024-11-04 13:48:13,Mostrar log de trabajo,127.0.0.1,Pepe,0,1,0.0
+2024-11-04 13:48:18,Mostrar log de trabajo,127.0.0.1,Pepe,0,1,0.0
+2024-11-04 13:48:20,Mostrar log de trabajo,127.0.0.1,Pepe,0,1,0.0
+2024-11-04 13:48:21,Mostrar log de trabajo,127.0.0.1,Pepe,0,1,0.0
+2024-11-04 13:55:04,Mostrar log de trabajo,127.0.0.1,Pepe,1,1,0.0
+2024-11-04 13:56:23,Encender/apagar servidor,127.0.0.1,Pepe,1,,1.0025501251220703
+2024-11-04 14:04:45,Mostrar log de trabajo,127.0.0.1,Pepe,1,0,0.0
+2024-11-04 14:05:09,Mostrar log de trabajo,127.0.0.1,Pepe,1,0,0.0
+2024-11-04 14:07:23,Mostrar log de trabajo,127.0.0.1,Pepe,1,0,0.0
+2024-11-04 14:13:34,Mostrar log de trabajo,127.0.0.1,Pepe,1,0,0.0
+2024-11-04 14:15:17,Mostrar log de trabajo,127.0.0.1,Pepe,1,0,0.0
+2024-11-04 14:15:19,Mostrar log de trabajo,127.0.0.1,Pepe,1,0,0.0
+2024-11-04 14:15:19,Mostrar log de trabajo,127.0.0.1,Pepe,1,0,0.0
+2024-11-04 14:16:10,Mostrar usuarios,127.0.0.1,Pepe,1,0,0.0
+2024-11-04 14:16:12,Modificar parametros de conexion,127.0.0.1,Pepe,1,0,0.0
+2024-11-04 14:16:13,Encender/apagar servidor,127.0.0.1,Pepe,1,,0.0
+2024-11-04 14:16:35,Encender/apagar servidor,127.0.0.1,Pepe,1,,0.0
+2024-11-04 14:19:54,Mostrar log de trabajo,127.0.0.1,Pepe,1,0,1.0111331939697266
+2024-11-04 14:19:55,Mostrar usuarios,127.0.0.1,Pepe,1,0,0.0
+2024-11-04 14:19:58,Modificar parametros de conexion,127.0.0.1,Pepe,1,0,0.0
+2024-11-04 14:20:24,Encender/apagar servidor,127.0.0.1,Pepe,1,,0.0
+2024-11-04 14:20:36,Mostrar log de trabajo,127.0.0.1,Pepe,1,0,0.0
+2024-11-04 14:20:38,Mostrar usuarios,127.0.0.1,Pepe,1,0,0.0
+2024-11-04 14:20:40,Modificar parametros de conexion,127.0.0.1,Pepe,1,0,0.0
+2024-11-04 14:20:42,Encender/apagar servidor,127.0.0.1,Pepe,1,,0.0
+2024-11-04 14:22:20,Mostrar log de trabajo,127.0.0.1,Pepe,1,0,0.0
+2024-11-04 14:22:27,Encender/apagar servidor,127.0.0.1,Pepe,1,,0.0
+2024-11-04 14:24:43,Encender/apagar servidor,127.0.0.1,Juan,0,1,1.012563705444336
+2024-11-04 14:26:51,Encender/apagar servidor,127.0.0.1,Pepe,1,0,0.0
+2024-11-04 16:32:50,Mostrar log de trabajo,127.0.0.1,Juan,0,1,0.0050067901611328125
+2024-11-04 16:33:07,Listar comandos nuevamente,127.0.0.1,Juan,0,1,2.7303695678710938
+2024-11-04 16:33:16,Mostrar log de trabajo,127.0.0.1,Juan,0,1,0.0095367431640625
+2024-11-04 16:33:30,Cerrar sesi�n,127.0.0.1,Juan,0,1,0.011444091796875
+2024-11-04 16:37:42,Mostrar log de trabajo,127.0.0.1,Pepe,1,0,0.0054836273193359375
+2024-11-04 16:37:53,Cerrar sesi�n,127.0.0.1,Pepe,0,1,0.009298324584960938
+2024-11-04 16:38:37,Apagar programa,127.0.0.1,Pepe,1,1,0.03743171691894531
+2024-11-04 16:57:23,Apagar programa,127.0.0.1,Juan,0,1,0.003814697265625
+2024-11-04 16:59:33,Apagar programa,127.0.0.1,Juan,0,1,0.0054836273193359375
 2024-11-04 11:01:28,Seleccionar modo automatico,127.0.0.1,Juan,0,1,0.0
 2024-11-04 11:01:28,Seleccionado modo manual,127.0.0.1,Juan,0,1,0.0
 2024-11-04 11:01:28,Seleccionar modo automatico,127.0.0.1,Juan,0,1,1.001596450805664
@@ -145,3 +237,4 @@ Fecha y Hora,Peticiones,IP,Usuario,Fallos,Exitos,Tiempo de Ejecucion
 2024-11-04 13:04:48,Listar comandos nuevamente,127.0.0.1,Renzito,0,1,0.7653236389160156
 2024-11-04 13:07:56,Conectar robot,127.0.0.1,Renzito,0,1,3503.051519393921
 2024-11-04 13:08:17,Seleccionar modo automatico,127.0.0.1,Renzito,0,1,0.9977817535400391
+
