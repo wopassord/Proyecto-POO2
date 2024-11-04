@@ -145,6 +145,9 @@ class InterfazServidor:
         elif opcion_elegida == 14:
             self.peticion = "Apagar programa"
             duracion = (time.time() - inicio)*1000  # Calcular el tiempo de ejecución
+            exito=1
+            self.exitos=exito
+            self.fallos=1-exito
             self.registrar_log_csv(peticion=self.peticion,fallos=self.fallos, exitos=self.exitos, tiempo_ejecucion=duracion,IP=self.ip_cliente)
             return 14
         else:
