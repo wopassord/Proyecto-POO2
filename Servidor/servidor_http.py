@@ -1,20 +1,13 @@
-from servidor import Servidor
-
-
-from fastapi import FastAPI, Form, UploadFile, File, HTTPException, Request, Query
+from fastapi import FastAPI, Form, UploadFile, File, HTTPException, Query
 from fastapi.responses import HTMLResponse
-import base64
 from pydantic import BaseModel
-import requests
 import uvicorn
 from starlette.responses import FileResponse, RedirectResponse
 import os
 from interprete_gcode import UtilGcode
 
 app = FastAPI()
-# s = Servidor()  # TIENE LOGICA DEL SISTEMA
 gcode_interprete = UtilGcode()
-# s.iniciar_sesion()
 
 
 class LoginData(BaseModel):
