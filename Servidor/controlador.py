@@ -8,7 +8,7 @@ class Controlador:
         self.estado_robot = False
         self.estado_motores = False
         self.baudrate = 115200
-        self.puerto_COM = 'COM3'
+        self.puerto_COM = 'COM6'
         self.arduino = None
         self.hilo_lectura = None
         self.cola_respuestas = queue.Queue()
@@ -98,16 +98,17 @@ class Controlador:
                 if comando =='G21':
                     respuesta = "Unidades establecidas en milímetros."
                     print(respuesta)
+                    exito = 1
+                    return respuesta, exito
                 # Verifica si el comando es 'M17' o 'M18' para evitar mostrar "No se recibió respuesta"
                 elif comando in ['M17', 'M18']:
                     if comando == 'M17':
                         respuesta = "MOTORES ACTIVADOS."
                         exito = 1
-                        return respuesta, exito
                     elif comando == 'M18':
                         respuesta = "MOTORES DESACTIVADOS."
                         exito = 1
-                        return respuesta, exito
+                    return respuesta, exito
                 else:
                     self.arduino.write((comando + '\r\n').encode('latin-1'))  # Enviar comando en formato de bytes
                     time.sleep(0.1)  # Tiempo de espera para recibir respuesta
@@ -115,11 +116,10 @@ class Controlador:
                     if respuesta:
                         print(f"Respuesta recibida: {respuesta}")
                         exito = 1
-                        return respuesta, exito
                     else:
                         print("No se recibió respuesta del robot.")
                         exito = 0
-                        return respuesta, exito
+                    return respuesta, exito
             except Exception as e:
                 respuesta = f"Error al enviar comando: {e}"
                 exito = 0
@@ -127,7 +127,7 @@ class Controlador:
                 return respuesta, exito
         else:
             respuesta = "No se puede enviar el comando. El robot no está conectado."
-            exito = 1
+            exito = 0
             print(respuesta)
         return respuesta, exito
     
