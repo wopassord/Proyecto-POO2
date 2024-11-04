@@ -48,6 +48,7 @@ class InterfazServidor:
                     break
                 else:
                     # Caso particular: se pide alguna accion desde el cliente
+                    self.peticion=opcion_elegida    #Esto se hace para almacenar en el log de trabajo
                     print(f"ACCION REALIZADA POR CLIENTE CON IP: {self.ip_cliente}")
                     respuesta = self.ejecucion_administrar_comando(opcion_elegida)   
                     break
@@ -61,6 +62,7 @@ class InterfazServidor:
         respuesta = None
         # Ejecución de opciones
         respuesta = None
+        self.peticion=opcion_elegida
         inicio = time.time()
         if opcion_elegida == 1:
             respuesta = self.activar_desactivar_robot()
@@ -109,9 +111,10 @@ class InterfazServidor:
             print("Opción no válida.")
             respuesta = "Opción inválida."
         
-        # Retornar respuesta (sirve para el cliente practicamente):
-        if respuesta is not None:
-            return respuesta
+        duracion = time.time() - inicio  # Calcular el tiempo de ejecución
+        logtrabajo = LogTrabajo(servidor=self.servidor,peticion=self.peticion,exitos=1 if respuesta != "Opción inválida" else 0,tiempo_ejecucion=duracion,IP=self.ip_cliente)
+    
+        return respuesta
 
     # Métodos adicionales para manipular el robot y mostrar reportes
     def activar_desactivar_robot(self):
@@ -145,7 +148,6 @@ class InterfazServidor:
 
     def mostrar_log_trabajo(self):
         try:
-            self.peticion = "Mostrar log de trabajo"
             self.sesion = self.servidor.get_sesion()
             self.usuarios = self.servidor.get_usuarios()
 
@@ -155,7 +157,7 @@ class InterfazServidor:
                 # Verificamos si el usuario tiene permisos de administrador
                 for usuario in self.usuarios:
                     if usuario.nombre_usuario == nombre_usuario and usuario.admin:
-                        logtrabajo = LogTrabajo(self.servidor, peticiones="Mostrar Log de Trabajo",exitos=1)
+                        logtrabajo = LogTrabajo(servidor=self.servidor,peticion=self.peticion,exitos=1,tiempo_ejecucion=0,IP=self.ip_cliente)
                         logtrabajo.leer_CSV()
                         return  # Salir del método si el log se muestra exitosamente
                 
@@ -231,7 +233,7 @@ class InterfazServidor:
         print("M18: Desactivar motores.\n")        
 
     def escribir_comando(self):
-        self.peticion = "Enviar comando"
+        # #self.peticion = "Enviar comando"
         if self.modo_trabajo == "manual":
             try: 
                 comando = input("Ingrese el comando en G-Code para accionar el robot: ")

@@ -1,11 +1,11 @@
 from datetime import datetime
 import csv
-import Servidor
+from servidor import Servidor
 
 class LogTrabajo:
-    def __init__(self, peticiones: str = None, usuario: str = None, fallos: int = 0, exitos: int = 0, tiempo_ejecucion: float = 0.0, IP: str = "127.0.0.1"):
-        self.servidor = Servidor
-        self.peticiones = peticiones
+    def __init__(self, servidor:Servidor, peticion: int = 0, usuario: str = None, fallos: int = 0, exitos: int = 0, tiempo_ejecucion: float = 0.0, IP: str = "127.0.0.1"):
+        self.servidor = servidor
+        self.peticion = peticion
         self.IP = IP
         self.usuario = self.servidor.get_sesion().get('nombre_usuario', "Usuario desconocido")
         self.fallos = fallos
@@ -29,7 +29,7 @@ class LogTrabajo:
                 # Escribimos los datos del log
                 writer.writerow([
                     datetime.now().strftime('%Y-%m-%d %H:%M:%S'),  # Fecha y hora actual
-                    self.peticiones,
+                    self.peticion,
                     self.IP,
                     self.usuario,
                     self.fallos,
