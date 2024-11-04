@@ -1,19 +1,27 @@
 from interfazServidor import InterfazServidor
 from servidor import Servidor
 import time
+from servidor import Servidor
+from servidor_http import app
+import threading
+import uvicorn
 
-def main():
+
+def init_rpc_server():
     # Crear instancias de Servidor y pasarlo a InterfazServidor
     servidor = Servidor()
-    interfaz = InterfazServidor(servidor, modo_trabajo="manual", modo_coordenadas="absolutas")
+    interfaz = InterfazServidor(
+        servidor, modo_trabajo="manual", modo_coordenadas="absolutas"
+    )
 
     # Iniciar el servidor y la interfaz de usuario en hilos separados
     servidor.asignar_interfaz(interfaz) 
 
+
     # Leer usuarios disponibles
     servidor.leer_usuarios_csv()
 
-    # Para que los mensajes se vean bien 
+    # Para que los mensajes se vean bien
     time.sleep(1)
 
     # Se inicia el programa
@@ -27,7 +35,9 @@ def main():
                     print("Inicie sesion antes de proceder.")
                     print(" 1) Iniciar sesion")
                     print(" 2) Agregar usuario")
-                    opcion = int(input("Por favor, ingrese una de las anteriores opciones: \n"))
+                    opcion = int(
+                        input("Por favor, ingrese una de las anteriores opciones: \n")
+                    )
                     # Inicio de sesion
                     if opcion == 1:
                         servidor.iniciar_sesion()
@@ -36,7 +46,7 @@ def main():
                             interfaz.listar_comandos()
                     # Se agrega un usuario
                     elif opcion == 2:
-                         # Pedir datos del usuario para agregar
+                        # Pedir datos del usuario para agregar
                         nombre_usuario = input("Ingrese el nombre de usuario: ")
                         contrasena = input("Ingrese la contraseña: ")
                         servidor.agregar_usuario(nombre_usuario, contrasena)
@@ -62,5 +72,6 @@ def main():
             interfaz.controlador.desconectar_robot()
         print("Programa finalizado.")
 
+
 if __name__ == "__main__":
-    main()
+    init_rpc_server()

@@ -1,6 +1,8 @@
 Servidor/__pycache__/*
 Servidor\\__pycache__\\*
 Servidor\__pycache__\*
+Servidor\imagenes\*
+Servidor/imagenes/*
 Cliente/cliente.exe
 Cliente\cliente.exe
 Cliente\\cliente.exe

@@ -1,5 +1,12 @@
 # Proyecto-POO
 
+## COMO CORRER EL SERVIDOR_HTTP:
+El servidor_http.py contiene un interfaz web para visualizar el funcionamineto desde la web que permite carga un usuario y archivo .gcode que deja visualizar el recorrido con una imagen .png.
+```python3 <path>/servidor_http.py```
+
+Importante utilizar las librerias que se inidican en requirments.txt para su correcto funcionamiento. Para instalar las librerias desde la terminal utilizar el siguiente comando: 
+``` pip install -r <path>/requirements. txt```
+
 
 # Realizado 21/10 Renzo: 
 

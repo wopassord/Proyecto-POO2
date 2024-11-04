@@ -8,7 +8,7 @@ class Controlador:
         self.estado_robot = False
         self.estado_motores = False
         self.baudrate = 115200
-        self.puerto_COM = 'COM7'
+        self.puerto_COM = 'COM3'
         self.arduino = None
         self.hilo_lectura = None
         self.cola_respuestas = queue.Queue()
@@ -61,42 +61,40 @@ class Controlador:
 
     def activar_motores(self):
         if self.estado_robot:
-            respuesta = self.enviar_comando('M17')
-            if respuesta:
-                print("Motores activados.")
-                self.estado_motores = True
-            else:
-                print("Error al activar motores.")
+            # Enviar el comando M17 al Arduino sin esperar respuesta
+            self.enviar_comando('M17')
+            self.estado_motores = True
         else:
-            respuesta = "No se pueden activar los motores. El robot no está conectado."
-            print(respuesta)
-
-        return respuesta
+            print("No se pueden activar los motores. El robot no está conectado.")
     
     def desactivar_motores(self):
         if self.estado_robot:
-            respuesta = self.enviar_comando('M18')
-            if respuesta:
-                print("Motores desactivados.")
-                self.estado_motores = False
-            else:
-                print("Error al desactivar motores.")
+            # Enviar el comando M18 al Arduino sin esperar respuesta
+            self.enviar_comando('M18')
+            self.estado_motores = False
         else:
-            respuesta = "No se pueden desactivar los motores. El robot no está conectado."
-            print(respuesta)
-
-        return respuesta
+            print("No se pueden desactivar los motores. El robot no está conectado.")
 
     def enviar_comando(self, comando):
         if self.estado_robot:
             try:
-                self.arduino.write((comando + '\r\n').encode('latin-1'))
-                time.sleep(0.1)
-                respuesta = self.leer_respuesta()
-                if respuesta:
-                    print(f"Respuesta recibida: {respuesta}")
+                # Verifica si el comando es 'M17' o 'M18' para evitar mostrar "No se recibió respuesta"
+                if comando in ['M17', 'M18']:
+                    self.arduino.write((comando + '\r\n').encode('latin-1')) # Enviar comando sin esperar respuesta
+                    if comando == 'M17':
+                        respuesta = "MOTORES ACTIVADOS."
+                        print("MOTORES ACTIVADOS.")
+                    elif comando == 'M18':
+                        respuesta = "MOTORES DESACTIVADOS."
+                        print("MOTORES DESACTIVADOS.")
                 else:
-                    print("No se recibió respuesta del robot.")
+                    self.arduino.write((comando + '\r\n').encode('latin-1'))  # Enviar comando en formato de bytes
+                    time.sleep(0.1)  # Tiempo de espera para recibir respuesta
+                    respuesta = self.leer_respuesta()
+                    if respuesta:
+                        print(f"Respuesta recibida: {respuesta}")
+                    else:
+                        print("No se recibió respuesta del robot.")
             except Exception as e:
                 respuesta = f"Error al enviar comando: {e}"
                 print(respuesta)

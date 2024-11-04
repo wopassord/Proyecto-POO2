@@ -1,15 +1,27 @@
 from datetime import datetime
 import csv
+from servidor import Servidor
 
 class LogTrabajo:
-    def __init__(self, peticiones: str = None, usuario: str = None, fallos: int = 0, exitos: int = 0, tiempo_ejecucion: float = 0.0, IP: str = "127.0.0.1"):
-        self.peticiones = peticiones
+    def __init__(self, servidor:Servidor, peticion: int = 0, usuario: str = None, fallos: int = 0, exitos: int = 0, tiempo_ejecucion: float = 0.0, IP: str = "127.0.0.1"):
+        self.servidor = servidor
+        self.peticion = peticion
         self.IP = IP
-        self.usuario = usuario
+        self.usuario = self.servidor.get_sesion().get('nombre_usuario', "Usuario desconocido")
         self.fallos = fallos
         self.exitos = exitos
-        self.tiempo_ejecucion = tiempo_ejecucion
-        self.escribir_CSV()
+        self.tiempo_ejecucion = float(tiempo_ejecucion)
+
+    def actualizar_log(self, peticion=None, usuario=None, fallos=0, exitos=0, tiempo_ejecucion=0.0, IP="127.0.0.1"):
+        """Actualizar los atributos del log sin escribir en el CSV inmediatamente."""
+        if peticion:
+            self.peticion = peticion
+        if usuario:
+            self.usuario = usuario
+        self.fallos = fallos
+        self.exitos = exitos
+        self.tiempo_ejecucion = float(tiempo_ejecucion)
+        self.IP = IP
 
     def escribir_CSV(self, archivo='log_trabajo.csv'):
         "Escribe la información del log en un archivo CSV."
@@ -27,7 +39,7 @@ class LogTrabajo:
                 # Escribimos los datos del log
                 writer.writerow([
                     datetime.now().strftime('%Y-%m-%d %H:%M:%S'),  # Fecha y hora actual
-                    self.peticiones,
+                    self.peticion,
                     self.IP,
                     self.usuario,
                     self.fallos,
@@ -39,15 +51,33 @@ class LogTrabajo:
             print(f"Error al escribir el log en {archivo}: {e}")
 
     def leer_CSV(self, archivo='log_trabajo.csv'):
-        "Lee y muestra el contenido del archivo CSV."
+        """Leer y mostrar el contenido del archivo CSV de manera alineada."""
         try:
             with open(archivo, mode='r', newline='') as csvfile:
                 reader = csv.reader(csvfile)
-                header = next(reader)  # Leer la cabecera
-                print(" | ".join(header))  # Mostrar la cabecera con separadores
+                
+                # Leer y almacenar todas las filas
+                rows = list(reader)
+                
+                # Definir los anchos de columna
+                col_widths = [20, 30, 15, 20, 10, 10, 20]  # Puedes ajustar los valores según sea necesario
+                
+                # Imprimir cabecera alineada
+                header = rows[0]
+                for i, col in enumerate(header):
+                    print(col.ljust(col_widths[i]), end=" | ")
+                print("\n" + "-" * (sum(col_widths) + len(col_widths) * 3))
 
-                for row in reader:
-                    print(" | ".join(row))  # Mostrar cada fila de datos
+                # Imprimir cada fila de datos alineada
+                for row in rows[1:]:
+                    for i, col in enumerate(row):
+                        # Convertir el tiempo de ejecución a milisegundos con formato adecuado
+                        if i == 6:  # Índice de la columna de tiempo de ejecución
+                            tiempo_ms = f"{float(col):.2f} ms"
+                            print(tiempo_ms.ljust(col_widths[i]), end=" | ")
+                        else:
+                            print(col.ljust(col_widths[i]), end=" | ")
+                    print()
 
         except FileNotFoundError:
             print(f"El archivo {archivo} no existe.")
