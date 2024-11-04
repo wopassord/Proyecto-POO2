@@ -1,34 +1,5 @@
-Fecha y Hora,Peticion,IP,Usuario,Fallos,Exitos,Tiempo de Ejecucion
-2024-11-03 20:50:57,,127.0.0.1,Juan,0,1,0.0
-2024-11-03 20:51:31,Enviar comando,127.0.0.1,Juan,0,1,0.0
-2024-11-03 20:51:37,Enviar comando,127.0.0.1,Juan,0,1,0.0
-2024-11-03 20:51:39,Enviar comando,127.0.0.1,Juan,0,1,0.0
-2024-11-03 20:51:40,Enviar comando,127.0.0.1,Juan,0,1,0.0
-2024-11-03 20:54:35,,127.0.0.1,Juan,0,1,0.0
-2024-11-03 20:54:46,,127.0.0.1,Juan,0,1,0.0
-2024-11-03 20:54:48,,127.0.0.1,Juan,0,1,0.0
-2024-11-03 21:03:37,,127.0.0.1,Juan,0,1,0.0
-2024-11-03 21:03:37,,,Juan,0,1,0.006267070770263672
-2024-11-03 21:03:49,Seleccionar modo automatico,,Juan,0,1,0.0002334117889404297
-2024-11-03 21:03:51,Seleccionado modo manual,,Juan,0,1,0.00020623207092285156
-2024-11-03 21:03:52,Seleccionado modo manual,127.0.0.1,Juan,0,1,0.0
-2024-11-03 21:03:52,Seleccionado modo manual,,Juan,0,1,0.0037081241607666016
-2024-11-03 21:05:01,Activar motores,,Juan,0,1,0.00035190582275390625
-2024-11-03 21:05:03,Activar motores,127.0.0.1,Juan,0,1,0.0
-2024-11-03 21:05:03,Activar motores,,Juan,0,1,0.004139900207519531
-2024-11-03 21:14:13,0,127.0.0.1,Usuario desconocido,0,0,0.0
-2024-11-03 21:14:54,0,127.0.0.1,Usuario desconocido,0,0,0.0
-2024-11-03 21:15:50,0,127.0.0.1,Usuario desconocido,0,0,0.0
-2024-11-03 21:21:41,,127.0.0.1,Juan,0,1,0.0
-2024-11-03 21:21:41,,,Juan,0,1,0.006407260894775391
-2024-11-03 21:21:54,Seleccionar modo de coordenadas relativas,,Juan,0,1,0.0003066062927246094
-2024-11-03 21:22:04,Enviar comando,,Juan,0,1,5.805354595184326
-2024-11-03 21:22:08,Enviar comando,127.0.0.1,Juan,0,1,0.0
-2024-11-03 21:22:08,Enviar comando,,Juan,0,1,0.007193326950073242
-2024-11-03 21:23:30,,127.0.0.1,Juan,0,1,0.0
-2024-11-03 21:23:30,,,Juan,0,1,0.014440536499023438
-2024-11-03 21:23:45,Seleccionar modo de coordenadas relativas,,Juan,0,1,0.0002918243408203125
-2024-11-03 21:23:52,Seleccionar modo automatico,,Juan,0,1,0.00026035308837890625
-2024-11-03 21:23:53,Seleccionado modo manual,,Juan,0,1,0.0002384185791015625
-2024-11-03 21:23:55,Seleccionado modo manual,127.0.0.1,Juan,0,1,0.0
-2024-11-03 21:23:55,Seleccionado modo manual,,Juan,0,1,0.007689714431762695
+Fecha y Hora,Peticiones,IP,Usuario,Fallos,Exitos,Tiempo de Ejecucion
+2024-11-03 23:07:02,Seleccionar modo automatico,127.0.0.1,Juan,0,1,0.0
+2024-11-03 23:07:02,Seleccionado modo manual,127.0.0.1,Juan,0,1,0.0
+2024-11-03 23:07:03,Seleccionar modo automatico,127.0.0.1,Juan,0,1,0.0
+2024-11-03 23:07:05,Mostrar log de trabajo,127.0.0.1,Juan,0,1,0.0
