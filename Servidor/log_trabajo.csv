@@ -91,3 +91,150 @@ Fecha y Hora,Peticiones,IP,Usuario,Fallos,Exitos,Tiempo de Ejecucion
 2024-11-04 16:38:37,Apagar programa,127.0.0.1,Pepe,1,1,0.03743171691894531
 2024-11-04 16:57:23,Apagar programa,127.0.0.1,Juan,0,1,0.003814697265625
 2024-11-04 16:59:33,Apagar programa,127.0.0.1,Juan,0,1,0.0054836273193359375
+2024-11-04 11:01:28,Seleccionar modo automatico,127.0.0.1,Juan,0,1,0.0
+2024-11-04 11:01:28,Seleccionado modo manual,127.0.0.1,Juan,0,1,0.0
+2024-11-04 11:01:28,Seleccionar modo automatico,127.0.0.1,Juan,0,1,1.001596450805664
+2024-11-04 11:01:31,Mostrar log de trabajo,127.0.0.1,Juan,0,1,0.0
+2024-11-04 11:02:04,Conectar robot,127.0.0.1,Juan,0,1,1501.0755062103271
+2024-11-04 11:02:53,Mostrar log de trabajo,127.0.0.1,Juan,0,1,0.0
+2024-11-04 11:03:13,Conectar robot,127.0.0.1,Juan,0,1,3521.0514068603516
+2024-11-04 11:03:16,Mostrar log de trabajo,127.0.0.1,Juan,0,1,0.0
+2024-11-04 11:03:21,Desconectar robot,127.0.0.1,Juan,0,1,1537.8847122192383
+2024-11-04 11:03:22,Mostrar log de trabajo,127.0.0.1,Juan,0,1,0.0
+2024-11-04 11:03:47,Conectar robot,127.0.0.1,Juan,0,1,3517.7924633026123
+2024-11-04 11:03:47,Activar motores,127.0.0.1,Juan,0,1,1.0006427764892578
+2024-11-04 11:03:48,Desactivar motores,127.0.0.1,Juan,0,1,0.0
+2024-11-04 11:03:51,Mostrar log de trabajo,127.0.0.1,Juan,0,1,0.0
+2024-11-04 11:04:48,Mostrar log de trabajo,127.0.0.1,Juan,0,1,0.0
+2024-11-04 11:04:53,Mostrar usuarios,127.0.0.1,Juan,0,1,0.0
+2024-11-04 11:05:11,Modificar parametros de conexion,127.0.0.1,Juan,0,1,9884.75775718689
+2024-11-04 11:05:21,Encender/apagar servidor,127.0.0.1,Juan,0,1,0.0
+2024-11-04 11:06:16,Mostrar log de trabajo,127.0.0.1,Magdalena,0,1,0.0
+2024-11-04 11:06:19,Mostrar usuarios,127.0.0.1,Magdalena,0,1,0.0
+2024-11-04 11:06:21,Modificar parametros de conexion,127.0.0.1,Magdalena,0,1,1.0063648223876953
+2024-11-04 11:06:22,Encender/apagar servidor,127.0.0.1,Magdalena,0,1,0.0
+2024-11-04 11:45:03,Conectar robot,127.0.0.1,Renzito,0,1,1500.5910396575928
+2024-11-04 11:45:19,Modificar parametros de conexion,127.0.0.1,Renzito,0,1,7510.167360305786
+2024-11-04 11:45:49,Conectar robot,127.0.0.1,Renzito,0,1,3505.4731369018555
+2024-11-04 11:57:51,Encender/apagar servidor,127.0.0.1,Renzito,0,1,0.0
+2024-11-04 11:57:53,Encender/apagar servidor,127.0.0.1,Renzito,0,1,0.0
+2024-11-04 11:57:57,Conectar robot,127.0.0.1,Renzito,0,1,1501.3935565948486
+2024-11-04 11:58:09,Listar comandos nuevamente,127.0.0.1,Renzito,0,1,1.993417739868164
+2024-11-04 11:58:18,Modificar parametros de conexion,127.0.0.1,Renzito,0,1,5865.8037185668945
+2024-11-04 11:59:02,Listar comandos nuevamente,127.0.0.1,Renzito,0,1,2.5010108947753906
+2024-11-04 12:00:35,Listar comandos nuevamente,127.0.0.1,Renzito,0,1,1.0640621185302734
+2024-11-04 12:00:39,Listar comandos nuevamente,127.0.0.1,Renzito,0,1,1.8084049224853516
+2024-11-04 12:00:46,Mostrar operaciones cliente,127.0.0.1,Renzito,0,1,1.9943714141845703
+2024-11-04 12:04:37,Desconectar robot,127.0.0.1,Renzito,0,1,1586.0090255737305
+2024-11-04 12:06:15,Conectar robot,127.0.0.1,Renzito,0,1,3503.633975982666
+2024-11-04 12:07:15,Listar comandos nuevamente,127.0.0.1,Renzito,0,1,0.9968280792236328
+2024-11-04 12:13:25,Encender/apagar servidor,127.0.0.1,Renzito,0,1,0.33593177795410156
+2024-11-04 12:13:30,Desconectar robot,127.0.0.1,Renzito,0,1,1524.1196155548096
+2024-11-04 12:13:34,Conectar robot,127.0.0.1,Renzito,0,1,3503.525733947754
+2024-11-04 12:13:38,Activar motores,127.0.0.1,Renzito,0,1,0.0
+2024-11-04 12:13:53,Desactivar motores,127.0.0.1,Renzito,0,1,0.0
+2024-11-04 12:14:00,Activar motores,127.0.0.1,Renzito,0,1,0.2167224884033203
+2024-11-04 12:14:02,Seleccionar modo automatico,127.0.0.1,Renzito,0,1,0.0
+2024-11-04 12:14:03,Seleccionado modo manual,127.0.0.1,Renzito,0,1,0.0
+2024-11-04 12:14:05,Seleccionar modo de coordenadas relativas,127.0.0.1,Renzito,0,1,100.88777542114258
+2024-11-04 12:14:08,Seleccionar modo de coordenadas absolutas,127.0.0.1,Renzito,0,1,101.3786792755127
+2024-11-04 12:14:11,Seleccionar modo de coordenadas relativas,127.0.0.1,Renzito,0,1,101.09329223632812
+2024-11-04 12:14:15,Seleccionar modo de coordenadas absolutas,127.0.0.1,Renzito,0,1,100.22091865539551
+2024-11-04 12:14:20,Listar comandos nuevamente,127.0.0.1,Renzito,0,1,1.9977092742919922
+2024-11-04 12:14:24,Seleccionar modo de coordenadas relativas,127.0.0.1,Renzito,0,1,100.51608085632324
+2024-11-04 12:14:28,Listar comandos nuevamente,127.0.0.1,Renzito,0,1,1.997232437133789
+2024-11-04 12:14:29,Listar comandos nuevamente,127.0.0.1,Renzito,0,1,0.8890628814697266
+2024-11-04 12:14:30,Listar comandos nuevamente,127.0.0.1,Renzito,0,1,1.993417739868164
+2024-11-04 12:14:30,Listar comandos nuevamente,127.0.0.1,Renzito,0,1,1.993417739868164
+2024-11-04 12:14:33,Seleccionar modo de coordenadas absolutas,127.0.0.1,Renzito,0,1,101.28974914550781
+2024-11-04 12:14:41,Listar comandos nuevamente,127.0.0.1,Renzito,0,1,1.7554759979248047
+2024-11-04 12:14:43,Seleccionar modo de coordenadas relativas,127.0.0.1,Renzito,0,1,101.24087333679199
+2024-11-04 12:14:45,Listar comandos nuevamente,127.0.0.1,Renzito,0,1,2.4328231811523438
+2024-11-04 12:14:47,Seleccionar modo de coordenadas absolutas,127.0.0.1,Renzito,0,1,101.87792778015137
+2024-11-04 12:14:48,Seleccionar modo de coordenadas relativas,127.0.0.1,Renzito,0,1,100.82006454467773
+2024-11-04 12:14:50,Seleccionar modo de coordenadas absolutas,127.0.0.1,Renzito,0,1,100.98624229431152
+2024-11-04 12:15:00,Desactivar motores,127.0.0.1,Renzito,0,1,0.0
+2024-11-04 12:15:01,Activar motores,127.0.0.1,Renzito,0,1,0.0
+2024-11-04 12:15:01,Desactivar motores,127.0.0.1,Renzito,0,1,0.0
+2024-11-04 12:15:02,Activar motores,127.0.0.1,Renzito,0,1,0.0
+2024-11-04 12:15:03,Desactivar motores,127.0.0.1,Renzito,0,1,0.39958953857421875
+2024-11-04 12:15:03,Activar motores,127.0.0.1,Renzito,0,1,0.0
+2024-11-04 12:15:03,Desactivar motores,127.0.0.1,Renzito,0,1,0.5805492401123047
+2024-11-04 12:15:04,Activar motores,127.0.0.1,Renzito,0,1,0.9958744049072266
+2024-11-04 12:15:04,Activar motores,127.0.0.1,Renzito,0,1,0.6444454193115234
+2024-11-04 12:15:04,Desactivar motores,127.0.0.1,Renzito,0,1,0.0
+2024-11-04 12:15:05,Activar motores,127.0.0.1,Renzito,0,1,0.0
+2024-11-04 12:15:05,Desactivar motores,127.0.0.1,Renzito,0,1,1.0035037994384766
+2024-11-04 12:15:06,Activar motores,127.0.0.1,Renzito,0,1,0.9975433349609375
+2024-11-04 12:15:06,Desactivar motores,127.0.0.1,Renzito,0,1,0.0
+2024-11-04 12:15:08,Seleccionar modo automatico,127.0.0.1,Renzito,0,1,0.0
+2024-11-04 12:15:08,Seleccionado modo manual,127.0.0.1,Renzito,0,1,0.0
+2024-11-04 12:15:09,Seleccionar modo automatico,127.0.0.1,Renzito,0,1,0.0
+2024-11-04 12:15:10,Seleccionar modo de coordenadas relativas,127.0.0.1,Renzito,0,1,100.86321830749512
+2024-11-04 12:15:10,Seleccionar modo de coordenadas absolutas,127.0.0.1,Renzito,0,1,100.79073905944824
+2024-11-04 12:15:54,Listar comandos nuevamente,127.0.0.1,Renzito,0,1,1.8470287322998047
+2024-11-04 12:15:56,Listar comandos nuevamente,127.0.0.1,Renzito,0,1,1.508951187133789
+2024-11-04 12:16:05,Escribir comando,127.0.0.1,Renzito,0,1,0.0
+2024-11-04 12:16:09,Seleccionado modo manual,127.0.0.1,Renzito,0,1,0.0
+2024-11-04 12:16:15,Escribir comando,127.0.0.1,Renzito,0,1,4998.356342315674
+2024-11-04 12:16:22,Escribir comando,127.0.0.1,Renzito,0,1,3024.3139266967773
+2024-11-04 12:22:11,Conectar robot,127.0.0.1,Renzito,0,1,1500.9913444519043
+2024-11-04 12:22:22,Modificar parametros de conexion,127.0.0.1,Renzito,0,1,6934.033632278442
+2024-11-04 12:22:27,Activar motores,127.0.0.1,Renzito,0,1,0.0
+2024-11-04 12:22:28,Desactivar motores,127.0.0.1,Renzito,0,1,0.0
+2024-11-04 12:22:29,Seleccionar modo automatico,127.0.0.1,Renzito,0,1,0.0
+2024-11-04 12:22:31,Seleccionado modo manual,127.0.0.1,Renzito,0,1,0.0
+2024-11-04 12:22:32,Seleccionar modo de coordenadas relativas,127.0.0.1,Renzito,0,1,101.07827186584473
+2024-11-04 12:22:37,Seleccionar modo de coordenadas absolutas,127.0.0.1,Renzito,0,1,100.46768188476562
+2024-11-04 12:23:46,Seleccionar modo de coordenadas relativas,127.0.0.1,Renzito,0,1,0.0
+2024-11-04 12:23:55,Modificar parametros de conexion,127.0.0.1,Renzito,0,1,5746.901273727417
+2024-11-04 12:24:48,Escribir comando,127.0.0.1,Renzito,0,1,1611.3004684448242
+2024-11-04 12:25:00,Modificar parametros de conexion,127.0.0.1,Renzito,0,1,8077.266216278076
+2024-11-04 12:25:03,Listar comandos nuevamente,127.0.0.1,Renzito,0,1,2.275228500366211
+2024-11-04 12:29:28,Modificar parametros de conexion,127.0.0.1,Renzito,0,1,5621.089935302734
+2024-11-04 12:29:30,Seleccionar modo de coordenadas relativas,127.0.0.1,Renzito,0,1,101.04107856750488
+2024-11-04 12:29:31,Seleccionar modo de coordenadas absolutas,127.0.0.1,Renzito,0,1,100.38328170776367
+2024-11-04 12:29:32,Seleccionar modo de coordenadas relativas,127.0.0.1,Renzito,0,1,100.68655014038086
+2024-11-04 12:29:33,Seleccionar modo automatico,127.0.0.1,Renzito,0,1,0.0
+2024-11-04 12:29:33,Seleccionado modo manual,127.0.0.1,Renzito,0,1,1.0013580322265625
+2024-11-04 12:29:34,Activar motores,127.0.0.1,Renzito,0,1,0.0
+2024-11-04 12:29:35,Desactivar motores,127.0.0.1,Renzito,0,1,0.0
+2024-11-04 12:29:37,Activar motores,127.0.0.1,Renzito,0,1,0.0
+2024-11-04 12:29:37,Desactivar motores,127.0.0.1,Renzito,0,1,0.0
+2024-11-04 12:29:38,Seleccionar modo de coordenadas absolutas,127.0.0.1,Renzito,0,1,100.9974479675293
+2024-11-04 12:29:39,Seleccionar modo de coordenadas relativas,127.0.0.1,Renzito,0,1,100.28338432312012
+2024-11-04 12:29:46,Mostrar operaciones cliente,127.0.0.1,Renzito,0,1,0.9973049163818359
+2024-11-04 12:29:51,Escribir comando,127.0.0.1,Renzito,0,1,3158.83731842041
+2024-11-04 12:29:57,Escribir comando,127.0.0.1,Renzito,0,1,2825.0691890716553
+2024-11-04 12:30:04,Escribir comando,127.0.0.1,Renzito,0,1,3040.0893688201904
+2024-11-04 12:30:22,Escribir comando,127.0.0.1,Renzito,0,1,10567.501306533813
+2024-11-04 12:30:25,Listar comandos nuevamente,127.0.0.1,Renzito,0,1,0.9961128234863281
+2024-11-04 12:30:29,Mostrar usuarios,127.0.0.1,Renzito,0,1,0.8971691131591797
+2024-11-04 12:30:46,Modificar parametros de conexion,127.0.0.1,Renzito,0,1,10662.286520004272
+2024-11-04 12:30:51,Mostrar log de trabajo,127.0.0.1,Renzito,0,1,0.0
+2024-11-04 12:30:58,Listar comandos nuevamente,127.0.0.1,Renzito,0,1,1.9943714141845703
+2024-11-04 12:38:17,Conectar robot,127.0.0.1,Renzito,0,1,1501.5714168548584
+2024-11-04 12:38:39,Modificar parametros de conexion,127.0.0.1,Renzito,0,1,6671.909332275391
+2024-11-04 12:38:43,Desconectar robot,127.0.0.1,Renzito,0,1,1501.3935565948486
+2024-11-04 12:38:48,Conectar robot,127.0.0.1,Renzito,0,1,3503.1986236572266
+2024-11-04 12:38:52,Activar motores,127.0.0.1,Renzito,0,1,0.0
+2024-11-04 12:38:54,Desactivar motores,127.0.0.1,Renzito,0,1,0.0
+2024-11-04 12:38:59,Listar comandos nuevamente,127.0.0.1,Renzito,0,1,1.004934310913086
+2024-11-04 12:39:01,Activar motores,127.0.0.1,Renzito,0,1,0.0
+2024-11-04 12:39:04,Desactivar motores,127.0.0.1,Renzito,0,1,0.0
+2024-11-04 12:39:05,Activar motores,127.0.0.1,Renzito,0,1,0.9982585906982422
+2024-11-04 12:44:21,Modificar parametros de conexion,127.0.0.1,Renzito,0,1,8158.928871154785
+2024-11-04 12:44:27,Desconectar robot,127.0.0.1,Renzito,0,1,1501.4855861663818
+2024-11-04 12:44:34,Conectar robot,127.0.0.1,Renzito,0,1,3502.7291774749756
+2024-11-04 12:44:46,Activar motores,127.0.0.1,Renzito,0,1,0.0
+2024-11-04 12:44:48,Desactivar motores,127.0.0.1,Renzito,0,1,0.0
+2024-11-04 12:44:50,Seleccionar modo automatico,127.0.0.1,Renzito,0,1,0.0
+2024-11-04 12:44:51,Seleccionado modo manual,127.0.0.1,Renzito,0,1,0.9970664978027344
+2024-11-04 12:44:53,Seleccionar modo de coordenadas relativas,127.0.0.1,Renzito,0,1,100.8758544921875
+2024-11-04 12:44:54,Seleccionar modo de coordenadas absolutas,127.0.0.1,Renzito,0,1,102.00691223144531
+2024-11-04 12:56:31,Modificar parametros de conexion,127.0.0.1,Renzito,0,1,9610.499382019043
+2024-11-04 13:04:11,Conectar robot,127.0.0.1,Renzito,0,1,3502.9237270355225
+2024-11-04 13:04:48,Listar comandos nuevamente,127.0.0.1,Renzito,0,1,0.7653236389160156
+2024-11-04 13:07:56,Conectar robot,127.0.0.1,Renzito,0,1,3503.051519393921
+2024-11-04 13:08:17,Seleccionar modo automatico,127.0.0.1,Renzito,0,1,0.9977817535400391
+
