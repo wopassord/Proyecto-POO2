@@ -4,13 +4,13 @@ import threading
 import queue
 
 class Controlador:
-
     def __init__(self):
         self.estado_robot = False
         self.estado_motores = False
         self.baudrate = 115200
         self.puerto_COM = 'COM6'
         self.arduino = None
+        self.hilo_lectura = None
         self.cola_respuestas = queue.Queue()
 
     def get_estado_robot(self):
@@ -20,12 +20,9 @@ class Controlador:
         return self.estado_motores
     
     def cambiar_parametros_comunicacion(self, baudrate, puerto_COM):
-        # Cerrar la conexión actual si está activa antes de cambiar los parámetros
-        baudrate = int(baudrate)
         if self.estado_robot:
             self.desconectar_robot()
-
-        self.baudrate = baudrate
+        self.baudrate = int(baudrate)
         self.puerto_COM = puerto_COM
         print(f"Parámetros de comunicación cambiados: Baudrate={self.baudrate}, Puerto={self.puerto_COM}")
 
@@ -44,14 +41,17 @@ class Controlador:
 
         except serial.SerialException:
             respuesta = f"Error al conectar: Verifique que el puerto {self.puerto_COM} esté disponible y correcto."
-        except Exception as e:
-            respuesta = f"Error al conectar: {e}"
+            print(respuesta)
+            self.estado_robot = False
+            self.arduino = None
+            
         return respuesta
 
     def desconectar_robot(self):
         if self.arduino and self.arduino.is_open:
             self.estado_robot = False
-            self.hilo_lectura.join()
+            if self.hilo_lectura and self.hilo_lectura.is_alive():
+                self.hilo_lectura.join()
             self.arduino.close()
             respuesta = "Robot desconectado."
         else:
@@ -61,42 +61,40 @@ class Controlador:
 
     def activar_motores(self):
         if self.estado_robot:
-            respuesta = self.enviar_comando('M17')
-            if respuesta:
-                print("Motores activados.")
-                self.estado_motores = True
-            else:
-                print("Error al activar motores.")
+            # Enviar el comando M17 al Arduino sin esperar respuesta
+            self.enviar_comando('M17')
+            self.estado_motores = True
         else:
-            respuesta = "No se pueden activar los motores. El robot no está conectado."
-            print(respuesta)
-
-        return respuesta
+            print("No se pueden activar los motores. El robot no está conectado.")
     
     def desactivar_motores(self):
         if self.estado_robot:
-            respuesta = self.enviar_comando('M18')
-            if respuesta:
-                print("Motores desactivados.")
-                self.estado_motores = False
-            else:
-                print("Error al desactivar motores.")
+            # Enviar el comando M18 al Arduino sin esperar respuesta
+            self.enviar_comando('M18')
+            self.estado_motores = False
         else:
-            respuesta = "No se pueden desactivar los motores. El robot no está conectado."
-            print(respuesta)
-
-        return respuesta
+            print("No se pueden desactivar los motores. El robot no está conectado.")
 
     def enviar_comando(self, comando):
         if self.estado_robot:
             try:
-                self.arduino.write((comando + '\r\n').encode('latin-1'))  # Enviar comando en formato de bytes
-                time.sleep(0.1)  # Tiempo de espera para recibir respuesta
-                respuesta = self.leer_respuesta()
-                if respuesta:
-                    print(f"Respuesta recibida: {respuesta}")
+                # Verifica si el comando es 'M17' o 'M18' para evitar mostrar "No se recibió respuesta"
+                if comando in ['M17', 'M18']:
+                    self.arduino.write((comando + '\r\n').encode('latin-1')) # Enviar comando sin esperar respuesta
+                    if comando == 'M17':
+                        respuesta = "MOTORES ACTIVADOS."
+                        print("MOTORES ACTIVADOS.")
+                    elif comando == 'M18':
+                        respuesta = "MOTORES DESACTIVADOS."
+                        print("MOTORES DESACTIVADOS.")
                 else:
-                    print("No se recibió respuesta del robot.")
+                    self.arduino.write((comando + '\r\n').encode('latin-1'))  # Enviar comando en formato de bytes
+                    time.sleep(0.1)  # Tiempo de espera para recibir respuesta
+                    respuesta = self.leer_respuesta()
+                    if respuesta:
+                        print(f"Respuesta recibida: {respuesta}")
+                    else:
+                        print("No se recibió respuesta del robot.")
             except Exception as e:
                 respuesta = f"Error al enviar comando: {e}"
                 print(respuesta)
@@ -107,19 +105,28 @@ class Controlador:
         return respuesta
     
     def leer_respuesta(self):
-        """Lee y devuelve la respuesta completa del Arduino, reemplazando caracteres no decodificados correctamente."""
         respuesta_completa = ""
-        if self.arduino and self.arduino.in_waiting > 0:
-            while self.arduino.in_waiting:
-                respuesta = self.arduino.read(self.arduino.in_waiting).decode('latin-1')
-                respuesta_completa += respuesta
-                return respuesta_completa.replace("ñ", "A").strip()
-            else:
-                return None
-            
+        while self.arduino and self.arduino.in_waiting > 0:
+            respuesta = self.arduino.read(self.arduino.in_waiting).decode('latin-1')
+            respuesta_completa += respuesta
+        return respuesta_completa.replace("ñ", "A").strip() if respuesta_completa else None
+
+    def leer_respuestas(self):
+        while self.estado_robot:
+            try:
+                if self.arduino.in_waiting > 0:
+                    respuesta = self.arduino.readline().decode('latin-1').strip()
+                    self.cola_respuestas.put(respuesta)
+                    print(f"Respuesta del robot: {respuesta}")
+                else:
+                    time.sleep(0.1)
+            except serial.SerialException as e:
+                print(f"Error de comunicación: {e}")
+                break
+            except Exception as e:
+                print(f"Error inesperado al leer respuestas: {e}")
 
     def procesar_respuestas_arduino(self):
-        # Procesar respuestas disponibles en la cola
         while not self.cola_respuestas.empty():
             respuesta = self.cola_respuestas.get()
             print(f"Respuesta del Arduino: {respuesta}")

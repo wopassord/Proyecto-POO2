@@ -11,7 +11,16 @@ class InterfazServidor:
         self.modo_coordenadas = modo_coordenadas
         self.usuario = None
         self.peticion = None
-        self.ip_cliente = None
+        self.ip_cliente = "127.0.0.1"
+        self.log_trabajo = LogTrabajo(servidor=servidor)
+
+    def registrar_log_csv(self, peticion, fallos=0, exitos=1, tiempo_ejecucion=0.0, IP="127.0.01"):
+        sesion = self.servidor.get_sesion()
+        usuario = sesion.get('nombre_usuario', "Usuario desconocido") if sesion else "Usuario desconocido"
+        # Actualizar el log sin escribir en el archivo
+        self.log_trabajo.actualizar_log(peticion=peticion, usuario=usuario, fallos=fallos, exitos=exitos, tiempo_ejecucion=tiempo_ejecucion, IP=self.ip_cliente)
+        # Guardar en el archivo CSV
+        self.log_trabajo.escribir_CSV()
 
     def listar_comandos(self):
         print("Comandos posibles a realizar: \n")
@@ -48,6 +57,7 @@ class InterfazServidor:
                     break
                 else:
                     # Caso particular: se pide alguna accion desde el cliente
+                    self.peticion=opcion_elegida    #Esto se hace para almacenar en el log de trabajo
                     print(f"ACCION REALIZADA POR CLIENTE CON IP: {self.ip_cliente}")
                     respuesta = self.ejecucion_administrar_comando(opcion_elegida)   
                     break
@@ -63,34 +73,47 @@ class InterfazServidor:
         respuesta = None
         inicio = time.time()
         if opcion_elegida == 1:
+            self.peticion = "Activar/desactivar robot"
             respuesta = self.activar_desactivar_robot()
             # Espera a mensaje inicial
             time.sleep(1.5)
         elif opcion_elegida == 2:
+            self.peticion = "Activar/desactivar motores"
             respuesta = self.activar_desactivar_motores()
         elif opcion_elegida == 3:
+            self.peticion = "Seleccionar modo de trabajo"
             respuesta = self.seleccionar_modo_trabajo()
         elif opcion_elegida == 4:
+            self.peticion = "Seleccionar modo de coordenadas"
             respuesta = self.seleccionar_modo_coordenadas()
         elif opcion_elegida == 5:
+            self.peticion = "Mostrar operaciones cliente"
             self.mostrar_operaciones_cliente()
             respuesta = "Operaciones mostradas."
         elif opcion_elegida == 6:
+            self.peticion = "Escribir comando"
             self.escribir_comando()
             respuesta = "Comando escrito en modo manual."
         elif opcion_elegida == 7:
+            self.peticion = "Mostrar reporte general"
             self.mostrar_reporte_general()
             respuesta = "Resporte general mostrado."
         elif opcion_elegida == 8:
+            self.peticion = "Mostrar log de trabajo"
+            duracion = (time.time() - inicio)*1000  # Calcular el tiempo de ejecución
+            self.registrar_log_csv(peticion=self.peticion, tiempo_ejecucion=duracion,IP=self.ip_cliente)
             self.mostrar_log_trabajo()
             respuesta = "Log de trabajo mostrado."
         elif opcion_elegida == 9:
+            self.peticion = "Mostrar usuarios"
             self.mostrar_usuarios()
             respuesta = "Usuarios mostrados."
         elif opcion_elegida == 10:
+            self.peticion = "Modificar parámetros de conexión"
             self.modificar_parametros_conexion()
             respuesta = "Parámetros de conexión modificados."
         elif opcion_elegida == 11:
+            self.peticion = "Encender/apagar servidor"
             if not self.servidor.get_estado_servidor():
                 self.servidor.iniciar_servidor()
                 respuesta = "Servidor iniciado."
@@ -98,20 +121,26 @@ class InterfazServidor:
                 self.servidor.apagar_servidor()
                 respuesta = "Servidor apagado."
         elif opcion_elegida == 12:
+            self.peticion = "Cerrar sesión"
             self.servidor.cerrar_sesion()
             respuesta = "Sesión cerrada."
         elif opcion_elegida == 13:
+            self.peticion = "Listar comandos nuevamente"
             self.listar_comandos()
             respuesta = "Comandos listados nuevamente."
         elif opcion_elegida == 14:
+            self.peticion = "Apagar programa"
             return 14
         else:
             print("Opción no válida.")
             respuesta = "Opción inválida."
         
-        # Retornar respuesta (sirve para el cliente practicamente):
-        if respuesta is not None:
-            return respuesta
+        if opcion_elegida != 8:
+            duracion = (time.time() - inicio)*1000  # Calcular el tiempo de ejecución
+            self.registrar_log_csv(peticion=self.peticion, tiempo_ejecucion=duracion,IP=self.ip_cliente)
+            # logtrabajo = LogTrabajo(servidor=self.servidor,peticion=self.peticion,exitos=1 if respuesta != "Opción inválida" else 0,tiempo_ejecucion=duracion,IP=self.ip_cliente)
+    
+        return respuesta
 
     # Métodos adicionales para manipular el robot y mostrar reportes
     def activar_desactivar_robot(self):
@@ -144,29 +173,18 @@ class InterfazServidor:
             print(f"Error inesperado: {e}")
 
     def mostrar_log_trabajo(self):
-        try:
-            self.peticion = "Mostrar log de trabajo"
-            self.sesion = self.servidor.get_sesion()
-            self.usuarios = self.servidor.get_usuarios()
+        self.peticion = "Mostrar log de trabajo"
+        if self.verificar_sesion_admin() == True:
+            try:
+                self.log_trabajo.leer_CSV()  
+            except FileNotFoundError:
+                print("Error: El archivo de log de trabajo no se encuentra.")
+            except PermissionError:
+                print("Error: Permisos insuficientes para acceder al archivo de log de trabajo.")
+            except Exception as e:
+                print(f"Error inesperado: {e}")
+        
 
-            if self.sesion and 'nombre_usuario' in self.sesion:
-                nombre_usuario = self.sesion['nombre_usuario']
-                
-                # Verificamos si el usuario tiene permisos de administrador
-                for usuario in self.usuarios:
-                    if usuario.nombre_usuario == nombre_usuario and usuario.admin:
-                        LogTrabajo.leer_CSV()
-                        return  # Salir del método si el log se muestra exitosamente
-                
-                print("Acceso denegado. Solo los administradores pueden ver la lista de usuarios.")
-            else:
-                print("No hay ningún usuario en sesión.")
-        except FileNotFoundError:
-            print("Error: El archivo de log de trabajo no se encuentra.")
-        except PermissionError:
-            print("Error: Permisos insuficientes para acceder al archivo de log de trabajo.")
-        except Exception as e:
-            print(f"Error inesperado: {e}")
 
     def seleccionar_modo_trabajo(self):
         if self.modo_trabajo == "manual":
@@ -191,31 +209,23 @@ class InterfazServidor:
         return respuesta
 
     def mostrar_usuarios(self):
-        self.peticion= "Mostrar usuarios"
-        self.sesion = self.servidor.get_sesion()
-        self.usuarios = self.servidor.get_usuarios()
-        if self.sesion and 'nombre_usuario' in self.sesion:
-            nombre_usuario = self.sesion['nombre_usuario']
-            # Verificamos si el usuario tiene permisos de administrador
-            for usuario in self.usuarios:
-                if usuario.nombre_usuario == nombre_usuario and usuario.admin:
-                    print("Usuarios registrados:")
-                    for u in self.usuarios:
-                        print(u.nombre_usuario)  # Muestra el nombre del usuario
-                    return
-            print("Acceso denegado. Solo los administradores pueden ver la lista de usuarios.")
-        else:
-            print("No hay ningún usuario en sesión.")
+        self.peticion = "Mostrar usuarios"
+        if self.verificar_sesion_admin() == True:
+            for u in self.usuarios:
+                print(u.nombre_usuario)  # Muestra el nombre del usuario
+            return
+            
 
     def modificar_parametros_conexion(self):
         self.peticion = "Modificar parametros de conexion"
-        try:
-            puerto_COM = input('Ingrese el nuevo puerto de COM al que se quiere conectar: ')
-            baudrate = int(input('Ingrese la velocidad de comunicacion (baudrate): '))
-            self.controlador.cambiar_parametros_comunicacion(baudrate, puerto_COM)
-            self.controlador.conectar_robot()
-        except Exception as e:
-            print(f"Error al modificar los parámetros de conexión: {e}")
+        if self.verificar_sesion_admin() == True:
+            try:
+                puerto_COM = input('Ingrese el nuevo puerto de COM al que se quiere conectar: ')
+                baudrate = int(input('Ingrese la velocidad de comunicacion (baudrate): '))
+                self.controlador.cambiar_parametros_comunicacion(baudrate, puerto_COM)
+                self.controlador.conectar_robot()
+            except Exception as e:
+                print(f"Error al modificar los parámetros de conexión: {e}")
 
     def mostrar_operaciones_cliente(self):
         print("\nOperaciones posibles a realizar por un cliente o por un operador en el servidor: \n")
@@ -230,7 +240,7 @@ class InterfazServidor:
         print("M18: Desactivar motores.\n")        
 
     def escribir_comando(self):
-        self.peticion = "Enviar comando"
+        # #self.peticion = "Enviar comando"
         if self.modo_trabajo == "manual":
             try: 
                 comando = input("Ingrese el comando en G-Code para accionar el robot: ")
@@ -239,3 +249,22 @@ class InterfazServidor:
                 print(f"Error al enviar el comando: {e} ")
         else: 
             print("El modo de trabajo no es manual. Por favor, cambie el modo de trabajo antes de realizar esta accion.")
+
+    def verificar_sesion_admin(self):
+        self.sesion = self.servidor.get_sesion()
+        self.usuarios = self.servidor.get_usuarios()
+
+        if self.sesion and 'nombre_usuario' in self.sesion:
+                nombre_usuario = self.sesion['nombre_usuario']
+                
+                # Verificamos si el usuario tiene permisos de administrador
+                for usuario in self.usuarios:
+                    if usuario.nombre_usuario == nombre_usuario and usuario.admin:
+                        # Seguir la funcion si el usuario tiene permisos de administrador
+                        return True
+    
+                print("Acceso denegado. Solo los administradores pueden realizar esta accion")
+                return False
+        else:
+            print("No hay ningún usuario en sesión.")
+            return False
