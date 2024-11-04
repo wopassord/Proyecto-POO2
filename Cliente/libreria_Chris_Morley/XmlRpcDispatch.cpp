@@ -1,8 +1,9 @@
-
+#ifdef _WIN32
 #include <windows.h>
+#endif
 #if defined(_WINDOWS_H)
 #define _WINDOWS Puma3D
-#endif  // _WINDOWS_H
+#endif // _WINDOWS_H
 
 #include "XmlRpcDispatch.h"
 #include "XmlRpcSource.h"
@@ -12,20 +13,18 @@
 #include <sys/timeb.h>
 
 #if defined(_WINDOWS)
-# include <winsock2.h>
+#include <winsock2.h>
 
-# define USE_FTIME
-# if defined(_MSC_VER)
-#  define timeb _timeb
-#  define ftime _ftime
-# endif
+#define USE_FTIME
+#if defined(_MSC_VER)
+#define timeb _timeb
+#define ftime _ftime
+#endif
 #else
-# include <sys/time.h>
-#endif  // _WINDOWS
-
+#include <sys/time.h>
+#endif // _WINDOWS
 
 using namespace XmlRpc;
-
 
 XmlRpcDispatch::XmlRpcDispatch()
 {
@@ -34,24 +33,21 @@ XmlRpcDispatch::XmlRpcDispatch()
   _inWork = false;
 }
 
-
 XmlRpcDispatch::~XmlRpcDispatch()
 {
 }
 
 // Monitor this source for the specified events and call its event handler
 // when the event occurs
-void
-XmlRpcDispatch::addSource(XmlRpcSource* source, unsigned mask)
+void XmlRpcDispatch::addSource(XmlRpcSource *source, unsigned mask)
 {
   _sources.push_back(MonitoredSource(source, mask));
 }
 
 // Stop monitoring this source. Does not close the source.
-void
-XmlRpcDispatch::removeSource(XmlRpcSource* source)
+void XmlRpcDispatch::removeSource(XmlRpcSource *source)
 {
-  for (SourceList::iterator it=_sources.begin(); it!=_sources.end(); ++it)
+  for (SourceList::iterator it = _sources.begin(); it != _sources.end(); ++it)
     if (it->getSource() == source)
     {
       _sources.erase(it);
@@ -59,12 +55,10 @@ XmlRpcDispatch::removeSource(XmlRpcSource* source)
     }
 }
 
-
 // Modify the types of events to watch for on this source
-void 
-XmlRpcDispatch::setSourceEvents(XmlRpcSource* source, unsigned eventMask)
+void XmlRpcDispatch::setSourceEvents(XmlRpcSource *source, unsigned eventMask)
 {
-  for (SourceList::iterator it=_sources.begin(); it!=_sources.end(); ++it)
+  for (SourceList::iterator it = _sources.begin(); it != _sources.end(); ++it)
     if (it->getSource() == source)
     {
       it->getMask() = eventMask;
@@ -72,11 +66,8 @@ XmlRpcDispatch::setSourceEvents(XmlRpcSource* source, unsigned eventMask)
     }
 }
 
-
-
 // Watch current set of sources and process events
-void
-XmlRpcDispatch::work(double timeout)
+void XmlRpcDispatch::work(double timeout)
 {
   // Compute end time
   _endTime = (timeout < 0.0) ? -1.0 : (getTime() + timeout);
@@ -84,34 +75,40 @@ XmlRpcDispatch::work(double timeout)
   _inWork = true;
 
   // Only work while there is something to monitor
-  while (_sources.size() > 0) {
+  while (_sources.size() > 0)
+  {
 
     // Construct the sets of descriptors we are interested in
     fd_set inFd, outFd, excFd;
-	  FD_ZERO(&inFd);
-	  FD_ZERO(&outFd);
-	  FD_ZERO(&excFd);
+    FD_ZERO(&inFd);
+    FD_ZERO(&outFd);
+    FD_ZERO(&excFd);
 
-    int maxFd = -1;     // Not used on windows
+    int maxFd = -1; // Not used on windows
     SourceList::iterator it;
-    for (it=_sources.begin(); it!=_sources.end(); ++it) {
+    for (it = _sources.begin(); it != _sources.end(); ++it)
+    {
       int fd = it->getSource()->getfd();
-      if (it->getMask() & ReadableEvent) FD_SET(fd, &inFd);
-      if (it->getMask() & WritableEvent) FD_SET(fd, &outFd);
-      if (it->getMask() & Exception)     FD_SET(fd, &excFd);
-      if (it->getMask() && fd > maxFd)   maxFd = fd;
+      if (it->getMask() & ReadableEvent)
+        FD_SET(fd, &inFd);
+      if (it->getMask() & WritableEvent)
+        FD_SET(fd, &outFd);
+      if (it->getMask() & Exception)
+        FD_SET(fd, &excFd);
+      if (it->getMask() && fd > maxFd)
+        maxFd = fd;
     }
 
     // Check for events
     int nEvents;
     if (timeout < 0.0)
-      nEvents = select(maxFd+1, &inFd, &outFd, &excFd, NULL);
-    else 
+      nEvents = select(maxFd + 1, &inFd, &outFd, &excFd, NULL);
+    else
     {
       struct timeval tv;
       tv.tv_sec = (int)floor(timeout);
-      tv.tv_usec = ((int)floor(1000000.0 * (timeout-floor(timeout)))) % 1000000;
-      nEvents = select(maxFd+1, &inFd, &outFd, &excFd, &tv);
+      tv.tv_usec = ((int)floor(1000000.0 * (timeout - floor(timeout)))) % 1000000;
+      nEvents = select(maxFd + 1, &inFd, &outFd, &excFd, &tv);
     }
 
     if (nEvents < 0)
@@ -122,13 +119,14 @@ XmlRpcDispatch::work(double timeout)
     }
 
     // Process events
-    for (it=_sources.begin(); it != _sources.end(); )
+    for (it = _sources.begin(); it != _sources.end();)
     {
       SourceList::iterator thisIt = it++;
-      XmlRpcSource* src = thisIt->getSource();
+      XmlRpcSource *src = thisIt->getSource();
       int fd = src->getfd();
-      unsigned newMask = (unsigned) -1;
-      if (fd <= maxFd) {
+      unsigned newMask = (unsigned)-1;
+      if (fd <= maxFd)
+      {
         // If you select on multiple event types this could be ambiguous
         if (FD_ISSET(fd, &inFd))
           newMask &= src->handleEvent(ReadableEvent);
@@ -137,11 +135,14 @@ XmlRpcDispatch::work(double timeout)
         if (FD_ISSET(fd, &excFd))
           newMask &= src->handleEvent(Exception);
 
-        if ( ! newMask) {
-          _sources.erase(thisIt);  // Stop monitoring this one
-          if ( ! src->getKeepOpen())
+        if (!newMask)
+        {
+          _sources.erase(thisIt); // Stop monitoring this one
+          if (!src->getKeepOpen())
             src->close();
-        } else if (newMask != (unsigned) -1) {
+        }
+        else if (newMask != (unsigned)-1)
+        {
           thisIt->getMask() = newMask;
         }
       }
@@ -152,8 +153,9 @@ XmlRpcDispatch::work(double timeout)
     {
       SourceList closeList = _sources;
       _sources.clear();
-      for (SourceList::iterator it=closeList.begin(); it!=closeList.end(); ++it) {
-	XmlRpcSource *src = it->getSource();
+      for (SourceList::iterator it = closeList.begin(); it != closeList.end(); ++it)
+      {
+        XmlRpcSource *src = it->getSource();
         src->close();
       }
 
@@ -168,47 +170,41 @@ XmlRpcDispatch::work(double timeout)
   _inWork = false;
 }
 
-
 // Exit from work routine. Presumably this will be called from
 // one of the source event handlers.
-void
-XmlRpcDispatch::exit()
+void XmlRpcDispatch::exit()
 {
-  _endTime = 0.0;   // Return from work asap
+  _endTime = 0.0; // Return from work asap
 }
 
 // Clear all sources from the monitored sources list
-void
-XmlRpcDispatch::clear()
+void XmlRpcDispatch::clear()
 {
   if (_inWork)
-    _doClear = true;  // Finish reporting current events before clearing
+    _doClear = true; // Finish reporting current events before clearing
   else
   {
     SourceList closeList = _sources;
     _sources.clear();
-    for (SourceList::iterator it=closeList.begin(); it!=closeList.end(); ++it)
+    for (SourceList::iterator it = closeList.begin(); it != closeList.end(); ++it)
       it->getSource()->close();
   }
 }
-
 
 double
 XmlRpcDispatch::getTime()
 {
 #ifdef USE_FTIME
-  struct timeb	tbuff;
+  struct timeb tbuff;
 
   ftime(&tbuff);
-  return ((double) tbuff.time + ((double)tbuff.millitm / 1000.0) +
-	  ((double) tbuff.timezone * 60));
+  return ((double)tbuff.time + ((double)tbuff.millitm / 1000.0) +
+          ((double)tbuff.timezone * 60));
 #else
-  struct timeval	tv;
-  struct timezone	tz;
+  struct timeval tv;
+  struct timezone tz;
 
   gettimeofday(&tv, &tz);
   return (tv.tv_sec + tv.tv_usec / 1000000.0);
 #endif /* USE_FTIME */
 }
-
-
