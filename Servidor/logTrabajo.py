@@ -60,7 +60,7 @@ class LogTrabajo:
                 rows = list(reader)
                 
                 # Definir los anchos de columna
-                col_widths = [20, 45, 15, 20, 10, 10, 20]  # Puedes ajustar los valores según sea necesario
+                col_widths = [20, 55, 10, 9, 8, 8, 21]  # Puedes ajustar los valores según sea necesario
                 
                 num_rows_to_show = min(len(rows) - 1, 100)
                 # Imprimir cabecera alineada

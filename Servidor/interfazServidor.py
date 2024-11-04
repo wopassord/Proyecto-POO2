@@ -103,7 +103,7 @@ class InterfazServidor:
             self.escribir_comando()
             respuesta = "Comando escrito en modo manual."
         elif opcion_elegida == 7:
-            self.peticion = "Cargar y ejecutar archivo G-Code en modo automático."
+            self.peticion = "Cargar y ejecutar archivo G-Code."
             respuesta = self.cargar_y_ejecutar_archivo_gcode()
         elif opcion_elegida == 8:
             self.peticion = "Mostrar reporte general"
@@ -156,12 +156,12 @@ class InterfazServidor:
             self.exitos=exito
             self.fallos=1-exito
             self.registrar_log_csv(peticion=self.peticion,fallos=self.fallos, exitos=self.exitos, tiempo_ejecucion=duracion,IP=self.ip_cliente)
-            return 14
+            return 15
         else:
             print("Opción no válida.")
             respuesta = "Opción inválida."
         
-        if opcion_elegida not in [8, 14, 12]:
+        if opcion_elegida not in [9, 15, 13]:
             duracion = (time.time() - inicio)*1000  # Calcular el tiempo de ejecución
             self.registrar_log_csv(peticion=self.peticion,fallos=self.fallos, exitos=self.exitos, tiempo_ejecucion=duracion,IP=self.ip_cliente)
             # logtrabajo = LogTrabajo(servidor=self.servidor,peticion=self.peticion,exitos=1 if respuesta != "Opción inválida" else 0,tiempo_ejecucion=duracion,IP=self.ip_cliente)
@@ -366,23 +366,35 @@ class InterfazServidor:
             return False
         
     def cargar_y_ejecutar_archivo_gcode(self):
+
         if self.modo_trabajo != "automatico":
             print("Esta acción solo está disponible en modo automático. Cambie el modo de trabajo a automático para proceder.")
             return
         nombre_archivo = input("Ingrese el nombre del archivo G-Code a cargar (con extensión): ")
         try:
-            with open(nombre_archivo, 'r', encoding = 'latin-1') as archivo:
+            with open(nombre_archivo, 'r', encoding='latin-1') as archivo:
                 print(f"Ejecutando comandos en {nombre_archivo}...")
                 for linea in archivo:
                     comando = linea.split(";")[0].strip()
                     if comando:
-                        self.controlador.enviar_comando(comando)
+                        respuesta, exito = self.controlador.enviar_comando(comando)
+                        if exito == 0:
+                            print(f"Error al ejecutar comando: {respuesta}")
+                            break
                         time.sleep(0.5)
                 print(f"Archivo {nombre_archivo} ejecutado correctamente.")
+                exito = 1 
+
         except FileNotFoundError:
             print(f"Error: No se pudo encontrar el archivo {nombre_archivo}. Verifique la ruta y el nombre.")
+            exito = 0
+
         except Exception as e:
             print(f"Error al ejecutar el archivo: {e}")
+            exito = 0
+        
+        self.exitos = exito
+        self.fallos = 1 - exito
 
     def verificar_sesion_admin_aux(self): ##SOLO PARA VERIFICAR ERRORES EN EL EXITOS/FALLOS DE MOSTRAR LOG
         self.sesion = self.servidor.get_sesion()
