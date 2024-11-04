@@ -145,3 +145,11 @@ Fecha y Hora,Peticiones,IP,Usuario,Fallos,Exitos,Tiempo de Ejecucion
 2024-11-04 13:04:48,Listar comandos nuevamente,127.0.0.1,Renzito,0,1,0.7653236389160156
 2024-11-04 13:07:56,Conectar robot,127.0.0.1,Renzito,0,1,3503.051519393921
 2024-11-04 13:08:17,Seleccionar modo automatico,127.0.0.1,Renzito,0,1,0.9977817535400391
+2024-11-04 16:20:42,Conectar robot,127.0.0.1,Renzito,0,1,3514.5530700683594
+2024-11-04 16:20:44,Activar motores,127.0.0.1,Renzito,0,1,0.0
+2024-11-04 16:21:00,Desactivar motores,127.0.0.1,Renzito,0,1,0.0
+2024-11-04 16:21:34,Mostrar usuarios,127.0.0.1,Renzito,0,1,1.1932849884033203
+2024-11-04 16:21:39,Mostrar usuarios,127.0.0.1,Renzito,0,1,0.0
+2024-11-04 16:21:47,Mostrar log de trabajo,127.0.0.1,Renzito,0,1,0.0
+2024-11-04 16:31:43,Mostrar usuarios,127.0.0.1,Renzito,0,1,0.0
+2024-11-04 16:34:10,Mostrar usuarios,127.0.0.1,Renzito,0,1,0.0

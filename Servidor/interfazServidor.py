@@ -211,8 +211,14 @@ class InterfazServidor:
     def mostrar_usuarios(self):
         self.peticion = "Mostrar usuarios"
         if self.verificar_sesion_admin() == True:
+            # Imprimir encabezado de la tabla
+            print(f"{'Nombre de usuario':<20} {'Contraseña':<20} {'Es admin':<10}")
+            print("-" * 50)  # Separador para mayor claridad
+        
+            # Imprimir cada usuario en un formato de tabla
             for u in self.usuarios:
-                print(u.nombre_usuario)  # Muestra el nombre del usuario
+                print(f"{u.nombre_usuario:<20} {u.contrasena:<20} {str(u.admin):<10}")
+        
             return
             
 
