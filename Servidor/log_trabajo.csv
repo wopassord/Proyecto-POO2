@@ -238,3 +238,24 @@ Fecha y Hora,Peticiones,IP,Usuario,Fallos,Exitos,Tiempo de Ejecucion
 2024-11-04 13:07:56,Conectar robot,127.0.0.1,Renzito,0,1,3503.051519393921
 2024-11-04 13:08:17,Seleccionar modo automatico,127.0.0.1,Renzito,0,1,0.9977817535400391
 
+2024-11-04 17:12:13,Activar motores,127.0.0.1,Juan,1,0,0.0
+2024-11-04 17:12:15,Activar motores,127.0.0.1,Juan,1,0,1.0008811950683594
+2024-11-04 17:12:20,Conectar robot,127.0.0.1,Juan,1,0,1500.9398460388184
+2024-11-04 17:12:37,Modificar parametros de conexion,127.0.0.1,Juan,0,1,8048.892974853516
+2024-11-04 17:20:53,Activar motores,127.0.0.1,Juan,1,0,0.0
+2024-11-04 17:20:54,Activar motores,127.0.0.1,Juan,1,0,0.0
+2024-11-04 17:20:57,Conectar robot,127.0.0.1,Juan,1,0,1501.1494159698486
+2024-11-04 17:21:05,Modificar parametros de conexion,127.0.0.1,Juan,0,1,6547.062873840332
+2024-11-04 17:21:09,Activar motores,127.0.0.1,Juan,0,1,1.0013580322265625
+2024-11-04 17:21:10,Desactivar motores,127.0.0.1,Juan,0,1,0.0
+2024-11-04 17:21:14,Activar motores,127.0.0.1,Juan,0,1,0.0
+2024-11-04 17:21:15,Desactivar motores,127.0.0.1,Juan,0,1,0.0
+2024-11-04 17:21:51,Mostrar log de trabajo,127.0.0.1,Juan,0,1,0.0
+2024-11-04 17:22:41,Activar motores,127.0.0.1,Juan,1,0,1.004934310913086
+2024-11-04 17:22:44,Conectar robot,127.0.0.1,Juan,1,0,1500.2713203430176
+2024-11-04 17:22:50,Modificar parametros de conexion,127.0.0.1,Juan,0,1,5240.797519683838
+2024-11-04 17:22:50,Activar motores,127.0.0.1,Juan,0,1,0.0
+2024-11-04 17:22:51,Desactivar motores,127.0.0.1,Juan,0,1,0.0
+2024-11-04 17:22:52,Activar motores,127.0.0.1,Juan,0,1,0.0
+2024-11-04 17:22:52,Desactivar motores,127.0.0.1,Juan,0,1,0.0
+2024-11-04 17:22:54,Mostrar log de trabajo,127.0.0.1,Juan,0,1,0.0

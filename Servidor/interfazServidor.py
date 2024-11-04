@@ -179,13 +179,12 @@ class InterfazServidor:
         if self.controlador.get_estado_motores():
             respuesta, exito = self.controlador.desactivar_motores()  # Usamos la instancia
             self.peticion = "Desactivar motores"
-            self.exitos = exito
-            self.fallos = 1 - exito
         else:
-            respuesta = self.controlador.activar_motores()
+            respuesta, exito = self.controlador.activar_motores()
             self.peticion = "Activar motores"
-            self.exitos = exito
-            self.fallos = 1 - exito
+
+        self.exitos = exito
+        self.fallos = 1 - exito
         return respuesta
 
     def mostrar_reporte_general(self):

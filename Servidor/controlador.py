@@ -65,27 +65,31 @@ class Controlador:
     def activar_motores(self):
         if self.estado_robot:
             # Enviar el comando M17 al Arduino sin esperar respuesta
-            respuesta = self.enviar_comando('M17')
+            self.enviar_comando('M17')
             self.estado_motores = True
+            respuesta = "MOTORES ACTIVADOS."
             exito = 1
-            return exito
-        else:
-            exito=0
-            respuesta = "No se pueden activar los motores. El robot no está conectado."
             print(respuesta)
+        else:
+            respuesta = "No se pueden activar los motores. El robot no está conectado."
+            exito = 0
+            print(respuesta)
+        
         return respuesta, exito
     
     def desactivar_motores(self):
         if self.estado_robot:
             # Enviar el comando M18 al Arduino sin esperar respuesta
-            respuesta = self.enviar_comando('M18')
+            self.enviar_comando('M18')
             self.estado_motores = False
+            respuesta = "MOTORES DESACTIVADOS."
             exito = 1
-            return exito
-        else:
-            exito=0
-            respuesta = "No se pueden desactivar los motores. El robot no está conectado."
             print(respuesta)
+        else:
+            respuesta = "No se pueden desactivar los motores. El robot no está conectado."
+            exito = 0
+            print(respuesta)
+
         return respuesta, exito
 
     def enviar_comando(self, comando):
@@ -95,12 +99,10 @@ class Controlador:
                 if comando in ['M17', 'M18']:
                     if comando == 'M17':
                         respuesta = "MOTORES ACTIVADOS."
-                        print("MOTORES ACTIVADOS.")
                         exito = 1
                         return respuesta, exito
                     elif comando == 'M18':
                         respuesta = "MOTORES DESACTIVADOS."
-                        print("MOTORES DESACTIVADOS.")
                         exito = 1
                         return respuesta, exito
                 else:
