@@ -13,4 +13,3 @@ G28         ; Volver a la posici�n de origen (home)
 M84         ; Apagar los motores
 
 ; Fin del archivo G-Code de prueba
-
