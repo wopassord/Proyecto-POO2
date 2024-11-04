@@ -98,27 +98,29 @@ class Servidor:
         self.interfaz = interfaz
 
     def iniciar_servidor(self, host="127.0.0.1", port=8080):
-        """Inicia el servidor XML-RPC en un hilo separado."""
-        print("Iniciando el servidor XML-RPC...")
-        self.running = True
 
-        def run_server():
-            self.server = SimpleXMLRPCServer((host, port), requestHandler=self.MyRequestHandler)
-            self.server.register_instance(self)
-            # Registrar funciones que pueden ser invocadas remotamente
-            self.server.register_function(self.saludo_personalizado, "saludo_personalizado")
-            self.server.register_function(self.apagar_servidor, "apagar_servidor")
-            self.server.register_function(self.subir_archivo_gcode, "subir_archivo_gcode")
-            print(f"Servidor XML-RPC escuchando en {host}:{port}...")
+        if self.interfaz.verificar_sesion_admin() == True:
+            """Inicia el servidor XML-RPC en un hilo separado."""
+            print("Iniciando el servidor XML-RPC...")
+            self.running = True
 
-            # Bucle para manejar solicitudes de clientes XML-RPC
-            while self.running:
-                self.server.handle_request()
+            def run_server():
+                self.server = SimpleXMLRPCServer((host, port), requestHandler=self.MyRequestHandler)
+                self.server.register_instance(self)
+                # Registrar funciones que pueden ser invocadas remotamente
+                self.server.register_function(self.saludo_personalizado, "saludo_personalizado")
+                self.server.register_function(self.apagar_servidor, "apagar_servidor")
+                self.server.register_function(self.subir_archivo_gcode, "subir_archivo_gcode")
+                print(f"Servidor XML-RPC escuchando en {host}:{port}...")
 
-        # Creación y arranque del hilo del servidor XML-RPC
-        self.server_thread = threading.Thread(target=run_server)
-        self.server_thread.start()
-        print("Servidor XML-RPC iniciado en un hilo separado.")
+                # Bucle para manejar solicitudes de clientes XML-RPC
+                while self.running:
+                    self.server.handle_request()
+
+            # Creación y arranque del hilo del servidor XML-RPC
+            self.server_thread = threading.Thread(target=run_server)
+            self.server_thread.start()
+            print("Servidor XML-RPC iniciado en un hilo separado.")
 
     def leer_usuarios_csv(self, archivo='usuarios_servidor_uno.csv'):
         try:
@@ -140,18 +142,19 @@ class Servidor:
             return []
 
     def apagar_servidor(self):
-        """Apaga el servidor XML-RPC de forma controlada."""
-        print("Apagando el servidor...")
-        self.running = False
-        if self.server:
-            self.server.server_close()
-        if self.server_thread:
-            self.server_thread.join()  # Espera a que el hilo del servidor termine, se puede seguir escribiendo en la terminal del "servidor"
-        print("Servidor apagado")
+        if self.interfaz.verificar_sesion_admin() == True:
+            """Apaga el servidor XML-RPC de forma controlada."""
+            print("Apagando el servidor...")
+            self.running = False
+            if self.server:
+                self.server.server_close()
+            if self.server_thread:
+                self.server_thread.join()  # Espera a que el hilo del servidor termine, se puede seguir escribiendo en la terminal del "servidor"
+            print("Servidor apagado")
 
     def guardar_usuario_csv(self, nombre_usuario, contrasena, admin=False, archivo='usuarios_servidor_uno.csv'):
         """Guarda un usuario nuevo en el archivo CSV."""
-        with open(archivo, mode='a', newline='') as csvfile:
+        with open(archivo, mode='a', newline='\n') as csvfile:
             writer = csv.writer(csvfile)
             writer.writerow([nombre_usuario, contrasena, str(admin)])
         print(f"Usuario {nombre_usuario} agregado al archivo CSV.")
@@ -230,7 +233,12 @@ class Servidor:
             if usuario_encontrado.contrasena == contrasena:
                 print(f"Bienvenido {nombre_usuario}!")
                 self.sesion_iniciada = True
-                self.sesion = {'nombre_usuario': nombre_usuario, 'contrasena': contrasena}
+                # Guardar los detalles de la sesión, incluido el estado de administrador
+                self.sesion = {
+                    'nombre_usuario': nombre_usuario,
+                    'contrasena': contrasena,
+                    'admin': usuario_encontrado.admin  # Guardar si es administrador o no
+                }
             else:
                 print("La contraseña ingresada es incorrecta. Pruebe nuevamente.")
 

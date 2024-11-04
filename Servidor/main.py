@@ -8,7 +8,6 @@ def main():
     interfaz = InterfazServidor(servidor, modo_trabajo="manual", modo_coordenadas="absolutas")
 
     # Iniciar el servidor y la interfaz de usuario en hilos separados
-    servidor.iniciar_servidor()
     servidor.asignar_interfaz(interfaz) 
 
     # Leer usuarios disponibles
@@ -33,6 +32,7 @@ def main():
                     if opcion == 1:
                         servidor.iniciar_sesion()
                         if servidor.sesion_iniciada:
+                            servidor.iniciar_servidor()
                             interfaz.listar_comandos()
                     # Se agrega un usuario
                     elif opcion == 2:
