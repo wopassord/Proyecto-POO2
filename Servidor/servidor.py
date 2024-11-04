@@ -104,6 +104,9 @@ class Servidor:
     def saludo_personalizado(self, nombre):
         """Retorna un saludo personalizado al cliente."""
         return f"Hola {nombre}, ¡conexión exitosa con el servidor XML-RPC!"
+    
+    def subir_archivo_gcode(self, nombre_archivo, contenido_archivo, returnBuffer=False):
+        return self.gcode.subir_archivo_gcode(nombre_archivo, contenido_archivo, returnBuffer)
 
     # Visualizacion 3D robot:
 
@@ -188,3 +191,6 @@ class Servidor:
 
     def __repr__(self):
         return f"Servidor con {len(self.usuarios)} usuarios."
+    
+
+

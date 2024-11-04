@@ -8,7 +8,7 @@ class Controlador:
         self.estado_robot = False
         self.estado_motores = False
         self.baudrate = 115200
-        self.puerto_COM = 'COM3'
+        self.puerto_COM = 'COM6'
         self.arduino = None
         self.hilo_lectura = None
         self.cola_respuestas = queue.Queue()
