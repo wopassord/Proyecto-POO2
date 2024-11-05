@@ -63,9 +63,12 @@ class Servidor:
                 reader = csv.reader(csvfile)
                 usuarios = []
                 for row in reader:
-                    nombre_usuario, contrasena, admin = row
-                    admin = (admin.lower() == "true")  # Convertir el valor del campo admin a booleano
-                    usuarios.append(Usuario(nombre_usuario, contrasena, admin))
+
+                    nombre_usuario, contrasena, admin, token = row
+                    admin = (
+                        admin.lower() == "true"
+                    )  # Convertir el valor del campo admin a booleano
+                    usuarios.append(Usuario(nombre_usuario, contrasena, admin, token))
 
                 return usuarios
 
@@ -92,12 +95,21 @@ class Servidor:
             exito = 0
             return exito
 
-    def guardar_usuario_csv(self, nombre_usuario, contrasena, admin=False, archivo="usuarios_servidor_uno.csv",):
+
+    def guardar_usuario_csv(
+        self,
+        nombre_usuario,
+        contrasena,
+        admin=False,
+        token = None,
+        archivo="usuarios_servidor_uno.csv",
+    ):
+
         """Guarda un usuario nuevo en el archivo CSV."""
         with open(archivo, mode='a', newline='\n') as csvfile:
 
             writer = csv.writer(csvfile)
-            writer.writerow([nombre_usuario, contrasena, str(admin)])
+            writer.writerow([nombre_usuario, contrasena, str(admin), token])
         print(f"Usuario {nombre_usuario} agregado al archivo CSV.")
 
     # Métodos XML-RPC
@@ -106,7 +118,15 @@ class Servidor:
         return f"Hola {nombre}, ¡conexión exitosa con el servidor XML-RPC!"
     
     def subir_archivo_gcode(self, nombre_archivo, contenido_archivo, returnBuffer=False):
-        return self.gcode.subir_archivo_gcode(nombre_archivo, contenido_archivo, returnBuffer)
+        if self.interfaz.modo_trabajo == "automatico":
+            try:
+                self.gcode.subir_archivo_gcode(nombre_archivo, contenido_archivo, returnBuffer)
+                return self.interfaz.cargar_y_ejecutar_archivo_gcode(contenido_archivo)
+            except Exception as e:
+                return f"Se produjo el siguiente error: {e}"
+        else:
+            return "Esta acciOn solo esta disponible en modo automatico. Cambie el modo de trabajo a automatico para proceder."
+            
 
     # Visualizacion 3D robot:
 
@@ -124,14 +144,14 @@ class Servidor:
             servidor.ip_cliente = self.client_address[0]
             super().handle()
 
-    def agregar_usuario(self, nombre_usuario, contrasena, admin=False):
+    def agregar_usuario(self, nombre_usuario, contrasena, admin=False, token = None):
         """Agrega un usuario nuevo al sistema."""
-        nuevo_usuario = Usuario(nombre_usuario, contrasena, admin)
+        nuevo_usuario = Usuario(nombre_usuario, contrasena, admin, token)
         self.usuarios.append(nuevo_usuario)
         print(f"Usuario {nombre_usuario} agregado correctamente.")
 
         # Llamar a guardar_usuario_csv para escribir en el archivo CSV
-        self.guardar_usuario_csv(nombre_usuario, contrasena, admin)
+        self.guardar_usuario_csv(nombre_usuario, contrasena, admin, token)
 
     def iniciar_sesion(self):
         """Inicia una sesión de usuario."""

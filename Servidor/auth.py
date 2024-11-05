@@ -4,7 +4,7 @@ from datetime import datetime
 
 
 class GestionUsuarios:
-    def __init__(self, archivo_csv="usuarios.csv"):
+    def __init__(self, archivo_csv="usuarios_servidor_uno.csv"):
         self.archivo_csv = archivo_csv
 
     def registrar_usuario(self, username, password):

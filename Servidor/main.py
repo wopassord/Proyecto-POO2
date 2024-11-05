@@ -5,6 +5,7 @@ from servidor import Servidor
 from servidor_http import app
 import threading
 import uvicorn
+import secrets
 
 
 def init_rpc_server():
@@ -53,7 +54,8 @@ def init_rpc_server():
                         # Pedir datos del usuario para agregar
                         nombre_usuario = input("Ingrese el nombre de usuario: ")
                         contrasena = input("Ingrese la contraseña: ")
-                        servidor.agregar_usuario(nombre_usuario, contrasena)
+                        token = secrets.token_hex(16)
+                        servidor.agregar_usuario(nombre_usuario, contrasena, False, token)
                 except ValueError:
                     print("Ingrese un numero valido.")
             else:
@@ -74,6 +76,8 @@ def init_rpc_server():
             servidor.apagar_servidor()
         if interfaz.controlador.get_estado_robot():
             interfaz.controlador.desconectar_robot()
+        if hasattr(interfaz, 'archivo_trayectoria'):
+            interfaz.archivo_trayectoria.close()
         print("Programa finalizado.")
 
 
