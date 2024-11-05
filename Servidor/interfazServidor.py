@@ -202,8 +202,15 @@ class InterfazServidor:
     
     def mostrar_reporte_general(self):
         try:
-            archivo = Archivo()  # Instancia de Archivo
-            archivo.mostrar_info()  
+            #archivo = Archivo()  # Instancia de Archivo
+
+            respuesta, exito = self.controlador.enviar_comando("M114", mostrar=False)
+            if exito:
+                self.archivo.set_posicion_actual(respuesta)
+            else:
+                print("No se pudo obtener la posición del robot.")
+
+            self.archivo.mostrar_info()  
             self.peticion = "Mostrar reporte general"
             exito = 1
             self.exitos = exito
@@ -288,11 +295,17 @@ class InterfazServidor:
     def mostrar_usuarios(self):
         self.peticion = "Mostrar usuarios"
         if self.verificar_sesion_admin() == True:
+            # Imprimir encabezado de la tabla
+            print(f"{'Nombre de usuario':<20} {'Contraseña':<20} {'Es admin':<10}")
+            print("-" * 50)  # Separador para mayor claridad
+        
             exito = 1
             self.exitos = exito
             self.fallos = 1 - exito
+            # Imprimir cada usuario en un formato de tabla
             for u in self.usuarios:
-                print(u.nombre_usuario)  # Muestra el nombre del usuario
+                print(f"{u.nombre_usuario:<20} {u.contrasena:<20} {str(u.admin):<10}")
+        
             return
 
 
