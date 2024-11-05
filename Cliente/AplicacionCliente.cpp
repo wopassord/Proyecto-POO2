@@ -22,7 +22,6 @@ void AplicacionCliente::ejecutar() {
     //cliente->login_o_signin();
 
     
-
     while (true) {
         cliente->mostrarMenu();
         cin >> entrada;

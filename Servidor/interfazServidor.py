@@ -2,6 +2,8 @@ from archivo import Archivo
 from logTrabajo import LogTrabajo
 from controlador import Controlador
 import time
+from interprete_gcode import SimuladorRobot
+from abb_sim_client import ABBSimClient
 from unidecode import unidecode
 
 class InterfazServidor:
@@ -18,6 +20,8 @@ class InterfazServidor:
         self.exitos = 0
         self.archivo = Archivo(estado_conexion=self.servidor.get_estado_servidor(),posicion="Inicio", estado_actividad="Inactiva")
         self.registrar_inicio_sesion()
+        self.simuladorrobot = SimuladorRobot()
+        self.abbsimclient = ABBSimClient()
 
     def registrar_log_csv(self, peticion, fallos=0, exitos=1, tiempo_ejecucion=0.0, IP="127.0.01"):
         sesion = self.servidor.get_sesion()
@@ -397,35 +401,44 @@ class InterfazServidor:
         
     def cargar_y_ejecutar_archivo_gcode(self, contenido_archivo = None):
         if contenido_archivo is None:
-            # ESTO SUCEDE SOLAMENTE SI SE QUIERE ENVIAR UN ARCHIVO GCODE DESDE EL SERVIDOR
             if self.modo_trabajo != "automatico":
                 print("Esta acción solo está disponible en modo automático. Cambie el modo de trabajo a automático para proceder.")
                 return
             nombre_archivo = input("Ingrese el nombre del archivo G-Code a cargar (con extensión): ")
             try:
                 with open(nombre_archivo, 'r', encoding='latin-1') as archivo:
+                    contenido_gcode = archivo.read()
                     print(f"Ejecutando comandos en {nombre_archivo}...")
-                    for linea in archivo:
-                        comando = linea.split(";")[0].strip()
-                        if comando:
-                            respuesta, exito = self.controlador.enviar_comando(comando)
-                            if exito == 0:
-                                print(f"Error al ejecutar comando: {respuesta}")
-                                break
-                            time.sleep(0.5)
-                    print(f"Archivo {nombre_archivo} ejecutado correctamente.")
-                    exito = 1 
 
-            except FileNotFoundError:
-                print(f"Error: No se pudo encontrar el archivo {nombre_archivo}. Verifique la ruta y el nombre.")
-                exito = 0
+                    # Procesar el contenido G-Code para almacenar movimientos y visualizar
+                    self.simuladorrobot.procesar_gcode(contenido_gcode)
 
-            except Exception as e:
-                print(f"Error al ejecutar el archivo: {e}")
-                exito = 0
-            
-            self.exitos = exito
-            self.fallos = 1 - exito
+                    # Enviar las coordenadas procesadas al cliente de simulación ABB
+                    self.abbsimclient.coordinates = self.simuladorrobot.movimientos
+                    self.abbsimclient.send_all_coordinates(self.abbsimclient.coordinates)
+
+                    # Ejecutar los comandos en el controlador sin volver a procesar el archivo
+                    for linea in contenido_gcode.splitlines():
+                      comando = linea.split(";")[0].strip()
+                            if comando:
+                                respuesta, exito = self.controlador.enviar_comando(comando)
+                                if exito == 0:
+                                    print(f"Error al ejecutar comando: {respuesta}")
+                                    break
+                                time.sleep(0.5)
+                        print(f"Archivo {nombre_archivo} ejecutado correctamente.")
+                        exito = 1 
+
+                except FileNotFoundError:
+                    print(f"Error: No se pudo encontrar el archivo {nombre_archivo}. Verifique la ruta y el nombre.")
+                    exito = 0
+
+                except Exception as e:
+                    print(f"Error al ejecutar el archivo: {e}")
+                    exito = 0
+
+                self.exitos = exito
+                self.fallos = 1 - exito
         else:
             # ESTO SE PRODUCE SOLO CUANDO SE ENVIA UN ARCHIVO DESDE EL CLIENTE, Y SE HACE EL CHEQUEO DE AUTOMATICO EN EL SERVER
             try:
@@ -466,6 +479,7 @@ class InterfazServidor:
             respuesta = unidecode(respuestas_correctas)
 
             return respuesta
+                  
 
     def verificar_sesion_admin_aux(self): ##SOLO PARA VERIFICAR ERRORES EN EL EXITOS/FALLOS DE MOSTRAR LOG
         self.sesion = self.servidor.get_sesion()

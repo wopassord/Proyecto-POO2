@@ -7,6 +7,7 @@ import os
 from datetime import datetime
 
 
+
 class SimuladorRobot:
     def __init__(self):
         self.movimientos = []  # Lista para almacenar las posiciones de cada movimiento
@@ -20,7 +21,6 @@ class SimuladorRobot:
         Extrae los comandos G1 con coordenadas X, Y, Z para determinar las posiciones del robot.
         """
         for linea in contenido_gcode.splitlines():
-            # Buscar el comando G1 que indica movimiento a una posición específica
             if linea.startswith("G1"):
                 x = self.posicion_actual[0]
                 y = self.posicion_actual[1]
@@ -38,23 +38,37 @@ class SimuladorRobot:
                 if match_z:
                     z = float(match_z.group(1))
 
-                # Actualizar la posición actual
-                nueva_posicion = np.array([x, y, z])
-                self.movimientos.append(nueva_posicion)
+                nueva_posicion = np.array([x, y, z], dtype=np.float64)  # Asegurarse de que la posición sea un array de floats
+
+                # Verificar que la nueva posición es un array de tres elementos
+                if nueva_posicion.shape == (3,):
+                    self.movimientos.append(nueva_posicion)
+                    print("Posición agregada:", nueva_posicion)  # Diagnóstico
+                else:
+                    print("Formato de posición incorrecto:", nueva_posicion)
+
                 self.posicion_actual = nueva_posicion
 
     def visualizar_movimientos(self, returnBuffer=False):
         """
         Crea una visualización en 3D de los movimientos del robot y del modelo ABB IRB 460.
         """
+        if not self.movimientos:
+            print("No hay movimientos para visualizar.")
+            return
+
+        movimientos_array = np.array(self.movimientos)
+
+        # Confirmar que movimientos_array tiene la forma esperada
+        if movimientos_array.ndim != 2 or movimientos_array.shape[1] != 3:
+            print("Error: movimientos_array no tiene la forma (n, 3).")
+            print("movimientos_array:", movimientos_array)
+            return
+
         # Figura para la trayectoria del robot
         fig = plt.figure(figsize=(10, 7))
         ax = fig.add_subplot(111, projection="3d")
 
-        # Convertir la lista de movimientos en un array para fácil manipulación
-        movimientos_array = np.array(self.movimientos)
-
-        # Graficar la trayectoria del robot
         ax.plot(
             movimientos_array[:, 0],
             movimientos_array[:, 1],
@@ -69,11 +83,8 @@ class SimuladorRobot:
             origen = movimientos_array[i - 1]
             destino = movimientos_array[i]
             vector = destino - origen
-            versor = vector / np.linalg.norm(
-                vector
-            )  # Normalizar para obtener el versor
+            versor = vector / np.linalg.norm(vector)
 
-            # Dibujar el versor (articulación) con una flecha
             ax.quiver(
                 origen[0],
                 origen[1],
@@ -101,13 +112,11 @@ class SimuladorRobot:
             buffer.close()
             return image_png
 
-        plt.show()
-
+        plt.show(block=False)  # Modo no bloqueante
 
 class UtilGcode:
     def __init__(self) -> None:
         pass
-
     def subir_archivo_gcode(
         self, nombre_archivo, contenido_archivo, returnBuffer=False
     ):
