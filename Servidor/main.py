@@ -55,7 +55,7 @@ def init_rpc_server():
                         nombre_usuario = input("Ingrese el nombre de usuario: ")
                         contrasena = input("Ingrese la contraseña: ")
                         token = secrets.token_hex(16)
-                        servidor.agregar_usuario(nombre_usuario, contrasena,token)
+                        servidor.agregar_usuario(nombre_usuario, contrasena, False, token)
                 except ValueError:
                     print("Ingrese un numero valido.")
             else:
