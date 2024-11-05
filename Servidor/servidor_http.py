@@ -8,12 +8,15 @@ from interprete_gcode import UtilGcode
 from auth import GestionUsuarios
 import csv
 from controlador import Controlador
+from LogTrabajo1 import LogTrabajo
+
 
 app = FastAPI()
 gcode_interprete = UtilGcode()
 auth = GestionUsuarios()
 token_dict = {}  # Diccionario para almacenar los tokens de sesión
 controlador = Controlador()
+log_trabajo = LogTrabajo(servidor=controlador)
 
 
 def protect_route(token):
@@ -109,6 +112,33 @@ async def listar_usuarios(token: str = Cookie(None)):
     usuarios_template = load_html_template("listar_usuarios.html")
     usuarios_html = "".join(usuarios)
     html_content = usuarios_template.replace("{{ usuarios }}", usuarios_html)
+
+    return HTMLResponse(content=html_content)
+
+
+@app.get("/log_trabajo")
+async def log_trabajo_route(token: str = Cookie(None)):
+    protect_route(token)
+
+    # Leer el log CSV y almacenar las filas para el HTML
+    rows = []
+    with open(
+        "log_trabajo.csv", mode="r", encoding="ISO-8859-1"
+    ) as csvfile:  # Añadir encoding
+        reader = csv.reader(csvfile)
+        headers = next(reader)  # Leer cabeceras
+        for row in reader:
+            rows.append(row)
+
+    # Generar el HTML para la tabla de log
+    log_template = load_html_template("log_trabajo.html")
+    headers_html = "".join(f"<th>{header}</th>" for header in headers)
+    rows_html = "".join(
+        "<tr>" + "".join(f"<td>{col}</td>" for col in row) + "</tr>" for row in rows
+    )
+    table_html = f"<table class='log-table'><thead><tr>{headers_html}</tr></thead><tbody>{rows_html}</tbody></table>"
+
+    html_content = log_template.replace("{{ log_table }}", table_html)
 
     return HTMLResponse(content=html_content)
 
