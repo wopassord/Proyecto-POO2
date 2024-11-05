@@ -201,3 +201,16 @@ Fecha y Hora,Peticiones,IP,Usuario,Fallos,Exitos,Tiempo de Ejecucion
 2024-11-05 12:10:45,Conectar robot,127.0.0.1,Juan,0,1,3515.134572982788
 2024-11-05 12:10:47,Mostrar reporte general,127.0.0.1,Juan,0,1,147.71199226379395
 2024-11-05 12:11:05,Apagar programa,127.0.0.1,Juan,0,1,0.011205673217773438
+2024-11-05 12:17:51,Inicio de actividad,127.0.0.1,Sistema,0,1,0.0
+2024-11-05 12:17:51,Inicio de actividad,127.0.0.1,Sistema,0,1,0.0
+2024-11-05 12:18:02,Iniciar Sesion,127.0.0.1,Pepe,0,1,0.0
+2024-11-05 12:18:04,Seleccionar modo automatico,127.0.0.1,Pepe,0,1,0.4138946533203125
+2024-11-05 12:18:05,Seleccionado modo manual,127.0.0.1,Pepe,0,1,0.25844573974609375
+2024-11-05 12:18:06,Cerrar sesión,127.0.0.1,Pepe,0,1,0.012874603271484375
+2024-11-05 12:18:14,Iniciar Sesion,127.0.0.1,Juan,0,1,0.0
+2024-11-05 12:18:28,Modificar parametros de conexion,127.0.0.1,Juan,0,1,10859.86351966858
+2024-11-05 12:18:32,Desconectar robot,127.0.0.1,Juan,0,1,1502.7737617492676
+2024-11-05 12:18:37,Conectar robot,127.0.0.1,Juan,0,1,3515.3074264526367
+2024-11-05 12:18:39,Activar motores,127.0.0.1,Juan,0,1,0.2827644348144531
+2024-11-05 12:18:42,Mostrar reporte general,127.0.0.1,Juan,0,1,106.53519630432129
+2024-11-05 12:18:51,Apagar programa,127.0.0.1,Juan,0,1,0.008106231689453125
