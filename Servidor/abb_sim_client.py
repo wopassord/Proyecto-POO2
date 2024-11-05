@@ -1,6 +1,7 @@
 import socket
 import time
-from interprete_gcode import SimuladorRobot
+import numpy as np
+
 
 class ABBSimClient:
     def __init__(self, host='localhost', port=8001):
@@ -20,27 +21,11 @@ class ABBSimClient:
         with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as client_socket:
             client_socket.connect((self.host, self.port))
             for coord in coordinates_list:
-                message = coord + "\n"
+                if not isinstance(coord, np.ndarray):  # Verificar tipo de coord
+                    coord = np.array(coord, dtype=np.float64)  # Convertir a array de floats si no lo es
+                message = ", ".join(map(str, coord)) + "\n"
                 client_socket.sendall(message.encode('utf-8'))
-                print("Coordenada enviada:", coord)
-                time.sleep(0.1)  # Pausa entre mensajes
-            # Enviar mensaje para indicar el final de la transmisión
+                print("Coordenada enviada:", message)
+                time.sleep(0.1)
             client_socket.sendall("fin_gif\n".encode('utf-8'))
             print("Se enviaron todas las coordenadas. Finalizando guardado del GIF.")
-
-
-if __name__ == "__main__":
-    simuladorrobot = SimuladorRobot()
-    client = ABBSimClient()
-    movimientos = []
-    with open("instrucciones5.gcode", "r") as file:
-        contenido_gcode = file.read()
-    simuladorrobot.procesar_gcode(contenido_gcode)
-    print("Movimientos procesados:")
-    client.coordinates = simuladorrobot.movimientos
-
-    print(client.coordinates)
-    client.send_all_coordinates(client.coordinates)
-
-
-

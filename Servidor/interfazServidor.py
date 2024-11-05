@@ -3,6 +3,7 @@ from logTrabajo import LogTrabajo
 from controlador import Controlador
 import time
 from interprete_gcode import SimuladorRobot
+from abb_sim_client import ABBSimClient
 
 class InterfazServidor:
     def __init__(self, servidor, modo_trabajo="automatico", modo_coordenadas="absolutas"):
@@ -19,6 +20,7 @@ class InterfazServidor:
         self.archivo = Archivo(estado_conexion=self.servidor.get_estado_servidor(),posicion="Inicio", estado_actividad="Inactiva")
         self.registrar_inicio_sesion()
         self.simuladorrobot = SimuladorRobot()
+        self.abbsimclient = ABBSimClient()
 
     def registrar_log_csv(self, peticion, fallos=0, exitos=1, tiempo_ejecucion=0.0, IP="127.0.01"):
         sesion = self.servidor.get_sesion()
@@ -376,15 +378,24 @@ class InterfazServidor:
             return False
         
     def cargar_y_ejecutar_archivo_gcode(self):
-
         if self.modo_trabajo != "automatico":
             print("Esta acción solo está disponible en modo automático. Cambie el modo de trabajo a automático para proceder.")
             return
         nombre_archivo = input("Ingrese el nombre del archivo G-Code a cargar (con extensión): ")
         try:
             with open(nombre_archivo, 'r', encoding='latin-1') as archivo:
+                contenido_gcode = archivo.read()
                 print(f"Ejecutando comandos en {nombre_archivo}...")
-                for linea in archivo:
+
+                # Procesar el contenido G-Code para almacenar movimientos y visualizar
+                self.simuladorrobot.procesar_gcode(contenido_gcode)
+
+                # Enviar las coordenadas procesadas al cliente de simulación ABB
+                self.abbsimclient.coordinates = self.simuladorrobot.movimientos
+                self.abbsimclient.send_all_coordinates(self.abbsimclient.coordinates)
+
+                # Ejecutar los comandos en el controlador sin volver a procesar el archivo
+                for linea in contenido_gcode.splitlines():
                     comando = linea.split(";")[0].strip()
                     if comando:
                         respuesta, exito = self.controlador.enviar_comando(comando)
@@ -394,9 +405,6 @@ class InterfazServidor:
                         time.sleep(0.5)
                 print(f"Archivo {nombre_archivo} ejecutado correctamente.")
                 exito = 1 
-            
-            # self.simuladorrobot.procesar_gcode(nombre_archivo)
-            # self.simuladorrobot.visualizar_movimientos()
 
         except FileNotFoundError:
             print(f"Error: No se pudo encontrar el archivo {nombre_archivo}. Verifique la ruta y el nombre.")
