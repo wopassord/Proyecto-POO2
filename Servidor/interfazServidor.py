@@ -419,8 +419,8 @@ class InterfazServidor:
 
                     # Ejecutar los comandos en el controlador sin volver a procesar el archivo
                     for linea in contenido_gcode.splitlines():
-                      comando = linea.split(";")[0].strip()
-                            if comando:
+                        comando = linea.split(";")[0].strip()
+                        if comando:
                                 respuesta, exito = self.controlador.enviar_comando(comando)
                                 if exito == 0:
                                     print(f"Error al ejecutar comando: {respuesta}")
@@ -429,13 +429,13 @@ class InterfazServidor:
                         print(f"Archivo {nombre_archivo} ejecutado correctamente.")
                         exito = 1 
 
-                except FileNotFoundError:
-                    print(f"Error: No se pudo encontrar el archivo {nombre_archivo}. Verifique la ruta y el nombre.")
-                    exito = 0
+            except FileNotFoundError:
+                print(f"Error: No se pudo encontrar el archivo {nombre_archivo}. Verifique la ruta y el nombre.")
+                exito = 0
 
-                except Exception as e:
-                    print(f"Error al ejecutar el archivo: {e}")
-                    exito = 0
+            except Exception as e:
+                print(f"Error al ejecutar el archivo: {e}")
+                exito = 0
 
                 self.exitos = exito
                 self.fallos = 1 - exito
