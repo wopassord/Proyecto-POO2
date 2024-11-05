@@ -9,25 +9,22 @@ bool ClienteRPC::iniciarSesion() {
     std::cout << "Ingrese la contraseña: ";
     std::cin >> contrasena;
 
+    // Crear un array en args para enviar los datos correctamente
     XmlRpcValue args;
+    args.setSize(2); // Configura el tamaño del array
     args[0] = nombre_usuario;
     args[1] = contrasena;
 
     try {
-        if (client.execute("iniciar_sesion", args, result)) {
+        if (client.execute("iniciar_sesion_cliente", args, result)) {
             bool sesion_iniciada = static_cast<bool>(result[0]);
-            bool es_admin = static_cast<bool>(result[1]);
+            std::string mensaje = static_cast<std::string>(result[1]);
 
             if (sesion_iniciada) {
-                std::cout << "Sesión iniciada correctamente.\n";
-                if (es_admin) {
-                    std::cout << "El usuario tiene permisos de administrador.\n";
-                } else {
-                    std::cout << "El usuario no tiene permisos de administrador.\n";
-                }
+                std::cout << mensaje << "\n";
                 return true;
             } else {
-                std::cout << "Error: Nombre de usuario o contraseña incorrectos.\n";
+                std::cout << "Error: " << mensaje << "\n";
                 return false;
             }
         }
@@ -47,9 +44,7 @@ bool ClienteRPC::agregarUsuario() {
     std::cin >> nombre_usuario;
     std::cout << "Ingrese la contraseña: ";
     std::cin >> contrasena;
-    std::cout << "¿Es administrador? (1 para sí, 0 para no): ";
-    std::cin >> admin;
-
+    admin=false;
     // Configurar los argumentos para enviar al servidor
     XmlRpcValue args;
     args[0] = nombre_usuario;
