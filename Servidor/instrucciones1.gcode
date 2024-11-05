@@ -1,4 +1,5 @@
 ; Inicio del archivo G-Code de prueba
+
 G21         ; Establecer las unidades en milimetros
 G90         ; Usar posicionamiento absoluto
 G28         ; Llevar a casa todas las posiciones

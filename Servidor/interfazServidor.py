@@ -346,14 +346,19 @@ class InterfazServidor:
         exito = 1
         self.exitos = exito
         self.fallos = 1 - exito
-    
 
     def escribir_comando(self):
-        # #self.peticion = "Enviar comando"
+        self.peticion = "Enviar comando"
         if self.modo_trabajo == "manual":
-            try: 
+            try:
+                if not hasattr(self, 'archivo_trayectoria'):
+                    nombre_archivo = input("Ingrese el nombre del archivo para almacenar los comandos (con extensión .txt): ")
+                    self.archivo_trayectoria = open(nombre_archivo, 'a', encoding='utf-8')
                 comando = input("Ingrese el comando en G-Code para accionar el robot: ")
                 respuesta, exito = self.controlador.enviar_comando(comando)
+                self.archivo_trayectoria.write(f"{comando}\n")
+                self.archivo_trayectoria.flush()
+                print(f"Comando '{comando}' guardado en el archivo.")
                 self.exitos = exito
                 self.fallos = 1 - exito
             except Exception as e:
