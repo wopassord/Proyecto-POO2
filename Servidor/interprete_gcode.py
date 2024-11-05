@@ -48,18 +48,19 @@ class SimuladorRobot:
         Crea una visualización en 3D de los movimientos del robot y del modelo ABB IRB 460.
         """
         # Figura para la trayectoria del robot
-        fig1 = plt.figure()
-        ax1 = fig1.add_subplot(111, projection="3d")
+        fig = plt.figure(figsize=(10, 7))
+        ax = fig.add_subplot(111, projection="3d")
 
         # Convertir la lista de movimientos en un array para fácil manipulación
         movimientos_array = np.array(self.movimientos)
 
         # Graficar la trayectoria del robot
-        ax1.plot(
+        ax.plot(
             movimientos_array[:, 0],
             movimientos_array[:, 1],
             movimientos_array[:, 2],
             marker="o",
+            color="b",
             label="Trayectoria",
         )
 
@@ -73,7 +74,7 @@ class SimuladorRobot:
             )  # Normalizar para obtener el versor
 
             # Dibujar el versor (articulación) con una flecha
-            ax1.quiver(
+            ax.quiver(
                 origen[0],
                 origen[1],
                 origen[2],
@@ -86,38 +87,11 @@ class SimuladorRobot:
             )
 
         # Configuración de los ejes
-        ax1.set_xlabel("X")
-        ax1.set_ylabel("Y")
-        ax1.set_zlabel("Z")
-        ax1.set_title("Simulación de Movimientos del Robot")
-        plt.legend()
-
-        # Figura para el modelo ABB IRB 460
-        fig2 = plt.figure()
-        ax2 = fig2.add_subplot(111, projection="3d")
-
-        # Definir el ABB IRB 460 usando los parámetros DH
-        # irb460 = DHRobot(
-        #     [
-        #         RevoluteDH(a=0, alpha=np.pi / 2, d=0.8),  # Primer enlace
-        #         RevoluteDH(a=0.5, alpha=0, d=0),  # Segundo enlace
-        #         RevoluteDH(a=0.35, alpha=0, d=0),  # Tercer enlace
-        #         RevoluteDH(a=0, alpha=np.pi / 2, d=0.2),  # Cuarto enlace
-        #     ],
-        #     name="ABB IRB 460",
-        # )
-
-        # # Configuración de las articulaciones
-        # q = [0, np.pi / 4, -np.pi / 4, np.pi / 6]
-
-        # # Plotear el modelo del robot en la configuración deseada
-        # irb460.plot(q, block=False, ax=ax2)
-
-        # Configuración de los ejes
-        ax2.set_xlabel("X")
-        ax2.set_ylabel("Y")
-        ax2.set_zlabel("Z")
-        ax2.set_title("Modelo ABB IRB 460 en configuración deseada")
+        ax.set_xlabel("X")
+        ax.set_ylabel("Y")
+        ax.set_zlabel("Z")
+        ax.set_title("Simulación de Movimientos del Robot")
+        ax.legend()
 
         if returnBuffer:
             buffer = BytesIO()
@@ -140,7 +114,6 @@ class UtilGcode:
         """Guarda un archivo G-Code enviado por el cliente."""
         try:
 
-            print("VAA A A RETORNAR BUFFER", returnBuffer)
             print("-------------------------------------------")
             print(f"Archivo {nombre_archivo} recibido.")
             print(f"Contenido del archivo: \n{contenido_archivo}")
@@ -165,6 +138,8 @@ class UtilGcode:
                     return image_path  # Devolver el path de la imagen
 
             simulador.visualizar_movimientos(False)
+
+            
             return f"Archivo {nombre_archivo} recibido y almacenado correctamente."
 
         except Exception as e:

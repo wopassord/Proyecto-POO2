@@ -2,6 +2,7 @@ from archivo import Archivo
 from logTrabajo import LogTrabajo
 from controlador import Controlador
 import time
+from unidecode import unidecode
 
 class InterfazServidor:
     def __init__(self, servidor, modo_trabajo="automatico", modo_coordenadas="absolutas"):
@@ -50,9 +51,12 @@ class InterfazServidor:
     def recibir_comando_cliente(self, comando):
         # Recibe un comando desde el servidor (que lo recibe de cliente) y lo procesa.
         if comando not in list(range(1, 5)):
-            respuesta = self.controlador.enviar_comando(comando)
+            if self.modo_trabajo == "manual":
+                respuesta = self.controlador.enviar_comando(comando)
+            else:
+                respuesta = "Esta accion solo esta disponible en modo manual. Cambie el modo de trabajo a automatico para proceder."
         else:
-            respuesta = self.administrar_comandos(comando)
+                respuesta = self.administrar_comandos(comando)
         return respuesta
 
     def administrar_comandos(self, opcion_elegida = None):
@@ -202,8 +206,15 @@ class InterfazServidor:
     
     def mostrar_reporte_general(self):
         try:
-            archivo = Archivo()  # Instancia de Archivo
-            archivo.mostrar_info()  
+            #archivo = Archivo()  # Instancia de Archivo
+
+            respuesta, exito = self.controlador.enviar_comando("M114", mostrar=False)
+            if exito:
+                self.archivo.set_posicion_actual(respuesta)
+            else:
+                print("No se pudo obtener la posición del robot.")
+
+            self.archivo.mostrar_info()  
             self.peticion = "Mostrar reporte general"
             exito = 1
             self.exitos = exito
@@ -288,11 +299,17 @@ class InterfazServidor:
     def mostrar_usuarios(self):
         self.peticion = "Mostrar usuarios"
         if self.verificar_sesion_admin() == True:
+            # Imprimir encabezado de la tabla
+            print(f"{'Nombre de usuario':<20} {'Contraseña':<20} {'Es admin':<10}")
+            print("-" * 50)  # Separador para mayor claridad
+        
             exito = 1
             self.exitos = exito
             self.fallos = 1 - exito
+            # Imprimir cada usuario en un formato de tabla
             for u in self.usuarios:
-                print(u.nombre_usuario)  # Muestra el nombre del usuario
+                print(f"{u.nombre_usuario:<20} {u.contrasena:<20} {str(u.admin):<10}")
+        
             return
 
 
@@ -378,36 +395,77 @@ class InterfazServidor:
             print("No hay ningún usuario en sesión.")
             return False
         
-    def cargar_y_ejecutar_archivo_gcode(self):
+    def cargar_y_ejecutar_archivo_gcode(self, contenido_archivo = None):
+        if contenido_archivo is None:
+            # ESTO SUCEDE SOLAMENTE SI SE QUIERE ENVIAR UN ARCHIVO GCODE DESDE EL SERVIDOR
+            if self.modo_trabajo != "automatico":
+                print("Esta acción solo está disponible en modo automático. Cambie el modo de trabajo a automático para proceder.")
+                return
+            nombre_archivo = input("Ingrese el nombre del archivo G-Code a cargar (con extensión): ")
+            try:
+                with open(nombre_archivo, 'r', encoding='latin-1') as archivo:
+                    print(f"Ejecutando comandos en {nombre_archivo}...")
+                    for linea in archivo:
+                        comando = linea.split(";")[0].strip()
+                        if comando:
+                            respuesta, exito = self.controlador.enviar_comando(comando)
+                            if exito == 0:
+                                print(f"Error al ejecutar comando: {respuesta}")
+                                break
+                            time.sleep(0.5)
+                    print(f"Archivo {nombre_archivo} ejecutado correctamente.")
+                    exito = 1 
 
-        if self.modo_trabajo != "automatico":
-            print("Esta acción solo está disponible en modo automático. Cambie el modo de trabajo a automático para proceder.")
-            return
-        nombre_archivo = input("Ingrese el nombre del archivo G-Code a cargar (con extensión): ")
-        try:
-            with open(nombre_archivo, 'r', encoding='latin-1') as archivo:
-                print(f"Ejecutando comandos en {nombre_archivo}...")
-                for linea in archivo:
+            except FileNotFoundError:
+                print(f"Error: No se pudo encontrar el archivo {nombre_archivo}. Verifique la ruta y el nombre.")
+                exito = 0
+
+            except Exception as e:
+                print(f"Error al ejecutar el archivo: {e}")
+                exito = 0
+            
+            self.exitos = exito
+            self.fallos = 1 - exito
+        else:
+            # ESTO SE PRODUCE SOLO CUANDO SE ENVIA UN ARCHIVO DESDE EL CLIENTE, Y SE HACE EL CHEQUEO DE AUTOMATICO EN EL SERVER
+            try:
+                # Dividir el string G-Code en líneas
+                lineas = contenido_archivo.splitlines()
+                
+                print(f"Ejecutando comandos G-Code...")
+
+                respuestas_correctas = ""
+
+                for linea in lineas:
+                    # Eliminar comentarios y espacios innecesarios
                     comando = linea.split(";")[0].strip()
-                    if comando:
+                    
+                    if comando:  # Si la línea no está vacía después de quitar los comentarios
+                        # Enviar el comando a través del controlador
                         respuesta, exito = self.controlador.enviar_comando(comando)
+                        
                         if exito == 0:
-                            print(f"Error al ejecutar comando: {respuesta}")
-                            break
-                        time.sleep(0.5)
-                print(f"Archivo {nombre_archivo} ejecutado correctamente.")
-                exito = 1 
+                            continue  # Continuar con el siguiente comando
+                        
+                        # Si la respuesta es válida, agregarla a la lista
+                        if respuesta:
+                            # Limpiar respuesta de caracteres especiales y acumular
+                            respuesta_limpia = ''.join(c for c in respuesta if c.isascii())
+                            respuestas_correctas += respuesta_limpia + "\n"
 
-        except FileNotFoundError:
-            print(f"Error: No se pudo encontrar el archivo {nombre_archivo}. Verifique la ruta y el nombre.")
-            exito = 0
+                print(f"Comandos G-Code ejecutados correctamente.")
+                exito = 1  # Marcar como exitoso
 
-        except Exception as e:
-            print(f"Error al ejecutar el archivo: {e}")
-            exito = 0
-        
-        self.exitos = exito
-        self.fallos = 1 - exito
+            except Exception as e:
+                print(f"Error al ejecutar el G-Code: {e}")
+                exito = 0  # Marcar como fallido
+
+            self.exitos = exito
+            self.fallos = 1 - exito
+
+            respuesta = unidecode(respuestas_correctas)
+
+            return respuesta
 
     def verificar_sesion_admin_aux(self): ##SOLO PARA VERIFICAR ERRORES EN EL EXITOS/FALLOS DE MOSTRAR LOG
         self.sesion = self.servidor.get_sesion()
