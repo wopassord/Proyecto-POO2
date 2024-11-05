@@ -5,7 +5,6 @@ import base64
 from io import BytesIO
 import os
 from datetime import datetime
-import abb_sim_client
 
 
 class SimuladorRobot:

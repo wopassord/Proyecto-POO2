@@ -8,7 +8,7 @@ class ABBSimClient:
         self.port = port
         self.client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.client_socket.connect((self.host, self.port))
-        self.coordinates = None
+        self.coordinates = []
 
     def send_coordinate(self, coordinate):
         """Envía una coordenada al servidor MATLAB."""
@@ -29,47 +29,20 @@ class ABBSimClient:
         self.client_socket.sendall("salir\n".encode('utf-8'))
         print("Comando de salida enviado. Finalizando cliente...")
         self.client_socket.close()
-
-    def format_coordinates(self, movimientos):
-        """
-        Convierte las coordenadas almacenadas en la lista `movimientos` de SimuladorRobot
-        a un formato de texto adecuado para enviar al servidor MATLAB.
-        """
-        self.coordinates = []
-        for pos in movimientos:
-            coord_str = f"{pos[0]*0.001},{pos[1]*0.001},{pos[2]*0.001}"
-            self.coordinates.append(coord_str)
             
 if __name__ == "__main__":
     simuladorrobot = SimuladorRobot()
     client = ABBSimClient()
+    movimientos = []
     with open("instrucciones1.gcode", "r") as file:
         contenido_gcode = file.read()
     simuladorrobot.procesar_gcode(contenido_gcode)
     print("Movimientos procesados:")
-    for movimiento in simuladorrobot.movimientos:
-        print(movimiento)
-    movimientos = [
-        (0.04, 0.02, 0.1),
-        (-0.05, -0.01, 0.2),
-        (0.06, -0.03, 0.15),
-        (-0.04, 0.05, 0.18),
-        (0.03, -0.02, 0.12),
-        (-0.02, 0.04, 0.16)
-    ]
-    client.format_coordinates(movimientos)
+    client.coordinates = simuladorrobot.movimientos
+
     print(client.coordinates)
     client.send_all_coordinates(client.coordinates)
     client.close_connection()
 
-        # Crear una instancia de SimuladorRobot
-    simulador = SimuladorRobot()
 
-    # Leer el archivo G-Code
-
-
-    # Procesar el archivo G-Code
-
-
-    # Mostrar los movimientos procesados
 
