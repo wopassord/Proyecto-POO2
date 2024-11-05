@@ -117,7 +117,15 @@ class Servidor:
         return f"Hola {nombre}, ¡conexión exitosa con el servidor XML-RPC!"
     
     def subir_archivo_gcode(self, nombre_archivo, contenido_archivo, returnBuffer=False):
-        return self.gcode.subir_archivo_gcode(nombre_archivo, contenido_archivo, returnBuffer)
+        if self.interfaz.modo_trabajo == "automatico":
+            try:
+                self.gcode.subir_archivo_gcode(nombre_archivo, contenido_archivo, returnBuffer)
+                return self.interfaz.cargar_y_ejecutar_archivo_gcode(contenido_archivo)
+            except Exception as e:
+                return f"Se produjo el siguiente error: {e}"
+        else:
+            return "Esta acciOn solo esta disponible en modo automatico. Cambie el modo de trabajo a automatico para proceder."
+            
 
     # Visualizacion 3D robot:
 
