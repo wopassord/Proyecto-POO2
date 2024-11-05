@@ -84,6 +84,23 @@ async def login(username: str = Form(...), password: str = Form(...)):
     data = auth.verificar_usuario(username, password)
     if data is None:
         data = auth.registrar_usuario(username, password)
+        exito = 1
+        accion = "Registro e Inicio de Sesion"
+    else:
+        exito = 1
+        accion = "Inicio de Sesion"
+
+    # Actualizar el log con la acción de inicio de sesión
+    log_trabajo.actualizar_log(
+        peticion=accion,
+        usuario=username,
+        fallos=0 if exito else 1,
+        exitos=1 if exito else 0,
+        tiempo_ejecucion=0.0,  # Puedes calcular el tiempo si es necesario
+    )
+    log_trabajo.escribir_CSV()  # Escribir en el log inmediatamente
+
+    # Crear la respuesta de redirección después del login exitoso
     response = RedirectResponse(url="/menu", status_code=303)
     response.set_cookie(key="token", value=data[3])
     return response
@@ -178,12 +195,23 @@ async def on_off_robot(token: str = Cookie(None)):
 
     # Alternar el estado de conexión del robot
     if controlador.get_estado_robot():
-        mensaje, _ = controlador.desconectar_robot()
+        mensaje, exito = controlador.desconectar_robot()
+        accion = "Desconectar Robot"
     else:
-        mensaje, _ = controlador.conectar_robot()
+        mensaje, exito = controlador.conectar_robot()
+        accion = "Conectar Robot"
 
     # Formatear el mensaje para mostrar el estado
     mensaje = f"{mensaje} de manera exitosa, {user}."
+
+    log_trabajo.actualizar_log(
+        peticion=accion,
+        usuario=user,
+        fallos=0 if exito else 1,
+        exitos=1 if exito else 0,
+        tiempo_ejecucion=0.0,  # Puedes ajustar el tiempo si es relevante
+    )
+    log_trabajo.escribir_CSV()
 
     # Cargar la plantilla y reemplazar el mensaje
     robot_template = load_html_template("on_off_robot.html")
@@ -200,12 +228,23 @@ async def motores(token: str = Cookie(None)):
 
     # Alternar el estado de los motores
     if controlador.get_estado_motores():
-        mensaje, _ = controlador.desactivar_motores()
+        mensaje, exito = controlador.desactivar_motores()
+        accion = "Desactivar Motores"
     else:
-        mensaje, _ = controlador.activar_motores()
+        mensaje, exito = controlador.activar_motores()
+        accion = "Activar Motores"
 
     # Formatear el mensaje para mostrar el estado
     mensaje = f"{mensaje} correctamente, {user}."
+
+    log_trabajo.actualizar_log(
+        peticion=accion,
+        usuario=user,
+        fallos=0 if exito else 1,
+        exitos=1 if exito else 0,
+        tiempo_ejecucion=0.0,  # Ajusta si se calcula el tiempo
+    )
+    log_trabajo.escribir_CSV()
 
     # Cargar la plantilla y reemplazar el mensaje
     motores_template = load_html_template("motores.html")
