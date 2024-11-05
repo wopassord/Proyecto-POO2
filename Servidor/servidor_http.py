@@ -34,7 +34,7 @@ def load_html_template(archivo):
         "Ruta de la plantilla HTML:", template_path
     )  # Verifica que el path sea correcto
     try:
-        with open(template_path, "r") as f:
+        with open(template_path, "r", encoding="ISO-8859-1") as f:
             return f.read()
     except FileNotFoundError:
         raise HTTPException(status_code=500, detail="Plantilla HTML no encontrada")
@@ -139,6 +139,28 @@ async def log_trabajo_route(token: str = Cookie(None)):
     table_html = f"<table class='log-table'><thead><tr>{headers_html}</tr></thead><tbody>{rows_html}</tbody></table>"
 
     html_content = log_template.replace("{{ log_table }}", table_html)
+
+    return HTMLResponse(content=html_content)
+
+
+# Ruta para conectar o desconectar el robot
+@app.get("/on_off_robot")
+async def on_off_robot(token: str = Cookie(None)):
+    protect_route(token)
+    user = auth.find_user(token)[0]
+
+    # Alternar el estado de conexión del robot
+    if controlador.get_estado_robot():
+        mensaje, _ = controlador.desconectar_robot()
+    else:
+        mensaje, _ = controlador.conectar_robot()
+
+    # Formatear el mensaje para mostrar el estado
+    mensaje = f"{mensaje} de manera exitosa, {user}."
+
+    # Cargar la plantilla y reemplazar el mensaje
+    robot_template = load_html_template("on_off_robot.html")
+    html_content = robot_template.replace("{{ mensaje }}", mensaje)
 
     return HTMLResponse(content=html_content)
 
