@@ -15,8 +15,8 @@ class InterfazServidor:
         self.log_trabajo = LogTrabajo(servidor=servidor)
         self.fallos = 0
         self.exitos = 0
-        self.archivo = Archivo(estado_conexion=self.servidor.get_estado_servidor(),
-                        posicion="Inicio", estado_actividad="Inactiva")
+        self.archivo = Archivo(estado_conexion=self.servidor.get_estado_servidor(),posicion="Inicio", estado_actividad="Inactiva")
+        self.registrar_inicio_sesion()
 
     def registrar_log_csv(self, peticion, fallos=0, exitos=1, tiempo_ejecucion=0.0, IP="127.0.01"):
         sesion = self.servidor.get_sesion()
@@ -194,9 +194,16 @@ class InterfazServidor:
         self.fallos = 1 - exito
         return respuesta
 
+    def registrar_inicio_sesion(self):
+        """Registra el inicio de una nueva sesión en el log."""
+        self.log_trabajo.actualizar_log(peticion="Inicio de actividad", usuario="Sistema", fallos=0, exitos=1)
+        self.log_trabajo.escribir_CSV()
+    
+    
     def mostrar_reporte_general(self):
         try:
-            Archivo.mostrar_info()  # Muestra información general
+            archivo = Archivo()  # Instancia de Archivo
+            archivo.mostrar_info()  
             self.peticion = "Mostrar reporte general"
             exito = 1
             self.exitos = exito
@@ -216,6 +223,7 @@ class InterfazServidor:
             self.exitos = exito
             self.fallos = 1 - exito
             print(f"Error inesperado: {e}")
+
 
     def mostrar_log_trabajo(self):
         self.peticion = "Mostrar log de trabajo"
