@@ -14,7 +14,6 @@ class SimuladorRobot:
         self.posicion_actual = np.array(
             [60, 0, 260]
         )  # Posición inicial del robot en el origen
-        # self.ABB = abb_sim_client.ABBSimClient()
 
     def procesar_gcode(self, contenido_gcode):
         """
@@ -41,9 +40,9 @@ class SimuladorRobot:
                     z = float(match_z.group(1))
 
                 # Actualizar la posición actual
-                nueva_posicion = np.array([x, y, z])
+                nueva_posicion = f"{x}, {y}, {z}"
                 self.movimientos.append(nueva_posicion)
-                self.posicion_actual = nueva_posicion
+                self.posicion_actual = np.array([x, y, z])
 
     def visualizar_movimientos(self, returnBuffer=False):
         """
@@ -115,7 +114,6 @@ class SimuladorRobot:
 class UtilGcode:
     def __init__(self) -> None:
         pass
-
     def subir_archivo_gcode(
         self, nombre_archivo, contenido_archivo, returnBuffer=False
     ):
@@ -151,3 +149,20 @@ class UtilGcode:
         except Exception as e:
             print(f"Error al guardar el archivo: {str(e)}")
             return None
+
+
+if __name__ == "__main__":
+    # Crear una instancia de SimuladorRobot
+    simulador = SimuladorRobot()
+
+    # Leer el archivo G-Code
+    with open("instrucciones1.gcode", "r") as file:
+        contenido_gcode = file.read()
+
+    # Procesar el archivo G-Code
+    simulador.procesar_gcode(contenido_gcode)
+
+    # Mostrar los movimientos procesados
+    print("Movimientos procesados:")
+    for movimiento in simulador.movimientos:
+        print(movimiento)
