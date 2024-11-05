@@ -28,7 +28,6 @@ class Servidor:
 
     def iniciar_servidor(self, host="127.0.0.1", port=8080):
 
-        if self.interfaz.verificar_sesion_admin() == True:
             """Inicia el servidor XML-RPC en un hilo separado."""
             print("Iniciando el servidor XML-RPC...")
             self.running = True
@@ -38,6 +37,7 @@ class Servidor:
                 self.server.register_instance(self)
                 # Registrar funciones que pueden ser invocadas remotamente
                 self.server.register_function(self.saludo_personalizado, "saludo_personalizado")
+                self.server.register_function(self.iniciar_sesion_cliente, "iniciar_sesion")
                 self.server.register_function(self.apagar_servidor, "apagar_servidor")
                 self.server.register_function(self.subir_archivo_gcode, "subir_archivo_gcode")
                 print(f"Servidor XML-RPC escuchando en {host}:{port}...")
@@ -51,9 +51,6 @@ class Servidor:
             self.server_thread.start()
             print("Servidor XML-RPC iniciado en un hilo separado.")
             exito = 1
-            return exito
-        else:
-            exito = 0
             return exito
 
 
@@ -190,6 +187,33 @@ class Servidor:
                 }
             else:
                 print("La contraseña ingresada es incorrecta. Pruebe nuevamente.")
+    
+    def iniciar_sesion_cliente(self, nombre_usuario, contrasena):
+        """Inicia una sesión de usuario para un cliente que envía los datos directamente."""
+        if self.sesion_iniciada:
+            return False, "Ya hay una sesión iniciada."
+
+        # Leer usuarios desde el archivo CSV
+        self.usuarios = self.leer_usuarios_csv()
+
+        # Buscar el usuario en la lista obtenida del archivo CSV
+        usuario_encontrado = next(
+            (u for u in self.usuarios if u.nombre_usuario == nombre_usuario), None
+        )
+        if not usuario_encontrado:
+            return False, "El usuario ingresado no existe."
+
+        # Verificar contraseña
+        if usuario_encontrado.contrasena == contrasena:
+            self.sesion_iniciada = True
+            # Guardar los detalles de la sesión, incluido el estado de administrador
+            self.sesion = {
+                'nombre_usuario': nombre_usuario,
+                'admin': usuario_encontrado.admin
+            }
+            return True, "Bienvenido " + nombre_usuario
+        else:
+            return False, "La contraseña ingresada es incorrecta."
 
     def cerrar_sesion(self):
         """Cierra la sesión del usuario actual."""
