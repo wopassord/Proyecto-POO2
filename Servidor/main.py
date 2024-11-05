@@ -15,7 +15,7 @@ def init_rpc_server():
     )
 
     # Registrar el inicio de sesión en el log (indica el inicio de la actividad)
-    interfaz.registrar_inicio_sesion()  # Nueva llamada aquí para registrar el inicio
+    interfaz.registrar_inicio_sesion()  
     
     # Iniciar el servidor y la interfaz de usuario en hilos separados
     servidor.asignar_interfaz(interfaz) 

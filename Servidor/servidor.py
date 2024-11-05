@@ -1,7 +1,5 @@
 from xmlrpc.server import SimpleXMLRPCServer, SimpleXMLRPCRequestHandler
-from usuario import (
-    Usuario,
-)  # Asegúrate de tener la clase Usuario en un archivo separado llamado usuario.py
+from usuario import (Usuario,)  # Asegúrate de tener la clase Usuario en un archivo separado llamado usuario.py
 from controlador import Controlador  # Clase que controla el robot, por ejemplo
 import csv
 import interfazServidor
@@ -66,9 +64,7 @@ class Servidor:
                 usuarios = []
                 for row in reader:
                     nombre_usuario, contrasena, admin = row
-                    admin = (
-                        admin.lower() == "true"
-                    )  # Convertir el valor del campo admin a booleano
+                    admin = (admin.lower() == "true")  # Convertir el valor del campo admin a booleano
                     usuarios.append(Usuario(nombre_usuario, contrasena, admin))
 
                 return usuarios
@@ -96,13 +92,7 @@ class Servidor:
             exito = 0
             return exito
 
-    def guardar_usuario_csv(
-        self,
-        nombre_usuario,
-        contrasena,
-        admin=False,
-        archivo="usuarios_servidor_uno.csv",
-    ):
+    def guardar_usuario_csv(self, nombre_usuario, contrasena, admin=False, archivo="usuarios_servidor_uno.csv",):
         """Guarda un usuario nuevo en el archivo CSV."""
         with open(archivo, mode='a', newline='\n') as csvfile:
 

@@ -214,3 +214,17 @@ Fecha y Hora,Peticiones,IP,Usuario,Fallos,Exitos,Tiempo de Ejecucion
 2024-11-05 12:18:39,Activar motores,127.0.0.1,Juan,0,1,0.2827644348144531
 2024-11-05 12:18:42,Mostrar reporte general,127.0.0.1,Juan,0,1,106.53519630432129
 2024-11-05 12:18:51,Apagar programa,127.0.0.1,Juan,0,1,0.008106231689453125
+2024-11-05 14:04:26,Inicio de actividad,127.0.0.1,Sistema,0,1,0.0
+2024-11-05 14:04:26,Inicio de actividad,127.0.0.1,Sistema,0,1,0.0
+2024-11-05 14:13:05,Iniciar Sesion,127.0.0.1,Juan,0,1,0.0
+2024-11-05 14:13:16,Mostrar log de trabajo,127.0.0.1,Juan,0,1,0.004291534423828125
+2024-11-05 14:14:20,Cerrar sesión,127.0.0.1,Juan,0,1,0.00476837158203125
+2024-11-05 14:14:37,Iniciar Sesion,127.0.0.1,Juan,0,1,0.0
+2024-11-05 14:14:50,Apagar programa,127.0.0.1,Juan,0,1,0.00858306884765625
+2024-11-05 17:18:35,Inicio de actividad,127.0.0.1,Sistema,0,1,0.0
+2024-11-05 17:18:35,Inicio de actividad,127.0.0.1,Sistema,0,1,0.0
+2024-11-05 17:23:43,Iniciar Sesion,127.0.0.1,Juan,0,1,0.0
+2024-11-05 17:25:49,Apagar programa,127.0.0.1,Juan,0,1,0.0040531158447265625
+2024-11-05 17:34:54,Inicio de actividad,127.0.0.1,Sistema,0,1,0.0
+2024-11-05 17:34:54,Inicio de actividad,127.0.0.1,Sistema,0,1,0.0
+2024-11-05 17:42:15,Iniciar Sesion,127.0.0.1,Juan,0,1,0.0

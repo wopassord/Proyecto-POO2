@@ -10,6 +10,8 @@ private:
 public:
     AplicacionCliente(const string& host, int port);
     ~AplicacionCliente();
+    bool iniciar_sesion();
+    bool agregar_usuario();
     void ejecutar();
 };
 
