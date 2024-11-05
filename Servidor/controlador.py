@@ -97,7 +97,7 @@ class Controlador:
 
         return respuesta, exito
 
-    def enviar_comando(self, comando):
+    def enviar_comando(self, comando, mostrar=True):
         if self.estado_robot:
             try:
                 if comando == "G21":
@@ -121,21 +121,27 @@ class Controlador:
                     time.sleep(0.1)  # Tiempo de espera para recibir respuesta
                     respuesta = self.leer_respuesta()
                     if respuesta:
-                        print(f"Respuesta recibida: {respuesta}")
                         exito = 1
+                        if mostrar:
+                            print(f"Respuesta recibida: {respuesta}")
+                        
                     else:
-                        print("No se recibió respuesta del robot.")
                         exito = 0
+                        if mostrar:
+                            print("No se recibió respuesta del robot.")
+                        
                     return respuesta, exito
             except Exception as e:
                 respuesta = f"Error al enviar comando: {e}"
                 exito = 0
-                print(respuesta)
+                if mostrar:
+                    print(respuesta)
                 return respuesta, exito
         else:
             respuesta = "No se puede enviar el comando. El robot no está conectado."
             exito = 0
-            print(respuesta)
+            if mostrar:
+                print(respuesta)
         return respuesta, exito
 
     def leer_respuesta(self):

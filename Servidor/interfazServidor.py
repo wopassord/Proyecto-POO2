@@ -202,8 +202,15 @@ class InterfazServidor:
     
     def mostrar_reporte_general(self):
         try:
-            archivo = Archivo()  # Instancia de Archivo
-            archivo.mostrar_info()  
+            #archivo = Archivo()  # Instancia de Archivo
+
+            respuesta, exito = self.controlador.enviar_comando("M114", mostrar=False)
+            if exito:
+                self.archivo.set_posicion_actual(respuesta)
+            else:
+                print("No se pudo obtener la posición del robot.")
+
+            self.archivo.mostrar_info()  
             self.peticion = "Mostrar reporte general"
             exito = 1
             self.exitos = exito

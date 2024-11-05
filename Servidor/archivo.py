@@ -2,7 +2,7 @@ from datetime import datetime
 import csv
 
 class Archivo:
-    def __init__(self, estado_conexion=None, posicion=None, estado_actividad=None, ordenes=None):
+    def __init__(self, estado_conexion=None, posicion="No Disponible", estado_actividad=None, ordenes=None):
         self.estado_conexion = estado_conexion
         self.posicion = posicion
         self.estado_actividad = estado_actividad
@@ -49,6 +49,19 @@ class Archivo:
         except Exception as e:
             print(f"Error al leer el archivo '{archivo_log}': {e}")
 
+    def set_posicion_actual(self, respuesta):
+        try:
+            # Parsear la respuesta para extraer la posición
+            if "ACTUAL POSITION" in respuesta:
+                # Ejemplo de respuesta: "INFO: ACTUAL POSITION: [X:0.00 Y:170.00 Z:120.00 E:0.00]"
+                posicion = respuesta.split("[")[1].split("]")[0]
+                self.posicion = f"[{posicion}]"
+            else:
+                self.posicion = "No disponible"  # En caso de que la respuesta no contenga la posición
+        except Exception as e:
+            print(f"Error al procesar la posición del robot: {e}")
+            self.posicion = "No disponible"
+
     def mostrar_info(self):
         """Genera un reporte detallado de la actividad desde el último inicio."""
         # Cargar los datos del log desde el último inicio de actividad
@@ -61,6 +74,7 @@ class Archivo:
         print(f"{'Inicio de la actividad:':<25} {self.inicio_actividad}")
         print(f"{'Cantidad de órdenes:':<25} {self.cantidad_ordenes}")
         print(f"{'Órdenes con errores:':<25} {self.ordenes_con_error}")
+        print(f"{'Posición actual del robot:':<25} {self.posicion}")
 
         # Mostrar inicios de sesión
         print("\nInicios de Sesión:")
