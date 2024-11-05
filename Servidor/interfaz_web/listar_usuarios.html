@@ -30,12 +30,19 @@
         }
 
         .usuario {
-            margin: 5px 0;
-            padding: 10px;
+            display: flex;
+            justify-content: space-between;
             width: 100%;
-            text-align: center;
+            padding: 10px;
+            margin: 5px 0;
             background-color: #e7f3fe;
             border-radius: 5px;
+        }
+
+        .usuario .nombre,
+        .usuario .password {
+            flex: 1;
+            text-align: center;
         }
 
         .menu-button {

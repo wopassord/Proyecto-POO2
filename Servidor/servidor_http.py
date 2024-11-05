@@ -85,7 +85,7 @@ async def login(username: str = Form(...), password: str = Form(...)):
     if data is None:
         data = auth.registrar_usuario(username, password)
     response = RedirectResponse(url="/menu", status_code=303)
-    response.set_cookie(key="token", value=data[2])
+    response.set_cookie(key="token", value=data[3])
     return response
 
 
@@ -95,7 +95,19 @@ async def menu_page(token: str = Cookie(None)):
     protect_route(token)
     menu_template = load_html_template("menu.html")
     user = auth.find_user(token)
-    html_content = menu_template.replace("{{ username }}", user[0])
+    username = user[0]
+
+    # Verificar el valor booleano del usuario logueado para mostrar o no la opción de log
+    show_log_option = (
+        user[2] == "True"
+    )  # Asegúrate de que el valor booleano esté en el índice 2 como "True" o "False"
+    log_option_html = ""
+    if show_log_option:
+        log_option_html = "<div class='card' onclick=\"location.href='/log_trabajo'\"><div class='card-title'>Ver Log de Trabajo</div></div>"
+
+    # Inserta la opción del log en el menú si corresponde
+    html_content = menu_template.replace("{{ log_option }}", log_option_html)
+    html_content = html_content.replace("{{ username }}", username)
     return HTMLResponse(content=html_content)
 
 
@@ -103,12 +115,27 @@ async def menu_page(token: str = Cookie(None)):
 async def listar_usuarios(token: str = Cookie(None)):
     protect_route(token)
 
+    # Verificar el usuario logueado y su valor booleano
+    usuario_logueado = auth.find_user(token)
+    if usuario_logueado is None:
+        raise HTTPException(status_code=401, detail="Usuario no autorizado")
+
+    mostrar_password = (
+        usuario_logueado[2] == "True"
+    )  # Asumimos que el booleano está en la posición 2 como string
+
     usuarios = []
     with open(auth.archivo_csv, mode="r") as file:
         reader = csv.reader(file)
         for row in reader:
-            usuarios.append(f"<div class='usuario'>{row[0]}</div>")
+            if mostrar_password:
+                # Mostrar tanto el nombre como la contraseña
+                usuarios.append(f"<div class='usuario'>{row[0]} - {row[1]}</div>")
+            else:
+                # Mostrar solo el nombre
+                usuarios.append(f"<div class='usuario'>{row[0]}</div>")
 
+    # Cargar la plantilla HTML y reemplazar el contenido de usuarios
     usuarios_template = load_html_template("listar_usuarios.html")
     usuarios_html = "".join(usuarios)
     html_content = usuarios_template.replace("{{ usuarios }}", usuarios_html)

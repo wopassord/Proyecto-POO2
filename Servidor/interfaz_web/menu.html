@@ -61,11 +61,9 @@
         <div class="card" onclick="location.href='/on_off_robot'">
             <div class="card-title">4. Conectar/Desconectar Robot</div>
         </div>
-        <div class="card" onclick="location.href='/log_trabajo'">
-            <div class="card-title">5. Log de Trabajo</div>
-        </div>
+        <!-- Esta es la opción de Log de Trabajo, que se mostrará solo si el usuario tiene permisos -->
+        {{ log_option }}
     </div>
-
 </body>
 
 </html>
