@@ -14,6 +14,9 @@ def init_rpc_server():
         servidor, modo_trabajo="manual", modo_coordenadas="absolutas"
     )
 
+    # Registrar el inicio de sesión en el log (indica el inicio de la actividad)
+    interfaz.registrar_inicio_sesion()  # Nueva llamada aquí para registrar el inicio
+    
     # Iniciar el servidor y la interfaz de usuario en hilos separados
     servidor.asignar_interfaz(interfaz) 
 
@@ -42,6 +45,7 @@ def init_rpc_server():
                     if opcion == 1:
                         servidor.iniciar_sesion()
                         if servidor.sesion_iniciada:
+                            interfaz.registrar_log_csv(peticion="Iniciar Sesion",fallos=0, exitos=1, tiempo_ejecucion=0,IP=servidor.ip_cliente)
                             servidor.iniciar_servidor()
                             interfaz.listar_comandos()
                     # Se agrega un usuario
@@ -60,7 +64,7 @@ def init_rpc_server():
                         interfaz.controlador.procesar_respuestas_arduino()
                     # Se permite ingresar una accion en consola para realizar acciones en la interfaz
                     comando = interfaz.administrar_comandos()
-                    if comando == 14:  # Comando para salir del programa
+                    if comando == 15:  # Comando para salir del programa
                         ejecutando = False
                 except ValueError:
                     print("Por favor, ingresa un número válido.")

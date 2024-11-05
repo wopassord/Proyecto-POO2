@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Log de Trabajo</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            overflow-y: auto;
+        }
+
+        .log-container {
+            width: 80%;
+            max-height: 80vh;
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            overflow-y: auto;
+        }
+
+        .log-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        .log-table th,
+        .log-table td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: center;
+        }
+
+        .log-table th {
+            font-weight: bold;
+            background-color: #38a7b6;
+            color: #ffffff;
+        }
+
+        .log-table td {
+            background-color: #f9f9f9;
+        }
+
+        .back-button {
+            display: inline-block;
+            text-decoration: none;
+            color: #ffffff;
+            background-color: #159abc;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-weight: bold;
+            text-align: center;
+            margin-top: 15px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="log-container">
+        <h2 style="text-align: center;">Log de Trabajo</h2>
+        <div style="overflow-y: auto; max-height: 60vh;">
+            {{ log_table }}
+        </div>
+        <a href="/menu" class="back-button">← Volver al Menu</a>
+    </div>
+</body>
+
+</html>

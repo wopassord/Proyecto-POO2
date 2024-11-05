@@ -52,6 +52,11 @@ class Servidor:
             self.server_thread = threading.Thread(target=run_server)
             self.server_thread.start()
             print("Servidor XML-RPC iniciado en un hilo separado.")
+            exito = 1
+            return exito
+        else:
+            exito = 0
+            return exito
 
 
     def leer_usuarios_csv(self, archivo="usuarios_servidor_uno.csv"):
@@ -85,6 +90,11 @@ class Servidor:
             if self.server_thread:
                 self.server_thread.join()  # Espera a que el hilo del servidor termine, se puede seguir escribiendo en la terminal del "servidor"
             print("Servidor apagado")
+            exito = 1
+            return exito
+        else:
+            exito = 0
+            return exito
 
     def guardar_usuario_csv(
         self,
@@ -175,6 +185,8 @@ class Servidor:
         """Cierra la sesión del usuario actual."""
         self.sesion_iniciada = False
         self.sesion = {}
+        exito = 1
+        return exito
 
     # Getters adicionales
     def get_estado_servidor(self):

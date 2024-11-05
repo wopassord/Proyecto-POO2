@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estado de Motores</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background-color: #f4f4f9;
+            position: relative;
+        }
+
+        .popup {
+            padding: 20px;
+            border: 2px solid #38a7b6;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            background-color: #ffffff;
+            text-align: center;
+        }
+
+        .menu-button {
+            position: absolute;
+            bottom: 20px;
+            background-color: #38a7b6;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            text-align: center;
+            text-decoration: none;
+            font-size: 16px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+        }
+
+        .menu-button:hover {
+            background-color: #2e8ca2;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="popup">
+        <h3>{{ mensaje }}</h3>
+    </div>
+
+    <!-- Botón centrado en la parte inferior de la pantalla -->
+    <a href="/menu" class="menu-button">Volver al menu</a>
+
+</body>
+
+</html>
