@@ -74,6 +74,8 @@ def init_rpc_server():
             servidor.apagar_servidor()
         if interfaz.controlador.get_estado_robot():
             interfaz.controlador.desconectar_robot()
+        if hasattr(interfaz, 'archivo_trayectoria'):
+            interfaz.archivo_trayectoria.close()
         print("Programa finalizado.")
 
 

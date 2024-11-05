@@ -69,12 +69,10 @@ class Controlador:
             self.estado_motores = True
             respuesta = "MOTORES ACTIVADOS."
             exito = 1
-            print(respuesta)
         else:
             respuesta = "No se pueden activar los motores. El robot no está conectado."
             exito = 0
-            print(respuesta)
-        
+        print(respuesta)
         return respuesta, exito
     
     def desactivar_motores(self):
@@ -84,11 +82,10 @@ class Controlador:
             self.estado_motores = False
             respuesta = "MOTORES DESACTIVADOS."
             exito = 1
-            print(respuesta)
         else:
             respuesta = "No se pueden desactivar los motores. El robot no está conectado."
             exito = 0
-            print(respuesta)
+        print(respuesta)
 
         return respuesta, exito
 
@@ -103,10 +100,16 @@ class Controlador:
                 # Verifica si el comando es 'M17' o 'M18' para evitar mostrar "No se recibió respuesta"
                 elif comando in ['M17', 'M18']:
                     if comando == 'M17':
+                        self.arduino.write((comando + '\r\n').encode('latin-1'))
+                        time.sleep(0.1)
                         respuesta = "MOTORES ACTIVADOS."
+                        print(respuesta)
                         exito = 1
                     elif comando == 'M18':
+                        self.arduino.write((comando + '\r\n').encode('latin-1'))
+                        time.sleep(0.1)
                         respuesta = "MOTORES DESACTIVADOS."
+                        print(respuesta)
                         exito = 1
                     return respuesta, exito
                 else:
