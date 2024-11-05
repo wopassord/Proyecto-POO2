@@ -1,0 +1,33 @@
+Fecha y Hora,Peticiones,IP,Usuario,Fallos,Exitos,Tiempo de Ejecucion
+2024-11-05 12:52:58,Inicio de actividad,127.0.0.1,Sistema,0,1,0.0
+2024-11-05 12:52:58,Inicio de actividad,127.0.0.1,Sistema,0,1,0.0
+2024-11-05 12:53:39,Iniciar Sesion,127.0.0.1,Jorge,0,1,0.0
+2024-11-05 12:53:47,Conectar robot,127.0.0.1,Jorge,1,0,1502.4590492248535
+2024-11-05 12:53:50,Activar motores,127.0.0.1,Jorge,1,0,0.06365776062011719
+2024-11-05 12:54:01,Mostrar operaciones cliente,127.0.0.1,Jorge,0,1,0.15401840209960938
+2024-11-05 12:54:13,Apagar programa,127.0.0.1,Jorge,0,1,0.0054836273193359375
+2024-11-05 13:14:55,Activar Motores,127.0.0.1,Marcos,1,0,0.0
+2024-11-05 13:16:40,Activar Motores,127.0.0.1,Marcos,1,0,0.0
+2024-11-05 13:16:43,Conectar Robot,127.0.0.1,Marcos,1,0,0.0
+2024-11-05 13:17:03,Conectar Robot,127.0.0.1,Marcos,1,0,0.0
+2024-11-05 13:18:32,Conectar Robot,127.0.0.1,Marcos,1,0,0.0
+2024-11-05 13:18:36,Activar Motores,127.0.0.1,Marcos,1,0,0.0
+2024-11-05 13:23:33,Inicio de Sesion,127.0.0.1,Marcos,0,1,0.0
+2024-11-05 13:23:54,Registro e Inicio de Sesion,127.0.0.1,Fiumba,0,1,0.0
+2024-11-05 13:24:24,Inicio de Sesión,127.0.0.1,Marcos,0,1,0.0
+2024-11-05 13:25:49,Inicio de Sesion,127.0.0.1,Marcos,0,1,0.0
+2024-11-05 13:26:11,Activar Motores,127.0.0.1,Marcos,1,0,0.0
+2024-11-05 13:26:31,Activar Motores,127.0.0.1,Marcos,1,0,0.0
+2024-11-05 13:26:33,Conectar Robot,127.0.0.1,Marcos,1,0,0.0
+2024-11-05 13:30:27,Inicio de Sesion,127.0.0.1,Marcos,0,1,0.0
+2024-11-05 13:31:04,Inicio de Sesion,127.0.0.1,Marcos,0,1,0.0
+2024-11-05 13:32:14,Inicio de Sesion,127.0.0.1,Marcos,0,1,0.0
+2024-11-05 13:32:19,Activar Motores,127.0.0.1,Marcos,1,0,0.0
+2024-11-05 13:36:25,Inicio de Sesion,127.0.0.1,Marcos,0,1,0.0
+2024-11-05 13:38:23,Inicio de Sesion,127.0.0.1,Marcos,0,1,0.0
+2024-11-05 13:40:40,Inicio de Sesion,127.0.0.1,Marcos,0,1,0.0
+2024-11-05 13:40:46,Activar Motores,127.0.0.1,Marcos,1,0,0.0
+2024-11-05 13:40:51,Conectar Robot,127.0.0.1,Marcos,1,0,0.0
+2024-11-05 13:40:59,Activar Motores,127.0.0.1,Marcos,1,0,0.0
+2024-11-05 13:41:43,Activar Motores,127.0.0.1,Marcos,1,0,0.0
+2024-11-05 13:41:47,Conectar Robot,127.0.0.1,Marcos,1,0,0.0
