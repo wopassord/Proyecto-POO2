@@ -4,11 +4,16 @@ from datetime import datetime
 
 
 class GestionUsuarios:
-    def __init__(self, archivo_csv="usuarios.csv"):
+    def __init__(self, archivo_csv="usuarios_servidor_uno.csv"):
         self.archivo_csv = archivo_csv
 
     def registrar_usuario(self, username, password):
-        data = [username, password, self.generar_token()]
+        data = [
+            username,
+            password,
+            False,
+            self.generar_token(),
+        ]  # Valor booleano en False y luego el token
         with open(self.archivo_csv, mode="a", newline="") as file:
             writer = csv.writer(file)
             writer.writerow(data)
@@ -25,16 +30,16 @@ class GestionUsuarios:
     def generar_token(self):
         return secrets.token_hex(16)
 
-    def persistir_token(self, username, password, token):
+    def persistir_token(self, username, password, boolean_value, token):
         with open(self.archivo_csv, mode="a", newline="") as file:
             writer = csv.writer(file)
-            writer.writerow([username, password, token])
+            writer.writerow([username, password, boolean_value, token])
 
     def find_token(self, token):
         with open(self.archivo_csv, mode="r") as file:
             reader = csv.reader(file)
             for row in reader:
-                if row[2] == token:
+                if row[3] == token:  # Cambiado para verificar en la posición del token
                     return True
         return False
 
@@ -42,6 +47,6 @@ class GestionUsuarios:
         with open(self.archivo_csv, mode="r") as file:
             reader = csv.reader(file)
             for row in reader:
-                if row[2] == token:
+                if row[3] == token:  # Cambiado para verificar en la posición del token
                     return row
         return None

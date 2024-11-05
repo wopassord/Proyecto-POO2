@@ -5,6 +5,8 @@ from servidor import Servidor
 from servidor_http import app
 import threading
 import uvicorn
+import secrets
+
 
 
 def init_rpc_server():
@@ -14,12 +16,14 @@ def init_rpc_server():
         servidor, modo_trabajo="manual", modo_coordenadas="absolutas"
     )
 
-    # Registrar el inicio de sesión en el log (indica el inicio de la actividad)
-    interfaz.registrar_inicio_sesion()  # Nueva llamada aquí para registrar el inicio
-    
+    servidor.iniciar_servidor()
+
     # Iniciar el servidor y la interfaz de usuario en hilos separados
+
     servidor.asignar_interfaz(interfaz) 
 
+    # Registrar el inicio de sesión en el log (indica el inicio de la actividad)
+    interfaz.registrar_inicio_sesion()  
 
     # Leer usuarios disponibles
     servidor.leer_usuarios_csv()
@@ -46,14 +50,14 @@ def init_rpc_server():
                         servidor.iniciar_sesion()
                         if servidor.sesion_iniciada:
                             interfaz.registrar_log_csv(peticion="Iniciar Sesion",fallos=0, exitos=1, tiempo_ejecucion=0,IP=servidor.ip_cliente)
-                            servidor.iniciar_servidor()
                             interfaz.listar_comandos()
                     # Se agrega un usuario
                     elif opcion == 2:
                         # Pedir datos del usuario para agregar
                         nombre_usuario = input("Ingrese el nombre de usuario: ")
                         contrasena = input("Ingrese la contraseña: ")
-                        servidor.agregar_usuario(nombre_usuario, contrasena)
+                        token = secrets.token_hex(16)
+                        servidor.agregar_usuario(nombre_usuario, contrasena, False, token)
                 except ValueError:
                     print("Ingrese un numero valido.")
             else:
@@ -74,6 +78,8 @@ def init_rpc_server():
             servidor.apagar_servidor()
         if interfaz.controlador.get_estado_robot():
             interfaz.controlador.desconectar_robot()
+        if hasattr(interfaz, 'archivo_trayectoria'):
+            interfaz.archivo_trayectoria.close()
         print("Programa finalizado.")
 
 

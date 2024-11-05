@@ -1,5 +1,6 @@
 #include "AplicacionCliente.h"
 #include <algorithm>
+#include <iostream>
 
 AplicacionCliente::AplicacionCliente(const string& host, int port) {
     cliente = new ClienteRPC(host, port);
@@ -9,10 +10,16 @@ AplicacionCliente::~AplicacionCliente() {
     delete cliente;
 }
 
+bool AplicacionCliente::iniciar_sesion(){
+    return cliente->iniciarSesion();
+}
+bool AplicacionCliente::agregar_usuario(){
+   return cliente->agregarUsuario();
+}
 void AplicacionCliente::ejecutar() {
     string entrada;
 
-    cliente->login_o_signin();
+    //cliente->login_o_signin();
 
     
     while (true) {

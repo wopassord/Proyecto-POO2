@@ -147,6 +147,8 @@ class UtilGcode:
                     return image_path  # Devolver el path de la imagen
 
             simulador.visualizar_movimientos(False)
+
+            
             return f"Archivo {nombre_archivo} recibido y almacenado correctamente."
 
         except Exception as e:

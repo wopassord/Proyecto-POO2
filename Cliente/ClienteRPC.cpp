@@ -2,26 +2,65 @@
 
 ClienteRPC::ClienteRPC(const string &host, int port) : client(host.c_str(), port) {}
 
-void ClienteRPC::login_o_signin()
-{
-    string nombre_usuario, contrasena;
-    cout << "Ingrese el nombre de usuario: ";
-    cin >> nombre_usuario;
-    cout << "Ingrese la contrasena: ";
-    cin >> contrasena;
+bool ClienteRPC::iniciarSesion() {
+    std::string nombre_usuario, contrasena;
+    std::cout << "Ingrese el nombre de usuario: ";
+    std::cin >> nombre_usuario;
+    std::cout << "Ingrese la contraseña: ";
+    std::cin >> contrasena;
 
+    // Crear un array en args para enviar los datos correctamente
+    XmlRpcValue args;
+    args.setSize(2); // Configura el tamaño del array
     args[0] = nombre_usuario;
     args[1] = contrasena;
 
-    cout << "Conexion exitosa" << endl;
+    try {
+        if (client.execute("iniciar_sesion_cliente", args, result)) {
+            bool sesion_iniciada = static_cast<bool>(result[0]);
+            std::string mensaje = static_cast<std::string>(result[1]);
 
-    /*
-    if (client.execute("login_o_signin", args, result)) {
-        cout << static_cast<string>(result) << "\n";
-    } else {
-        cerr << "Error en la conexión al iniciar sesión o registrar el usuario.\n";
+            if (sesion_iniciada) {
+                std::cout << mensaje << "\n";
+                return true;
+            } else {
+                std::cout << "Error: " << mensaje << "\n";
+                return false;
+            }
+        }
+    } catch (const XmlRpc::XmlRpcException& e) {
+        std::cerr << "Error en la conexión al intentar iniciar sesión: " << e.getMessage() << "\n";
+        return false;
     }
-    */
+    return false;
+}
+
+// Método para agregar un nuevo usuario
+bool ClienteRPC::agregarUsuario() {
+    std::string nombre_usuario, contrasena;
+    bool admin = false;
+
+    std::cout << "Ingrese el nombre de usuario: ";
+    std::cin >> nombre_usuario;
+    std::cout << "Ingrese la contraseña: ";
+    std::cin >> contrasena;
+    admin=false;
+    // Configurar los argumentos para enviar al servidor
+    XmlRpcValue args;
+    args[0] = nombre_usuario;
+    args[1] = contrasena;
+    args[2] = admin;
+
+    try {
+        if (client.execute("agregar_usuario", args, result)) {
+            std::cout << "Usuario agregado correctamente.\n";
+            return true;
+        }
+    } catch (const XmlRpc::XmlRpcException& e) {
+        std::cerr << "Error en la conexión al intentar agregar usuario: " << e.getMessage() << "\n";
+        return false;
+    }
+    return false;
 }
 
 void ClienteRPC::activarAlarma()
