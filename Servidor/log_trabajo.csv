@@ -228,3 +228,49 @@ Fecha y Hora,Peticiones,IP,Usuario,Fallos,Exitos,Tiempo de Ejecucion
 2024-11-05 17:34:54,Inicio de actividad,127.0.0.1,Sistema,0,1,0.0
 2024-11-05 17:34:54,Inicio de actividad,127.0.0.1,Sistema,0,1,0.0
 2024-11-05 17:42:15,Iniciar Sesion,127.0.0.1,Juan,0,1,0.0
+2024-11-05 18:11:24,Inicio de actividad,127.0.0.1,Sistema,0,1,0.0
+2024-11-05 18:11:24,Inicio de actividad,127.0.0.1,Sistema,0,1,0.0
+2024-11-05 18:11:28,Iniciar Sesion,127.0.0.1,Marcos,0,1,0.0
+2024-11-05 18:12:42,Inicio de actividad,127.0.0.1,Sistema,0,1,0.0
+2024-11-05 18:12:42,Inicio de actividad,127.0.0.1,Sistema,0,1,0.0
+2024-11-05 18:12:50,Iniciar Sesion,127.0.0.1,Juan,0,1,0.0
+2024-11-05 18:12:57,Cerrar sesión,127.0.0.1,Juan,0,1,0.0
+2024-11-05 18:13:01,Iniciar Sesion,127.0.0.1,Marcos,0,1,0.0
+2024-11-05 18:13:17,Cerrar sesión,127.0.0.1,Marcos,0,1,0.0
+2024-11-05 18:13:23,Iniciar Sesion,127.0.0.1,Juan,0,1,0.0
+2024-11-05 18:29:39,Inicio de actividad,127.0.0.1,Sistema,0,1,0.0
+2024-11-05 18:29:40,Inicio de actividad,127.0.0.1,Sistema,0,1,0.0
+2024-11-05 18:29:44,Iniciar Sesion,127.0.0.1,Juan,0,1,0.0
+2024-11-05 18:31:20,Inicio de actividad,127.0.0.1,Sistema,0,1,0.0
+2024-11-05 18:31:20,Inicio de actividad,127.0.0.1,Sistema,0,1,0.0
+2024-11-05 18:31:24,Iniciar Sesion,127.0.0.1,Juan,0,1,0.0
+2024-11-05 18:40:27,Inicio de actividad,127.0.0.1,Sistema,0,1,0.0
+2024-11-05 18:40:27,Inicio de actividad,127.0.0.1,Sistema,0,1,0.0
+2024-11-05 18:40:31,Iniciar Sesion,127.0.0.1,Juan,0,1,0.0
+2024-11-05 18:43:57,Inicio de actividad,127.0.0.1,Sistema,0,1,0.0
+2024-11-05 18:43:57,Inicio de actividad,127.0.0.1,Sistema,0,1,0.0
+2024-11-05 18:44:01,Iniciar Sesion,127.0.0.1,Juan,0,1,0.0
+2024-11-05 18:45:29,Inicio de actividad,127.0.0.1,Sistema,0,1,0.0
+2024-11-05 18:46:27,Inicio de actividad,127.0.0.1,Sistema,0,1,0.0
+2024-11-05 18:46:48,Inicio de actividad,127.0.0.1,Sistema,0,1,0.0
+2024-11-05 18:51:48,Inicio de actividad,127.0.0.1,Sistema,0,1,0.0
+2024-11-05 18:51:48,Inicio de actividad,127.0.0.1,Sistema,0,1,0.0
+2024-11-05 18:52:22,Inicio de actividad,127.0.0.1,Sistema,0,1,0.0
+2024-11-05 18:52:22,Inicio de actividad,127.0.0.1,Sistema,0,1,0.0
+2024-11-05 18:54:13,Inicio de actividad,127.0.0.1,Sistema,0,1,0.0
+2024-11-05 18:54:13,Inicio de actividad,127.0.0.1,Sistema,0,1,0.0
+2024-11-05 18:55:02,Iniciar Sesion,127.0.0.1,Juan,0,1,0.0
+2024-11-05 18:55:37,Inicio de actividad,127.0.0.1,Sistema,0,1,0.0
+2024-11-05 18:55:37,Inicio de actividad,127.0.0.1,Sistema,0,1,0.0
+2024-11-05 18:55:47,Iniciar Sesion,127.0.0.1,Juan,0,1,0.0
+2024-11-05 18:56:44,Inicio de actividad,127.0.0.1,Sistema,0,1,0.0
+2024-11-05 18:56:44,Inicio de actividad,127.0.0.1,Sistema,0,1,0.0
+2024-11-05 18:57:27,Iniciar Sesion,127.0.0.1,Juan,0,1,0.0
+2024-11-05 18:57:34,Mostrar usuarios,127.0.0.1,Juan,0,1,1.001119613647461
+2024-11-05 18:58:06,Inicio de actividad,127.0.0.1,Sistema,0,1,0.0
+2024-11-05 18:58:06,Inicio de actividad,127.0.0.1,Sistema,0,1,0.0
+2024-11-05 18:58:58,Iniciar Sesion,127.0.0.1,Magdalena2,0,1,0.0
+2024-11-05 18:59:02,Mostrar usuarios,127.0.0.1,Magdalena2,1,0,0.0
+2024-11-05 19:01:09,Inicio de actividad,127.0.0.1,Sistema,0,1,0.0
+2024-11-05 19:01:09,Inicio de actividad,127.0.0.1,Sistema,0,1,0.0
+2024-11-05 19:01:32,Iniciar Sesion,127.0.0.1,Juan,0,1,0.0

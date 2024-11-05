@@ -7,6 +7,7 @@ import threading
 import uvicorn
 
 
+
 def init_rpc_server():
     # Crear instancias de Servidor y pasarlo a InterfazServidor
     servidor = Servidor()
@@ -14,12 +15,14 @@ def init_rpc_server():
         servidor, modo_trabajo="manual", modo_coordenadas="absolutas"
     )
 
-    # Registrar el inicio de sesión en el log (indica el inicio de la actividad)
-    interfaz.registrar_inicio_sesion()  
-    
+    servidor.iniciar_servidor()
+
     # Iniciar el servidor y la interfaz de usuario en hilos separados
+
     servidor.asignar_interfaz(interfaz) 
 
+    # Registrar el inicio de sesión en el log (indica el inicio de la actividad)
+    interfaz.registrar_inicio_sesion()  
 
     # Leer usuarios disponibles
     servidor.leer_usuarios_csv()
@@ -46,7 +49,6 @@ def init_rpc_server():
                         servidor.iniciar_sesion()
                         if servidor.sesion_iniciada:
                             interfaz.registrar_log_csv(peticion="Iniciar Sesion",fallos=0, exitos=1, tiempo_ejecucion=0,IP=servidor.ip_cliente)
-                            servidor.iniciar_servidor()
                             interfaz.listar_comandos()
                     # Se agrega un usuario
                     elif opcion == 2:
