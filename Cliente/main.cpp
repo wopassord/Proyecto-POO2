@@ -14,21 +14,30 @@ int main(int argc, char* argv[]) {
 
 
     string host = argv[1];
-    int port = atoi(argv[2]);
+    int port = stoi(argv[2]);
 
-    // Crear la aplicación cliente y ejecutar el ciclo principal
+    // Crear la aplicación cliente
     AplicacionCliente app(host, port);
+
+    bool sesionIniciada = false;
+    while (!sesionIniciada) {
+        std::cout << "\nMenú de Inicio de Sesión:\n";
+        std::cout << "1. Iniciar Sesión\n";
+        std::cout << "2. Agregar Usuario\n";
+        std::cout << "Seleccione una opción: ";
+        int opcion;
+        std::cin >> opcion;
+
+        if (opcion == 1) {
+            sesionIniciada = app.iniciar_sesion();
+        } else if (opcion == 2) {
+            app.agregar_usuario();
+        } else {
+            std::cout << "Opción inválida. Intente nuevamente.\n";
+        }
+    }
+    
     app.ejecutar();
 
     return 0;
 }
-// '''
-//     QApplication app(argc, argv);
-
-//     // Crear la ventana de login con el host y el puerto
-//     LoginWindow loginWindow(host, port);
-//     loginWindow.show();
-
-    // return app.exec();
-    // ''' COMENTADA INTERFAZ DE USUARIO DISTINTA DE LA TERMINAL
-

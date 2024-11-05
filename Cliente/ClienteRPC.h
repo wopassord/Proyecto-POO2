@@ -25,7 +25,8 @@ private:
 
 public:
     ClienteRPC(const string &host, int port);
-    void login_o_signin();
+    bool iniciarSesion();
+    bool agregarUsuario();
     void activarAlarma();
     void apagarServidor();
     bool esPosicionAlcanzable(double x, double y, double z);
