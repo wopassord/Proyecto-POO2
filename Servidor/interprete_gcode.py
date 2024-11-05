@@ -5,6 +5,7 @@ import base64
 from io import BytesIO
 import os
 from datetime import datetime
+import abb_sim_client
 
 
 class SimuladorRobot:
@@ -13,6 +14,7 @@ class SimuladorRobot:
         self.posicion_actual = np.array(
             [60, 0, 260]
         )  # Posición inicial del robot en el origen
+        # self.ABB = abb_sim_client.ABBSimClient()
 
     def procesar_gcode(self, contenido_gcode):
         """
@@ -47,6 +49,11 @@ class SimuladorRobot:
         """
         Crea una visualización en 3D de los movimientos del robot y del modelo ABB IRB 460.
         """
+
+        # self.ABB.format_coordinates(self.movimientos)
+        # self.ABB.send_all_coordinates(self.ABB.coordinates)
+        # self.ABB.close_connection()
+
         # Figura para la trayectoria del robot
         fig = plt.figure(figsize=(10, 7))
         ax = fig.add_subplot(111, projection="3d")
@@ -102,6 +109,7 @@ class SimuladorRobot:
             return image_png
 
         plt.show()
+    
 
 
 class UtilGcode:

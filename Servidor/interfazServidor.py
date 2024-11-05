@@ -2,6 +2,7 @@ from archivo import Archivo
 from logTrabajo import LogTrabajo
 from controlador import Controlador
 import time
+from interprete_gcode import SimuladorRobot
 
 class InterfazServidor:
     def __init__(self, servidor, modo_trabajo="automatico", modo_coordenadas="absolutas"):
@@ -17,6 +18,7 @@ class InterfazServidor:
         self.exitos = 0
         self.archivo = Archivo(estado_conexion=self.servidor.get_estado_servidor(),posicion="Inicio", estado_actividad="Inactiva")
         self.registrar_inicio_sesion()
+        self.simuladorrobot = SimuladorRobot()
 
     def registrar_log_csv(self, peticion, fallos=0, exitos=1, tiempo_ejecucion=0.0, IP="127.0.01"):
         sesion = self.servidor.get_sesion()
@@ -392,6 +394,9 @@ class InterfazServidor:
                         time.sleep(0.5)
                 print(f"Archivo {nombre_archivo} ejecutado correctamente.")
                 exito = 1 
+            
+            # self.simuladorrobot.procesar_gcode(nombre_archivo)
+            # self.simuladorrobot.visualizar_movimientos()
 
         except FileNotFoundError:
             print(f"Error: No se pudo encontrar el archivo {nombre_archivo}. Verifique la ruta y el nombre.")

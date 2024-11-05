@@ -119,3 +119,56 @@ Fecha y Hora,Peticiones,IP,Usuario,Fallos,Exitos,Tiempo de Ejecucion
 2024-11-05 12:05:57,Inicio de actividad,127.0.0.1,Sistema,0,1,0.0
 2024-11-05 12:05:57,Inicio de actividad,127.0.0.1,Sistema,0,1,0.0
 2024-11-05 12:06:06,Iniciar Sesion,127.0.0.1,Juan,0,1,0.0
+2024-11-05 13:15:47,Inicio de actividad,127.0.0.1,Sistema,0,1,0.0
+2024-11-05 13:15:47,Inicio de actividad,127.0.0.1,Sistema,0,1,0.0
+2024-11-05 13:15:52,Iniciar Sesion,127.0.0.1,Marcos,0,1,0.0
+2024-11-05 13:16:36,Cargar y ejecutar archivo G-Code.,127.0.0.1,Marcos,1,1,0.0
+2024-11-05 13:16:42,Conectar robot,127.0.0.1,Marcos,0,1,3520.2763080596924
+2024-11-05 13:16:44,Seleccionar modo automatico,127.0.0.1,Marcos,0,1,0.0
+2024-11-05 13:17:02,Cargar y ejecutar archivo G-Code.,127.0.0.1,Marcos,0,1,16143.980741500854
+2024-11-05 13:18:20,Cargar y ejecutar archivo G-Code.,127.0.0.1,Marcos,0,1,8828.25517654419
+2024-11-05 13:19:40,Inicio de actividad,127.0.0.1,Sistema,0,1,0.0
+2024-11-05 13:19:40,Inicio de actividad,127.0.0.1,Sistema,0,1,0.0
+2024-11-05 13:19:45,Iniciar Sesion,127.0.0.1,Marcos,0,1,0.0
+2024-11-05 13:19:49,Conectar robot,127.0.0.1,Marcos,0,1,3518.47767829895
+2024-11-05 13:19:50,Seleccionar modo automatico,127.0.0.1,Marcos,0,1,1.0027885437011719
+2024-11-05 13:20:43,Cargar y ejecutar archivo G-Code.,127.0.0.1,Marcos,0,1,52806.4181804657
+2024-11-05 13:20:58,Cargar y ejecutar archivo G-Code.,127.0.0.1,Marcos,0,1,5003.232717514038
+2024-11-05 13:44:04,Inicio de actividad,127.0.0.1,Sistema,0,1,0.0
+2024-11-05 13:44:04,Inicio de actividad,127.0.0.1,Sistema,0,1,0.0
+2024-11-05 13:44:09,Iniciar Sesion,127.0.0.1,Marcos,0,1,0.0
+2024-11-05 13:44:14,Conectar robot,127.0.0.1,Marcos,0,1,3517.90189743042
+2024-11-05 13:44:16,Seleccionar modo automatico,127.0.0.1,Marcos,0,1,0.0
+2024-11-05 13:44:28,Cargar y ejecutar archivo G-Code.,127.0.0.1,Marcos,0,1,10666.644096374512
+2024-11-05 13:51:58,Inicio de actividad,127.0.0.1,Sistema,0,1,0.0
+2024-11-05 13:51:58,Inicio de actividad,127.0.0.1,Sistema,0,1,0.0
+2024-11-05 13:52:02,Iniciar Sesion,127.0.0.1,Marcos,0,1,0.0
+2024-11-05 13:52:06,Conectar robot,127.0.0.1,Marcos,0,1,3520.3959941864014
+2024-11-05 13:52:07,Seleccionar modo automatico,127.0.0.1,Marcos,0,1,0.0
+2024-11-05 13:52:19,Cargar y ejecutar archivo G-Code.,127.0.0.1,Marcos,1,0,11154.388189315796
+2024-11-05 13:54:50,Inicio de actividad,127.0.0.1,Sistema,0,1,0.0
+2024-11-05 13:54:50,Inicio de actividad,127.0.0.1,Sistema,0,1,0.0
+2024-11-05 13:54:56,Iniciar Sesion,127.0.0.1,Marcos,0,1,0.0
+2024-11-05 13:55:00,Conectar robot,127.0.0.1,Marcos,0,1,3519.9708938598633
+2024-11-05 13:55:08,Seleccionar modo automatico,127.0.0.1,Marcos,0,1,0.0
+2024-11-05 13:55:20,Cargar y ejecutar archivo G-Code.,127.0.0.1,Marcos,1,0,10715.84939956665
+2024-11-05 14:09:19,Inicio de actividad,127.0.0.1,Sistema,0,1,0.0
+2024-11-05 14:10:21,Inicio de actividad,127.0.0.1,Sistema,0,1,0.0
+2024-11-05 14:10:36,Inicio de actividad,127.0.0.1,Sistema,0,1,0.0
+2024-11-05 14:11:21,Inicio de actividad,127.0.0.1,Sistema,0,1,0.0
+2024-11-05 14:11:21,Inicio de actividad,127.0.0.1,Sistema,0,1,0.0
+2024-11-05 14:11:29,Iniciar Sesion,127.0.0.1,Marcos,0,1,0.0
+2024-11-05 14:11:39,Conectar robot,127.0.0.1,Marcos,1,0,1501.1236667633057
+2024-11-05 14:11:49,Conectar robot,127.0.0.1,Marcos,1,0,1501.4677047729492
+2024-11-05 14:12:10,Inicio de actividad,127.0.0.1,Sistema,0,1,0.0
+2024-11-05 14:12:10,Inicio de actividad,127.0.0.1,Sistema,0,1,0.0
+2024-11-05 14:12:14,Iniciar Sesion,127.0.0.1,Marcos,0,1,0.0
+2024-11-05 14:12:16,Conectar robot,127.0.0.1,Marcos,1,0,1501.9972324371338
+2024-11-05 14:13:16,Conectar robot,127.0.0.1,Marcos,0,1,3521.052360534668
+2024-11-05 14:13:17,Seleccionar modo automatico,127.0.0.1,Marcos,0,1,0.0
+2024-11-05 14:13:30,Cargar y ejecutar archivo G-Code.,127.0.0.1,Marcos,1,0,11716.858863830566
+2024-11-05 14:14:04,Cargar y ejecutar archivo G-Code.,127.0.0.1,Marcos,1,0,8630.174160003662
+2024-11-05 14:16:00,Inicio de actividad,127.0.0.1,Sistema,0,1,0.0
+2024-11-05 14:16:00,Inicio de actividad,127.0.0.1,Sistema,0,1,0.0
+2024-11-05 14:16:04,Iniciar Sesion,127.0.0.1,Marcos,0,1,0.0
+2024-11-05 14:16:08,Conectar robot,127.0.0.1,Marcos,0,1,3519.4036960601807
