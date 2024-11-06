@@ -22,11 +22,8 @@ class SimuladorRobot:
         """
         for linea in contenido_gcode.splitlines():
             if linea.startswith("G1"):
-                x = self.posicion_actual[0]
-                y = self.posicion_actual[1]
-                z = self.posicion_actual[2]
+                x, y, z = self.posicion_actual  # Valores por defecto
 
-                # Extraer coordenadas X, Y, Z si están presentes en la línea
                 match_x = re.search(r"X([-+]?\d*\.\d+|\d+)", linea)
                 match_y = re.search(r"Y([-+]?\d*\.\d+|\d+)", linea)
                 match_z = re.search(r"Z([-+]?\d*\.\d+|\d+)", linea)
@@ -38,16 +35,13 @@ class SimuladorRobot:
                 if match_z:
                     z = float(match_z.group(1))
 
-                nueva_posicion = np.array([x, y, z], dtype=np.float64)  # Asegurarse de que la posición sea un array de floats
+                nueva_posicion = np.array([x, y, z], dtype=np.float64)
 
-                # Verificar que la nueva posición es un array de tres elementos
-                if nueva_posicion.shape == (3,):
+                # Agregar solo si la nueva posición es distinta de la posición actual
+                if not np.array_equal(nueva_posicion, self.posicion_actual):
                     self.movimientos.append(nueva_posicion)
+                    self.posicion_actual = nueva_posicion
                     print("Posición agregada:", nueva_posicion)  # Diagnóstico
-                else:
-                    print("Formato de posición incorrecto:", nueva_posicion)
-
-                self.posicion_actual = nueva_posicion
 
     def visualizar_movimientos(self, returnBuffer=False):
         """

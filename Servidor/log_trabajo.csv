@@ -1,3 +1,29 @@
 
 2024-11-05 20:24:33,Inicio de actividad,127.0.0.1,Sistema,0,1,0.0
 2024-11-05 20:24:33,Inicio de actividad,127.0.0.1,Sistema,0,1,0.0
+2024-11-05 20:26:22,Inicio de actividad,127.0.0.1,Sistema,0,1,0.0
+2024-11-05 20:26:22,Inicio de actividad,127.0.0.1,Sistema,0,1,0.0
+2024-11-05 20:26:28,Iniciar Sesion,127.0.0.1,Marcos,0,1,0.0
+2024-11-05 20:26:38,Conectar robot,127.0.0.1,Marcos,1,0,1501.0063648223877
+2024-11-05 20:26:47,Modificar parametros de conexion,127.0.0.1,Marcos,0,1,5734.9395751953125
+2024-11-05 20:26:57,Desconectar robot,127.0.0.1,Marcos,0,1,1504.7497749328613
+2024-11-05 20:27:01,Conectar robot,127.0.0.1,Marcos,0,1,3519.1824436187744
+2024-11-05 20:27:01,Seleccionar modo automatico,127.0.0.1,Marcos,0,1,1.0023117065429688
+2024-11-05 20:27:02,Seleccionado modo manual,127.0.0.1,Marcos,0,1,0.0
+2024-11-05 20:27:32,Enviar comando,127.0.0.1,Marcos,0,1,26756.288051605225
+2024-11-05 20:27:51,Enviar comando,127.0.0.1,Marcos,0,1,1996.4652061462402
+2024-11-05 20:27:56,Enviar comando,127.0.0.1,Marcos,0,1,1331.2578201293945
+2024-11-05 21:29:53,Inicio de actividad,127.0.0.1,Sistema,0,1,0.0
+2024-11-05 21:29:53,Inicio de actividad,127.0.0.1,Sistema,0,1,0.0
+2024-11-05 21:29:58,Iniciar Sesion,127.0.0.1,Marcos,0,1,0.0
+2024-11-05 21:30:01,Conectar robot,127.0.0.1,Marcos,1,0,1500.542163848877
+2024-11-05 21:30:07,Modificar parametros de conexion,127.0.0.1,Marcos,0,1,5690.1044845581055
+2024-11-05 21:30:08,Seleccionar modo automatico,127.0.0.1,Marcos,0,1,0.0
+2024-11-05 21:30:59,Cargar y ejecutar archivo G-Code.,127.0.0.1,Marcos,0,1,39767.74191856384
+2024-11-05 21:33:18,Cargar y ejecutar archivo G-Code.,127.0.0.1,Marcos,0,1,13126.070022583008
+2024-11-05 21:44:42,Inicio de actividad,127.0.0.1,Sistema,0,1,0.0
+2024-11-05 21:44:42,Inicio de actividad,127.0.0.1,Sistema,0,1,0.0
+2024-11-05 21:44:48,Iniciar Sesion,127.0.0.1,Marcos,0,1,0.0
+2024-11-05 21:44:55,Modificar parametros de conexion,127.0.0.1,Marcos,0,1,4873.57234954834
+2024-11-05 21:44:57,Seleccionar modo automatico,127.0.0.1,Marcos,0,1,0.0
+2024-11-05 21:45:10,Cargar y ejecutar archivo G-Code.,127.0.0.1,Marcos,0,1,12527.446985244751

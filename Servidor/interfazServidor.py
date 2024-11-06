@@ -426,8 +426,8 @@ class InterfazServidor:
                                     print(f"Error al ejecutar comando: {respuesta}")
                                     break
                                 time.sleep(0.5)
-                        print(f"Archivo {nombre_archivo} ejecutado correctamente.")
-                        exito = 1 
+                print(f"Archivo {nombre_archivo} ejecutado correctamente.")
+                exito = 1 
 
             except FileNotFoundError:
                 print(f"Error: No se pudo encontrar el archivo {nombre_archivo}. Verifique la ruta y el nombre.")
