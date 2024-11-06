@@ -1,6 +1,5 @@
 from fastapi import FastAPI, Form, UploadFile, File, HTTPException, Query, Cookie
 from fastapi.responses import HTMLResponse
-from pydantic import BaseModel
 import uvicorn
 from starlette.responses import FileResponse, RedirectResponse
 import os
@@ -24,7 +23,6 @@ def protect_route(token):
         raise HTTPException(status_code=401, detail="Acceso no autorizado")
 
     return
-
 
 # Cargar el archivo HTML como plantilla
 def load_html_template(archivo):

@@ -35,3 +35,86 @@
 2024-11-05 22:23:27,Desactivar motores,127.0.0.1,Marcos,0,1,102.07653045654297
 2024-11-05 22:24:28,Mostrar log de trabajo,127.0.0.1,Marcos,1,0,0.0
 2024-11-05 22:24:34,Mostrar log de trabajo,127.0.0.1,Marcos,1,0,0.0
+2024-11-05 23:26:38,Inicio de actividad,127.0.0.1,Sistema,0,1,0.0
+2024-11-05 23:26:38,Inicio de actividad,127.0.0.1,Sistema,0,1,0.0
+2024-11-05 23:29:51,Inicio de actividad,127.0.0.1,Sistema,0,1,0.0
+2024-11-05 23:29:51,Inicio de actividad,127.0.0.1,Sistema,0,1,0.0
+2024-11-05 23:31:02,Inicio de actividad,127.0.0.1,Sistema,0,1,0.0
+2024-11-05 23:31:02,Inicio de actividad,127.0.0.1,Sistema,0,1,0.0
+2024-11-05 23:33:53,Inicio de actividad,127.0.0.1,Sistema,0,1,0.0
+2024-11-05 23:33:53,Inicio de actividad,127.0.0.1,Sistema,0,1,0.0
+2024-11-05 23:33:57,Iniciar Sesion,127.0.0.1,Juan,0,1,0.0
+2024-11-05 23:39:22,Inicio de actividad,127.0.0.1,Sistema,0,1,0.0
+2024-11-05 23:39:22,Inicio de actividad,127.0.0.1,Sistema,0,1,0.0
+2024-11-06 00:20:49,Inicio de actividad,127.0.0.1,Sistema,0,1,0.0
+2024-11-06 00:20:49,Inicio de actividad,127.0.0.1,Sistema,0,1,0.0
+2024-11-06 00:22:19,Inicio de actividad,127.0.0.1,Sistema,0,1,0.0
+2024-11-06 00:22:19,Inicio de actividad,127.0.0.1,Sistema,0,1,0.0
+2024-11-06 00:23:40,Inicio de actividad,127.0.0.1,Sistema,0,1,0.0
+2024-11-06 00:23:40,Inicio de actividad,127.0.0.1,Sistema,0,1,0.0
+2024-11-06 00:23:51,Iniciar Sesion,127.0.0.1,Juan,0,1,0.0
+2024-11-06 00:25:06,Inicio de actividad,127.0.0.1,Sistema,0,1,0.0
+2024-11-06 00:25:06,Inicio de actividad,127.0.0.1,Sistema,0,1,0.0
+2024-11-06 00:25:49,Iniciar Sesion,127.0.0.1,Juan,0,1,0.0
+2024-11-06 00:25:58,Conectar robot,127.0.0.1,Juan,0,1,3518.8119411468506
+2024-11-06 00:26:09,Activar motores,127.0.0.1,Juan,0,1,101.34768486022949
+2024-11-06 00:26:10,Desactivar motores,127.0.0.1,Juan,0,1,101.99952125549316
+2024-11-06 00:26:13,Seleccionar modo automatico,127.0.0.1,Juan,0,1,0.0
+2024-11-06 00:26:15,Seleccionado modo manual,127.0.0.1,Juan,0,1,0.0
+2024-11-06 00:26:19,Seleccionar modo de coordenadas relativas,127.0.0.1,Juan,0,1,101.83119773864746
+2024-11-06 00:26:21,Seleccionar modo de coordenadas absolutas,127.0.0.1,Juan,0,1,101.84574127197266
+2024-11-06 00:26:28,Mostrar operaciones cliente,127.0.0.1,Juan,0,1,0.99945068359375
+2024-11-06 00:26:46,Seleccionar modo automatico,127.0.0.1,Juan,0,1,0.0
+2024-11-06 00:26:47,Seleccionado modo manual,127.0.0.1,Juan,0,1,0.0
+2024-11-06 00:27:06,Enviar comando,127.0.0.1,Juan,0,1,16277.233123779297
+2024-11-06 00:27:18,Cargar y ejecutar archivo G-Code.,127.0.0.1,Juan,0,1,0.0
+2024-11-06 00:27:22,Seleccionar modo automatico,127.0.0.1,Juan,0,1,0.0
+2024-11-06 00:30:24,Cargar y ejecutar archivo G-Code.,127.0.0.1,Juan,0,1,19181.957006454468
+2024-11-06 00:30:36,Mostrar reporte general,127.0.0.1,Juan,0,1,101.7463207244873
+2024-11-06 00:30:51,Mostrar log de trabajo,127.0.0.1,Juan,1,0,0.0
+2024-11-06 00:31:12,Mostrar usuarios,127.0.0.1,Juan,0,1,0.0
+2024-11-06 00:31:28,Modificar parametros de conexion,127.0.0.1,Juan,0,1,11387.709379196167
+2024-11-06 00:31:32,Encender/apagar servidor,127.0.0.1,Juan,0,1,1.0025501251220703
+2024-11-06 00:32:22,Cerrar sesión,127.0.0.1,Juan,0,1,0.0
+2024-11-06 00:32:45,Inicio de actividad,127.0.0.1,Sistema,0,1,0.0
+2024-11-06 00:32:45,Inicio de actividad,127.0.0.1,Sistema,0,1,0.0
+2024-11-06 00:32:49,Iniciar Sesion,127.0.0.1,Juan,0,1,0.0
+2024-11-06 00:33:08,Cerrar sesión,127.0.0.1,Juan,0,1,0.0
+2024-11-06 00:33:12,Iniciar Sesion,127.0.0.1,Juan,0,1,0.0
+2024-11-06 00:33:16,Listar comandos nuevamente,127.0.0.1,Juan,0,1,0.9965896606445312
+2024-11-06 00:33:18,Apagar programa,127.0.0.1,Juan,0,1,0.0
+2024-11-06 00:34:38,Inicio de actividad,127.0.0.1,Sistema,0,1,0.0
+2024-11-06 00:34:38,Inicio de actividad,127.0.0.1,Sistema,0,1,0.0
+2024-11-06 00:35:04,Conectar robot,127.0.0.1,Juan,0,1,3518.6967849731445
+2024-11-06 00:35:05,Activar motores,127.0.0.1,Juan,0,1,101.34315490722656
+2024-11-06 00:35:08,Seleccionar modo automatico,127.0.0.1,Juan,0,1,0.0
+2024-11-06 00:35:09,Seleccionado modo manual,127.0.0.1,Juan,0,1,0.0
+2024-11-06 00:35:11,Seleccionar modo de coordenadas relativas,127.0.0.1,Juan,0,1,101.58658027648926
+2024-11-06 00:35:41,Seleccionar modo automatico,127.0.0.1,Juan,0,1,0.0
+2024-11-06 00:36:54,Inicio de actividad,127.0.0.1,Sistema,0,1,0.0
+2024-11-06 00:36:54,Inicio de actividad,127.0.0.1,Sistema,0,1,0.0
+2024-11-06 00:37:26,Conectar robot,127.0.0.1,Juan,0,1,3518.2859897613525
+2024-11-06 00:37:27,Activar motores,127.0.0.1,Juan,0,1,101.6075611114502
+2024-11-06 00:37:28,Desactivar motores,127.0.0.1,Juan,0,1,101.70602798461914
+2024-11-06 00:37:30,Seleccionar modo automatico,127.0.0.1,Juan,0,1,0.0
+2024-11-06 00:37:32,Seleccionado modo manual,127.0.0.1,Juan,0,1,0.0
+2024-11-06 00:37:34,Seleccionar modo de coordenadas relativas,127.0.0.1,Juan,0,1,101.75347328186035
+2024-11-06 00:37:36,Seleccionar modo de coordenadas absolutas,127.0.0.1,Juan,0,1,101.92728042602539
+2024-11-06 00:37:58,Seleccionar modo automatico,127.0.0.1,Juan,0,1,0.0
+2024-11-06 00:40:37,Inicio de Sesion,127.0.0.1,Juan,0,1,0.0
+2024-11-06 00:40:52,Activar Motores,127.0.0.1,Juan,1,0,0.0
+2024-11-06 00:41:00,Activar Motores,127.0.0.1,Juan,1,0,0.0
+2024-11-06 00:41:03,Activar Motores,127.0.0.1,Juan,1,0,0.0
+2024-11-06 00:43:36,Inicio de Sesion,127.0.0.1,Marcos,0,1,0.0
+2024-11-06 00:43:49,Conectar Robot,127.0.0.1,Marcos,0,1,0.0
+2024-11-06 00:45:02,Inicio de Sesion,127.0.0.1,Marcos,0,1,0.0
+2024-11-06 00:45:54,Conectar Robot,127.0.0.1,Marcos,0,1,0.0
+2024-11-06 00:46:03,Activar Motores,127.0.0.1,Marcos,0,1,0.0
+2024-11-06 00:46:06,Desactivar Motores,127.0.0.1,Marcos,0,1,0.0
+2024-11-06 00:47:18,Inicio de Sesion,127.0.0.1,Juan,0,1,0.0
+2024-11-06 00:53:30,Inicio de actividad,127.0.0.1,Sistema,0,1,0.0
+2024-11-06 00:53:30,Inicio de actividad,127.0.0.1,Sistema,0,1,0.0
+2024-11-06 00:53:34,Iniciar Sesion,127.0.0.1,Juan,0,1,0.0
+2024-11-06 00:53:41,Conectar robot,127.0.0.1,Juan,0,1,3519.1521644592285
+2024-11-06 00:53:41,Seleccionar modo automatico,127.0.0.1,Juan,0,1,0.0
+2024-11-06 00:54:01,Cargar y ejecutar archivo G-Code.,127.0.0.1,Juan,0,1,18614.092588424683
