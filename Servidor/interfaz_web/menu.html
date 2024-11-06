@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menu Principal</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background-color: #f4f4f9;
+        }
+
+        .menu-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            width: 80%;
+            max-width: 800px;
+        }
+
+        .card {
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            padding: 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .card:hover {
+            transform: scale(1.05);
+        }
+
+        .card-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="menu-container">
+        <div class="card" onclick="location.href='/listar-usuarios'">
+            <div class="card-title">1. Mostrar lista de usuarios</div>
+        </div>
+        <div class="card" onclick="location.href='/motores'">
+            <div class="card-title">2. Conectar/Desconectar Robot</div>
+        </div>
+        <div class="card" onclick="location.href='/dashboard'">
+            <div class="card-title">3. Cargar archivo .gcode</div>
+        </div>
+        <div class="card" onclick="location.href='/on_off_robot'">
+            <div class="card-title">4. Prender/Apagar motores</div>
+        </div>
+        <!-- Esta es la opción de Log de Trabajo, que se mostrará solo si el usuario tiene permisos -->
+        {{ log_option }}
+    </div>
+</body>
+
+</html>

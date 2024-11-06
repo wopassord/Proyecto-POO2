@@ -2,26 +2,65 @@
 
 ClienteRPC::ClienteRPC(const string &host, int port) : client(host.c_str(), port) {}
 
-void ClienteRPC::login_o_signin()
-{
-    string nombre_usuario, contrasena;
-    cout << "Ingrese el nombre de usuario: ";
-    cin >> nombre_usuario;
-    cout << "Ingrese la contraseña: ";
-    cin >> contrasena;
+bool ClienteRPC::iniciarSesion() {
+    std::string nombre_usuario, contrasena;
+    std::cout << "Ingrese el nombre de usuario: ";
+    std::cin >> nombre_usuario;
+    std::cout << "Ingrese la contraseña: ";
+    std::cin >> contrasena;
 
+    // Crear un array en args para enviar los datos correctamente
+    XmlRpcValue args;
+    args.setSize(2); // Configura el tamaño del array
     args[0] = nombre_usuario;
     args[1] = contrasena;
 
-    cout << "Conexión Successful" << endl;
+    try {
+        if (client.execute("iniciar_sesion_cliente", args, result)) {
+            bool sesion_iniciada = static_cast<bool>(result[0]);
+            std::string mensaje = static_cast<std::string>(result[1]);
 
-    /*
-    if (client.execute("login_o_signin", args, result)) {
-        cout << static_cast<string>(result) << "\n";
-    } else {
-        cerr << "Error en la conexión al iniciar sesión o registrar el usuario.\n";
+            if (sesion_iniciada) {
+                std::cout << mensaje << "\n";
+                return true;
+            } else {
+                std::cout << "Error: " << mensaje << "\n";
+                return false;
+            }
+        }
+    } catch (const XmlRpc::XmlRpcException& e) {
+        std::cerr << "Error en la conexión al intentar iniciar sesión: " << e.getMessage() << "\n";
+        return false;
     }
-    */
+    return false;
+}
+
+// Método para agregar un nuevo usuario
+bool ClienteRPC::agregarUsuario() {
+    std::string nombre_usuario, contrasena;
+    bool admin = false;
+
+    std::cout << "Ingrese el nombre de usuario: ";
+    std::cin >> nombre_usuario;
+    std::cout << "Ingrese la contraseña: ";
+    std::cin >> contrasena;
+    admin=false;
+    // Configurar los argumentos para enviar al servidor
+    XmlRpcValue args;
+    args[0] = nombre_usuario;
+    args[1] = contrasena;
+    args[2] = admin;
+
+    try {
+        if (client.execute("agregar_usuario", args, result)) {
+            std::cout << "Usuario agregado correctamente.\n";
+            return true;
+        }
+    } catch (const XmlRpc::XmlRpcException& e) {
+        std::cerr << "Error en la conexión al intentar agregar usuario: " << e.getMessage() << "\n";
+        return false;
+    }
+    return false;
 }
 
 void ClienteRPC::activarAlarma()
@@ -143,7 +182,7 @@ void ClienteRPC::subirArchivoGCode()
             // Verificar si la posición es alcanzable
             if (!esPosicionAlcanzable(nuevaPosX, nuevaPosY, nuevaPosZ))
             {
-                cerr << "Posición fuera del alcance acumulativo: X" << nuevaPosX << " Y" << nuevaPosY << " Z" << nuevaPosZ << "\n";
+                cerr << "Posicion fuera del alcance acumulativo: X" << nuevaPosX << " Y" << nuevaPosY << " Z" << nuevaPosZ << "\n";
                 activarAlarma();
                 coordenadasValidas = false;
                 break;
@@ -181,7 +220,7 @@ void ClienteRPC::subirArchivoGCode()
     }
     else
     {
-        cerr << "Error en la conexión al subir el archivo G-Code\n\n";
+        cerr << "Error en la conexion al subir el archivo G-Code\n\n";
         activarAlarma();
     }
 }
@@ -200,6 +239,7 @@ void ClienteRPC::conectarDesconectarRobot()
 
 void ClienteRPC::enviarComando(const string &comando)
 {
+    XmlRpcValue args;
     args[0] = comando;
     if (client.execute("recibir_comando_cliente", args, result))
     {
@@ -237,16 +277,18 @@ void ClienteRPC::seleccionarModoCoordenadas()
 
 void ClienteRPC::mostrarOperacionesCliente()
 {
-    if (client.execute("recibir_comando_cliente", 5, result))
-    {
-        cout << "Operaciones disponibles:\n"
-             << result << "\n\n";
-    }
-    else
-    {
-        cerr << "Error al obtener las operaciones del servidor\n\n";
-    }
+    cout << "\nOperaciones posibles a realizar por un cliente o por un operador en el servidor: \n";
+    cout << "M3: Activar gripper." << endl;
+    cout << "M5: Desactivar gripper." << endl;
+    cout << "G28: Hacer homing." << endl;
+    cout << "G1: Hacer un movimiento a una determinada posición (para enviar este comando, realizar lo siguiente: [G1 Xa Yb Zc], donde Xa, Yb y Zc son las posiciones a las que se debe mover)." << endl;
+    cout << "M114: Reporte de modo de coordenadas y posición actual." << endl;
+    cout << "G90: Modo de coordenadas absolutas." << endl;
+    cout << "G91: Modo de coordenadas relativas." << endl;
+    cout << "M17: Activar motores." << endl;
+    cout << "M18: Desactivar motores.\n" << endl;
 }
+
 
 void ClienteRPC::activarDesactivarMotores()
 {
@@ -270,12 +312,15 @@ void ClienteRPC::enviarComandoGCode()
     std::regex gcode_regex("^[GM]\\d+"); // valida que el comando empieza con G o M
     if (!std::regex_match(comando, gcode_regex))
     {
-        cerr << "Error: Comando inválido. Solo se permiten comandos en GCode.\n\n";
+        cerr << "Error: Comando invalido. Solo se permiten comandos en GCode.\n\n";
         activarAlarma();
         return; // Salir del método sin enviar el comando
     }
 
-    args[0] = XmlRpcValue(comando); // agregar proteccion de que no se puedan mandar opciones
+
+    XmlRpcValue args;
+    args[0] = comando;
+
     if (client.execute("recibir_comando_cliente", args, result))
     {
         cout << "Comando G-Code enviado correctamente: " << result << "\n\n";
@@ -289,14 +334,25 @@ void ClienteRPC::enviarComandoGCode()
 
 void ClienteRPC::modoManual()
 {
-    int opcionManual;
+    string entrada;
     while (true)
     {
         cout << "\n--- MODO MANUAL ---\n";
         cout << "1. Enviar comando G-Code\n";
-        cout << "2. Salir del Modo Manual y volver al inicio (envÍa G28)\n";
-        cout << "Seleccione una opción: ";
-        cin >> opcionManual;
+        cout << "2. Salir del Modo Manual y volver al inicio (envia G28)\n";
+        cout << "Seleccione una opcion: ";
+
+        cin >> entrada;
+
+        // Verificar si la entrada contiene solo dígitos
+        bool esNumeroValido = !entrada.empty() && std::all_of(entrada.begin(), entrada.end(), ::isdigit);
+        if (!esNumeroValido)
+        {
+            cout << "Entrada invalida. Por favor, ingrese un numero entero.\n";
+            continue;
+        }
+
+        int opcionManual = std::stoi(entrada); // Convertir la cadena a entero
 
         if (opcionManual == 1)
         {
@@ -310,14 +366,14 @@ void ClienteRPC::modoManual()
         }
         else
         {
-            cout << "Opción inválida. Intente de nuevo.\n";
+            cout << "Opción invalida. Intente de nuevo.\n";
         }
     }
 }
 
+
 void ClienteRPC::mostrarMenu()
 {
-    cout << "jaja\n";
     cout << "Menu de opciones:\n";
     cout << "1. Conectar/desconectar robot.\n";
     cout << "2. Activar/desactivar motores del robot.\n";
@@ -325,7 +381,7 @@ void ClienteRPC::mostrarMenu()
     cout << "4. Seleccionar modos de coordenadas.\n";
     cout << "5. Mostrar operaciones posibles.\n";
     cout << "6. [MODO MANUAL] Enviar comandos en formato G-Code.\n";
-    cout << "7. [MODO AUTOMÁTICO] Subir archivo G-Code\n";
+    cout << "7. [MODO AUTOMATICO] Subir archivo G-Code\n";
     cout << "8. Salir y apagar todo\n";
-    cout << "Seleccione una opción: ";
+    cout << "Seleccione una opcion: ";
 }

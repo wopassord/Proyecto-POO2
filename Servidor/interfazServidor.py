@@ -2,6 +2,9 @@ from archivo import Archivo
 from logTrabajo import LogTrabajo
 from controlador import Controlador
 import time
+from interprete_gcode import SimuladorRobot
+from abb_sim_client import ABBSimClient
+from unidecode import unidecode
 
 class InterfazServidor:
     def __init__(self, servidor, modo_trabajo="automatico", modo_coordenadas="absolutas"):
@@ -13,6 +16,12 @@ class InterfazServidor:
         self.peticion = None
         self.ip_cliente = "127.0.0.1"
         self.log_trabajo = LogTrabajo(servidor=servidor)
+        self.fallos = 0
+        self.exitos = 0
+        self.archivo = Archivo(estado_conexion=self.servidor.get_estado_servidor(),posicion="Inicio", estado_actividad="Inactiva")
+        self.registrar_inicio_sesion()
+        self.simuladorrobot = SimuladorRobot()
+        self.abbsimclient = ABBSimClient()
 
     def registrar_log_csv(self, peticion, fallos=0, exitos=1, tiempo_ejecucion=0.0, IP="127.0.01"):
         sesion = self.servidor.get_sesion()
@@ -26,25 +35,32 @@ class InterfazServidor:
         print("Comandos posibles a realizar: \n")
         print(" 1) Conectar/desconectar robot.")
         print(" 2) Activar/desactivar motores del robot.")
-        print(" 3) Seleccionar los modos de trabajo (manual o automatico)")
-        print(" 4) Seleccionar los modos de coordenadas (absolutas o relativas)")
+        print(" 3) Seleccionar los modos de trabajo (manual o automatico).")
+        print(" 4) Seleccionar los modos de coordenadas (absolutas o relativas).")
         print(" 5) Mostrar operaciones posibles a realizar por un cliente o un operador en el servidor.")
         print(" 6) [SOLO MODO MANUAL] Enviar comandos en formato G-Code para accionar robot.")
-        print(" 7) Mostrar reporte de informacion general.")
-        print(" 8) [SOLO ADMIN] Mostrar reporte de log de trabajo del servidor.")
-        print(" 9) [SOLO ADMIN] Mostrar usuarios.")
-        print(" 10) [SOLO ADMIN] Mostrar/editar los parametros de conexion del robot.")
-        print(" 11) [SOLO ADMIN] Encender/apagar servidor.")
-        print(" 12) Cerrar sesion.")
-        print(" 13) Listar comandos nuevamente.")
-        print(" 14) Apagar programa.")
+        print(" 7) [MODO AUTOMÁTICO] Cargar y ejecutar un archivo en formado G-Code.")
+        print(" 8) Mostrar reporte de informacion general.")
+        print(" 9) [SOLO ADMIN] Mostrar reporte de log de trabajo del servidor.")
+        print(" 10) [SOLO ADMIN] Mostrar usuarios.")
+        print(" 11) [SOLO ADMIN] Mostrar/editar los parametros de conexion del robot.")
+        print(" 12) [SOLO ADMIN] Encender/apagar servidor.")
+        print(" 13) Cerrar sesion.")
+        print(" 14) Listar comandos nuevamente.")
+        print(" 15) Apagar programa.")
+        exito = 1
+        self.exitos = exito
+
 
     def recibir_comando_cliente(self, comando):
         # Recibe un comando desde el servidor (que lo recibe de cliente) y lo procesa.
         if comando not in list(range(1, 5)):
-            respuesta = self.controlador.enviar_comando(comando)
+            if self.modo_trabajo == "manual":
+                respuesta = self.controlador.enviar_comando(comando)
+            else:
+                respuesta = "Esta accion solo esta disponible en modo manual. Cambie el modo de trabajo a automatico para proceder."
         else:
-            respuesta = self.administrar_comandos(comando)
+                respuesta = self.administrar_comandos(comando)
         return respuesta
 
     def administrar_comandos(self, opcion_elegida = None):
@@ -95,49 +111,67 @@ class InterfazServidor:
             self.escribir_comando()
             respuesta = "Comando escrito en modo manual."
         elif opcion_elegida == 7:
+            self.peticion = "Cargar y ejecutar archivo G-Code."
+            respuesta = self.cargar_y_ejecutar_archivo_gcode()
+        elif opcion_elegida == 8:
             self.peticion = "Mostrar reporte general"
             self.mostrar_reporte_general()
             respuesta = "Resporte general mostrado."
-        elif opcion_elegida == 8:
+        elif opcion_elegida == 9:
             self.peticion = "Mostrar log de trabajo"
             duracion = (time.time() - inicio)*1000  # Calcular el tiempo de ejecución
-            self.registrar_log_csv(peticion=self.peticion, tiempo_ejecucion=duracion,IP=self.ip_cliente)
+            self.mostrar_log_trabajo_aux()
+            self.registrar_log_csv(peticion=self.peticion,fallos=self.fallos , exitos=self.exitos,tiempo_ejecucion=duracion,IP=self.ip_cliente)
             self.mostrar_log_trabajo()
             respuesta = "Log de trabajo mostrado."
-        elif opcion_elegida == 9:
+        elif opcion_elegida == 10:
             self.peticion = "Mostrar usuarios"
             self.mostrar_usuarios()
             respuesta = "Usuarios mostrados."
-        elif opcion_elegida == 10:
+        elif opcion_elegida == 11:
             self.peticion = "Modificar parámetros de conexión"
             self.modificar_parametros_conexion()
             respuesta = "Parámetros de conexión modificados."
-        elif opcion_elegida == 11:
+        elif opcion_elegida == 12:
             self.peticion = "Encender/apagar servidor"
             if not self.servidor.get_estado_servidor():
-                self.servidor.iniciar_servidor()
+                exito = self.servidor.iniciar_servidor()
                 respuesta = "Servidor iniciado."
+                self.exitos = exito
+                self.fallos= 1 - exito
             else:
-                self.servidor.apagar_servidor()
+                exito = self.servidor.apagar_servidor()
                 respuesta = "Servidor apagado."
-        elif opcion_elegida == 12:
+                self.exitos = exito
+                self.fallos = 1 - exito
+        elif opcion_elegida == 13:
             self.peticion = "Cerrar sesión"
+            duracion = (time.time() - inicio)*1000  # Calcular el tiempo de ejecución
+            exito = 1
+            self.exitos = exito
+            self.fallos = 1 - exito
+            self.registrar_log_csv(peticion=self.peticion,fallos=self.fallos, exitos=self.exitos, tiempo_ejecucion=duracion,IP=self.ip_cliente)
             self.servidor.cerrar_sesion()
             respuesta = "Sesión cerrada."
-        elif opcion_elegida == 13:
+        elif opcion_elegida == 14:
             self.peticion = "Listar comandos nuevamente"
             self.listar_comandos()
             respuesta = "Comandos listados nuevamente."
-        elif opcion_elegida == 14:
+        elif opcion_elegida == 15:
             self.peticion = "Apagar programa"
-            return 14
+            duracion = (time.time() - inicio)*1000  # Calcular el tiempo de ejecución
+            exito=1
+            self.exitos=exito
+            self.fallos=1-exito
+            self.registrar_log_csv(peticion=self.peticion,fallos=self.fallos, exitos=self.exitos, tiempo_ejecucion=duracion,IP=self.ip_cliente)
+            return 15
         else:
             print("Opción no válida.")
             respuesta = "Opción inválida."
         
-        if opcion_elegida != 8:
+        if opcion_elegida not in [9, 15, 13]:
             duracion = (time.time() - inicio)*1000  # Calcular el tiempo de ejecución
-            self.registrar_log_csv(peticion=self.peticion, tiempo_ejecucion=duracion,IP=self.ip_cliente)
+            self.registrar_log_csv(peticion=self.peticion,fallos=self.fallos, exitos=self.exitos, tiempo_ejecucion=duracion,IP=self.ip_cliente)
             # logtrabajo = LogTrabajo(servidor=self.servidor,peticion=self.peticion,exitos=1 if respuesta != "Opción inválida" else 0,tiempo_ejecucion=duracion,IP=self.ip_cliente)
     
         return respuesta
@@ -145,54 +179,108 @@ class InterfazServidor:
     # Métodos adicionales para manipular el robot y mostrar reportes
     def activar_desactivar_robot(self):
         if not self.controlador.get_estado_robot():  # Solo conectar si está desconectado
-            respuesta = self.controlador.conectar_robot()
+            respuesta, exito = self.controlador.conectar_robot()
             self.peticion = "Conectar robot"
+            self.exitos = exito
+            self.fallos = 1 - exito
         else:
-            respuesta = self.controlador.desconectar_robot()
+            respuesta, exito = self.controlador.desconectar_robot()
             self.peticion = "Desconectar robot"
+            self.exitos = exito
+            self.fallos = 1 - exito
         return respuesta
 
     def activar_desactivar_motores(self):
         if self.controlador.get_estado_motores():
-            respuesta = self.controlador.desactivar_motores()  # Usamos la instancia
+            respuesta, exito = self.controlador.desactivar_motores()  # Usamos la instancia
             self.peticion = "Desactivar motores"
         else:
-            respuesta = self.controlador.activar_motores()
+            respuesta, exito = self.controlador.activar_motores()
             self.peticion = "Activar motores"
+
+        self.exitos = exito
+        self.fallos = 1 - exito
         return respuesta
 
+    def registrar_inicio_sesion(self):
+        """Registra el inicio de una nueva sesión en el log."""
+        self.log_trabajo.actualizar_log(peticion="Inicio de actividad", usuario="Sistema", fallos=0, exitos=1)
+        self.log_trabajo.escribir_CSV()
+    
+    
     def mostrar_reporte_general(self):
         try:
-            Archivo.mostrar_info()  # Muestra información general
+            #archivo = Archivo()  # Instancia de Archivo
+
+            respuesta, exito = self.controlador.enviar_comando("M114", mostrar=False)
+            if exito:
+                self.archivo.set_posicion_actual(respuesta)
+            else:
+                print("No se pudo obtener la posición del robot.")
+
+            self.archivo.mostrar_info()  
             self.peticion = "Mostrar reporte general"
+            exito = 1
+            self.exitos = exito
+            self.fallos = 1 - exito
         except FileNotFoundError:
+            exito = 0
+            self.exitos = exito
+            self.fallos = 1 - exito
             print("Error: No se encontró el archivo requerido para mostrar el reporte general.")
         except IOError:
+            exito = 0
+            self.exitos = exito
+            self.fallos = 1 - exito
             print("Error: Hubo un problema al leer el archivo para el reporte general.")
         except Exception as e:
+            exito = 0
+            self.exitos = exito
+            self.fallos = 1 - exito
             print(f"Error inesperado: {e}")
+
 
     def mostrar_log_trabajo(self):
         self.peticion = "Mostrar log de trabajo"
         if self.verificar_sesion_admin() == True:
             try:
-                self.log_trabajo.leer_CSV()  
+                self.log_trabajo.leer_CSV() 
+                exito = 1
+                self.exitos = exito
+                self.fallos = 1 - exito
             except FileNotFoundError:
                 print("Error: El archivo de log de trabajo no se encuentra.")
+                exito = 0
+                self.exitos = exito
+                self.fallos = 1 - exito
             except PermissionError:
                 print("Error: Permisos insuficientes para acceder al archivo de log de trabajo.")
+                exito = 0
+                self.exitos = exito
+                self.fallos = 1 - exito
             except Exception as e:
                 print(f"Error inesperado: {e}")
-        
-
-
+                exito = 0
+                self.exitos = exito
+                self.fallos = 1 - exito
+        else:
+            exito = 0
+            self.exitos = exito
+            self.fallos = 1 - exito 
+            
     def seleccionar_modo_trabajo(self):
         if self.modo_trabajo == "manual":
             self.modo_trabajo = "automatico"
             self.peticion = "Seleccionar modo automatico"
+            exito = 1
+            self.exitos = exito
+            self.fallos = 1 - exito
         elif self.modo_trabajo == "automatico":
             self.modo_trabajo = "manual"
             self.peticion = "Seleccionado modo manual"
+            exito = 1
+            self.exitos = exito
+            self.fallos = 1 - exito
         respuesta = f"Modo de trabajo seleccionado: {self.modo_trabajo}"
         print(respuesta)
         return respuesta
@@ -200,21 +288,34 @@ class InterfazServidor:
     def seleccionar_modo_coordenadas(self):
         if self.modo_coordenadas == "absolutas":
             self.modo_coordenadas = "relativas"
-            respuesta = self.controlador.enviar_comando('G91')
+            respuesta, exito = self.controlador.enviar_comando('G91')
             self.peticion = "Seleccionar modo de coordenadas relativas"
+            self.exitos = exito
+            self.fallos = 1 - exito
         elif self.modo_coordenadas == "relativas":
             self.modo_coordenadas = "absolutas"
-            respuesta = self.controlador.enviar_comando('G90')
+            respuesta, exito = self.controlador.enviar_comando('G90')
             self.peticion = "Seleccionar modo de coordenadas absolutas"
+            self.exitos = exito
+            self.fallos = 1 - exito
         return respuesta
 
     def mostrar_usuarios(self):
         self.peticion = "Mostrar usuarios"
         if self.verificar_sesion_admin() == True:
+            # Imprimir encabezado de la tabla
+            print(f"{'Nombre de usuario':<20} {'Contraseña':<20} {'Es admin':<10}")
+            print("-" * 50)  # Separador para mayor claridad
+        
+            exito = 1
+            self.exitos = exito
+            self.fallos = 1 - exito
+            # Imprimir cada usuario en un formato de tabla
             for u in self.usuarios:
-                print(u.nombre_usuario)  # Muestra el nombre del usuario
+                print(f"{u.nombre_usuario:<20} {u.contrasena:<20} {str(u.admin):<10}")
+        
             return
-            
+
 
     def modificar_parametros_conexion(self):
         self.peticion = "Modificar parametros de conexion"
@@ -224,8 +325,16 @@ class InterfazServidor:
                 baudrate = int(input('Ingrese la velocidad de comunicacion (baudrate): '))
                 self.controlador.cambiar_parametros_comunicacion(baudrate, puerto_COM)
                 self.controlador.conectar_robot()
+                exito = 1
+                self.exitos = exito 
+                self.fallos = 1 - exito
+    
             except Exception as e:
                 print(f"Error al modificar los parámetros de conexión: {e}")
+                exito = 1
+                self.exitos = exito 
+                self.fallos = 1 - exito 
+                
 
     def mostrar_operaciones_cliente(self):
         print("\nOperaciones posibles a realizar por un cliente o por un operador en el servidor: \n")
@@ -237,18 +346,35 @@ class InterfazServidor:
         print("G90: Modo de coordenadas absolutas.")
         print("G91: Modo de coordenadas relativas.")
         print("M17: Activar motores.")
-        print("M18: Desactivar motores.\n")        
+        print("M18: Desactivar motores.\n")
+        exito = 1
+        self.exitos = exito
+        self.fallos = 1 - exito
 
     def escribir_comando(self):
-        # #self.peticion = "Enviar comando"
+        self.peticion = "Enviar comando"
         if self.modo_trabajo == "manual":
-            try: 
+            try:
+                if not hasattr(self, 'archivo_trayectoria'):
+                    nombre_archivo = input("Ingrese el nombre del archivo para almacenar los comandos (con extensión .txt): ")
+                    self.archivo_trayectoria = open(nombre_archivo, 'a', encoding='utf-8')
                 comando = input("Ingrese el comando en G-Code para accionar el robot: ")
-                self.controlador.enviar_comando(comando)
+                respuesta, exito = self.controlador.enviar_comando(comando)
+                self.archivo_trayectoria.write(f"{comando}\n")
+                self.archivo_trayectoria.flush()
+                print(f"Comando '{comando}' guardado en el archivo.")
+                self.exitos = exito
+                self.fallos = 1 - exito
             except Exception as e:
                 print(f"Error al enviar el comando: {e} ")
+                exito = 0
+                self.exitos = exito
+                self.fallos = 1 - exito
         else: 
             print("El modo de trabajo no es manual. Por favor, cambie el modo de trabajo antes de realizar esta accion.")
+            exito = 0
+            self.exitos = exito
+            self.fallos = 1 - exito
 
     def verificar_sesion_admin(self):
         self.sesion = self.servidor.get_sesion()
@@ -264,7 +390,141 @@ class InterfazServidor:
                         return True
     
                 print("Acceso denegado. Solo los administradores pueden realizar esta accion")
+                exito = 0
+                self.exitos = exito
+                self.fallos = 1 - exito
                 return False
+        
         else:
             print("No hay ningún usuario en sesión.")
             return False
+        
+    def cargar_y_ejecutar_archivo_gcode(self, contenido_archivo = None):
+        if contenido_archivo is None:
+            if self.modo_trabajo != "automatico":
+                print("Esta acción solo está disponible en modo automático. Cambie el modo de trabajo a automático para proceder.")
+                return
+            nombre_archivo = input("Ingrese el nombre del archivo G-Code a cargar (con extensión): ")
+            try:
+                with open(nombre_archivo, 'r', encoding='latin-1') as archivo:
+                    contenido_gcode = archivo.read()
+                    print(f"Ejecutando comandos en {nombre_archivo}...")
+
+                    # Procesar el contenido G-Code para almacenar movimientos y visualizar
+                    self.simuladorrobot.procesar_gcode(contenido_gcode)
+
+                    # Enviar las coordenadas procesadas al cliente de simulación ABB
+                    self.abbsimclient.coordinates = self.simuladorrobot.movimientos
+                    self.abbsimclient.send_all_coordinates(self.abbsimclient.coordinates)
+
+                    # Ejecutar los comandos en el controlador sin volver a procesar el archivo
+                    for linea in contenido_gcode.splitlines():
+                        comando = linea.split(";")[0].strip()
+                        if comando:
+                                respuesta, exito = self.controlador.enviar_comando(comando)
+                                if exito == 0:
+                                    print(f"Error al ejecutar comando: {respuesta}")
+                                    break
+                                time.sleep(0.5)
+                print(f"Archivo {nombre_archivo} ejecutado correctamente.")
+                exito = 1 
+
+            except FileNotFoundError:
+                print(f"Error: No se pudo encontrar el archivo {nombre_archivo}. Verifique la ruta y el nombre.")
+                exito = 0
+
+            except Exception as e:
+                print(f"Error al ejecutar el archivo: {e}")
+                exito = 0
+
+                self.exitos = exito
+                self.fallos = 1 - exito
+        else:
+            # ESTO SE PRODUCE SOLO CUANDO SE ENVIA UN ARCHIVO DESDE EL CLIENTE, Y SE HACE EL CHEQUEO DE AUTOMATICO EN EL SERVER
+            try:
+                # Dividir el string G-Code en líneas
+                lineas = contenido_archivo.splitlines()
+                
+                print(f"Ejecutando comandos G-Code...")
+
+                respuestas_correctas = ""
+
+                for linea in lineas:
+                    # Eliminar comentarios y espacios innecesarios
+                    comando = linea.split(";")[0].strip()
+                    
+                    if comando:  # Si la línea no está vacía después de quitar los comentarios
+                        # Enviar el comando a través del controlador
+                        respuesta, exito = self.controlador.enviar_comando(comando)
+                        
+                        if exito == 0:
+                            continue  # Continuar con el siguiente comando
+                        
+                        # Si la respuesta es válida, agregarla a la lista
+                        if respuesta:
+                            # Limpiar respuesta de caracteres especiales y acumular
+                            respuesta_limpia = ''.join(c for c in respuesta if c.isascii())
+                            respuestas_correctas += respuesta_limpia + "\n"
+
+                print(f"Comandos G-Code ejecutados correctamente.")
+                exito = 1  # Marcar como exitoso
+
+            except Exception as e:
+                print(f"Error al ejecutar el G-Code: {e}")
+                exito = 0  # Marcar como fallido
+
+            self.exitos = exito
+            self.fallos = 1 - exito
+
+            respuesta = unidecode(respuestas_correctas)
+
+            return respuesta
+                  
+
+    def verificar_sesion_admin_aux(self): ##SOLO PARA VERIFICAR ERRORES EN EL EXITOS/FALLOS DE MOSTRAR LOG
+        self.sesion = self.servidor.get_sesion()
+        self.usuarios = self.servidor.get_usuarios()
+
+        if self.sesion and 'nombre_usuario' in self.sesion:
+                nombre_usuario = self.sesion['nombre_usuario']
+                
+                # Verificamos si el usuario tiene permisos de administrador
+                for usuario in self.usuarios:
+                    if usuario.nombre_usuario == nombre_usuario and usuario.admin:
+                        # Seguir la funcion si el usuario tiene permisos de administrador
+                        return True
+
+                exito = 0
+                self.exitos = exito
+                self.fallos = 1 - exito
+                return False
+        
+        else:
+            return False
+    def mostrar_log_trabajo_aux(self): ##ESTA SOLO RECORRE SIN PRINTEAR NADA PARA VERIFICAR ERRORES UNICAMENTE
+        self.peticion = "Mostrar log de trabajo"
+        if self.verificar_sesion_admin_aux() == True:
+            try:
+                self.log_trabajo.leer_CSV_aux() 
+                exito = 1
+                self.exitos = exito
+                self.fallos = 1 - exito
+            except FileNotFoundError:
+                print("Error: El archivo de log de trabajo no se encuentra.")
+                exito = 0
+                self.exitos = exito
+                self.fallos = 1 - exito
+            except PermissionError:
+                print("Error: Permisos insuficientes para acceder al archivo de log de trabajo.")
+                exito = 0
+                self.exitos = exito
+                self.fallos = 1 - exito
+            except Exception as e:
+                print(f"Error inesperado: {e}")
+                exito = 0
+                self.exitos = exito
+                self.fallos = 1 - exito
+        else:
+            exito = 0
+            self.exitos = exito
+            self.fallos = 1 - exito 

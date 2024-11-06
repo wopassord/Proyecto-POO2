@@ -1,4 +1,6 @@
 #include "AplicacionCliente.h"
+#include <algorithm>
+#include <iostream>
 
 AplicacionCliente::AplicacionCliente(const string& host, int port) {
     cliente = new ClienteRPC(host, port);
@@ -8,14 +10,32 @@ AplicacionCliente::~AplicacionCliente() {
     delete cliente;
 }
 
+bool AplicacionCliente::iniciar_sesion(){
+    return cliente->iniciarSesion();
+}
+bool AplicacionCliente::agregar_usuario(){
+   return cliente->agregarUsuario();
+}
 void AplicacionCliente::ejecutar() {
-    int opcion;
+    string entrada;
 
-    cliente->login_o_signin();
+    //cliente->login_o_signin();
 
+    
     while (true) {
         cliente->mostrarMenu();
-        cin >> opcion;
+        cin >> entrada;
+
+        // Verificar si la entrada contiene solo dígitos
+        bool esNumeroValido = !entrada.empty() && std::all_of(entrada.begin(), entrada.end(), ::isdigit);
+        if (!esNumeroValido)
+        {
+            cout << "Entrada inválida. Por favor, ingrese un número entero.\n";
+            continue;
+        }
+
+        int opcion = std::stoi(entrada); // Convertir la cadena a entero
+
 
         switch (opcion) {
             
