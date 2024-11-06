@@ -24,7 +24,7 @@ class LogTrabajo:
 
     def escribir_CSV(self, archivo="log_trabajo.csv"):
         "Escribe la información del log en un archivo CSV."
-        header = ["Fecha y Hora","Peticiones","IP","Usuario","Fallos","Exitos","Tiempo de Ejecucion"]
+        header = ["Fecha y Hora","Peticiones","IP","Usuario","Fallos","Exitos","Tiempo de Ejecucion",]
 
         try:
             with open(archivo, mode="a", newline="") as csvfile:
@@ -32,7 +32,7 @@ class LogTrabajo:
                 if csvfile.tell() == 0:
                     writer.writerow(header)
                 writer.writerow(
-                    [datetime.now().strftime("%Y-%m-%d %H:%M:%S"),self.peticion,self.IP,self.usuario,self.fallos,self.exitos,self.tiempo_ejecucion]
+                    [datetime.now().strftime("%Y-%m-%d %H:%M:%S"),self.peticion,self.IP,self.usuario,self.fallos,self.exitos,self.tiempo_ejecucion,]
                 )
 
         except Exception as e:

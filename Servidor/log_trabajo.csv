@@ -112,3 +112,9 @@
 2024-11-06 00:46:03,Activar Motores,127.0.0.1,Marcos,0,1,0.0
 2024-11-06 00:46:06,Desactivar Motores,127.0.0.1,Marcos,0,1,0.0
 2024-11-06 00:47:18,Inicio de Sesion,127.0.0.1,Juan,0,1,0.0
+2024-11-06 00:53:30,Inicio de actividad,127.0.0.1,Sistema,0,1,0.0
+2024-11-06 00:53:30,Inicio de actividad,127.0.0.1,Sistema,0,1,0.0
+2024-11-06 00:53:34,Iniciar Sesion,127.0.0.1,Juan,0,1,0.0
+2024-11-06 00:53:41,Conectar robot,127.0.0.1,Juan,0,1,3519.1521644592285
+2024-11-06 00:53:41,Seleccionar modo automatico,127.0.0.1,Juan,0,1,0.0
+2024-11-06 00:54:01,Cargar y ejecutar archivo G-Code.,127.0.0.1,Juan,0,1,18614.092588424683
