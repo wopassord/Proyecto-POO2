@@ -1,5 +1,5 @@
 from archivo import Archivo
-from logTrabajo import LogTrabajo
+from LogTrabajo1 import LogTrabajo
 from controlador import Controlador
 import time
 from interprete_gcode import SimuladorRobot
@@ -172,7 +172,6 @@ class InterfazServidor:
         if opcion_elegida not in [9, 15, 13]:
             duracion = (time.time() - inicio)*1000  # Calcular el tiempo de ejecución
             self.registrar_log_csv(peticion=self.peticion,fallos=self.fallos, exitos=self.exitos, tiempo_ejecucion=duracion,IP=self.ip_cliente)
-            # logtrabajo = LogTrabajo(servidor=self.servidor,peticion=self.peticion,exitos=1 if respuesta != "Opción inválida" else 0,tiempo_ejecucion=duracion,IP=self.ip_cliente)
     
         return respuesta
 

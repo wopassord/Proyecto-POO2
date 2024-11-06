@@ -27,3 +27,11 @@
 2024-11-05 21:44:55,Modificar parametros de conexion,127.0.0.1,Marcos,0,1,4873.57234954834
 2024-11-05 21:44:57,Seleccionar modo automatico,127.0.0.1,Marcos,0,1,0.0
 2024-11-05 21:45:10,Cargar y ejecutar archivo G-Code.,127.0.0.1,Marcos,0,1,12527.446985244751
+2024-11-05 22:23:00,Inicio de actividad,127.0.0.1,Sistema,0,1,0.0
+2024-11-05 22:23:00,Inicio de actividad,127.0.0.1,Sistema,0,1,0.0
+2024-11-05 22:23:07,Iniciar Sesion,127.0.0.1,Marcos,0,1,0.0
+2024-11-05 22:23:25,Modificar parametros de conexion,127.0.0.1,Marcos,0,1,6925.850629806519
+2024-11-05 22:23:26,Activar motores,127.0.0.1,Marcos,0,1,101.01890563964844
+2024-11-05 22:23:27,Desactivar motores,127.0.0.1,Marcos,0,1,102.07653045654297
+2024-11-05 22:24:28,Mostrar log de trabajo,127.0.0.1,Marcos,1,0,0.0
+2024-11-05 22:24:34,Mostrar log de trabajo,127.0.0.1,Marcos,1,0,0.0
