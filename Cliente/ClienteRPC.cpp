@@ -9,9 +9,8 @@ bool ClienteRPC::iniciarSesion() {
     std::cout << "Ingrese la contraseña: ";
     std::cin >> contrasena;
 
-    // Crear un array en args para enviar los datos correctamente
     XmlRpcValue args;
-    args.setSize(2); // Configura el tamaño del array
+    args.setSize(2); 
     args[0] = nombre_usuario;
     args[1] = contrasena;
 

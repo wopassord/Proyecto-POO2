@@ -1,5 +1,5 @@
 from archivo import Archivo
-from logTrabajo import LogTrabajo
+from LogTrabajo1 import LogTrabajo
 from controlador import Controlador
 import time
 from interprete_gcode import SimuladorRobot
@@ -8,9 +8,9 @@ from unidecode import unidecode
 
 class InterfazServidor:
     def __init__(self, servidor, modo_trabajo="automatico", modo_coordenadas="absolutas"):
-        self.servidor = servidor  # Instancia del Servidor
+        self.servidor = servidor  
         self.modo_trabajo = modo_trabajo
-        self.controlador = Controlador()  # Instancia de Controlador
+        self.controlador = Controlador()  
         self.modo_coordenadas = modo_coordenadas
         self.usuario = None
         self.peticion = None
@@ -172,7 +172,6 @@ class InterfazServidor:
         if opcion_elegida not in [9, 15, 13]:
             duracion = (time.time() - inicio)*1000  # Calcular el tiempo de ejecución
             self.registrar_log_csv(peticion=self.peticion,fallos=self.fallos, exitos=self.exitos, tiempo_ejecucion=duracion,IP=self.ip_cliente)
-            # logtrabajo = LogTrabajo(servidor=self.servidor,peticion=self.peticion,exitos=1 if respuesta != "Opción inválida" else 0,tiempo_ejecucion=duracion,IP=self.ip_cliente)
     
         return respuesta
 
@@ -481,7 +480,7 @@ class InterfazServidor:
             return respuesta
                   
 
-    def verificar_sesion_admin_aux(self): ##SOLO PARA VERIFICAR ERRORES EN EL EXITOS/FALLOS DE MOSTRAR LOG
+    def verificar_sesion_admin_aux(self):
         self.sesion = self.servidor.get_sesion()
         self.usuarios = self.servidor.get_usuarios()
 
@@ -501,7 +500,7 @@ class InterfazServidor:
         
         else:
             return False
-    def mostrar_log_trabajo_aux(self): ##ESTA SOLO RECORRE SIN PRINTEAR NADA PARA VERIFICAR ERRORES UNICAMENTE
+    def mostrar_log_trabajo_aux(self):
         self.peticion = "Mostrar log de trabajo"
         if self.verificar_sesion_admin_aux() == True:
             try:

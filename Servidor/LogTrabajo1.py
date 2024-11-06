@@ -1,20 +1,8 @@
-# logTrabajo.py
-
 from datetime import datetime
 import csv
 
-
 class LogTrabajo:
-    def __init__(
-        self,
-        servidor=None,
-        peticion=0,
-        usuario=None,
-        fallos=0,
-        exitos=0,
-        tiempo_ejecucion=0.0,
-        IP="127.0.0.1",
-    ):
+    def __init__(self, servidor=None, peticion=0, usuario=None, fallos=0, exitos=0, tiempo_ejecucion=0.0, IP="127.0.0.1",):
         self.servidor = servidor
         self.peticion = peticion
         self.IP = IP
@@ -23,15 +11,7 @@ class LogTrabajo:
         self.exitos = exitos
         self.tiempo_ejecucion = float(tiempo_ejecucion)
 
-    def actualizar_log(
-        self,
-        peticion=None,
-        usuario=None,
-        fallos=0,
-        exitos=0,
-        tiempo_ejecucion=0.0,
-        IP="127.0.0.1",
-    ):
+    def actualizar_log(self, peticion=None, usuario=None, fallos=0, exitos=0, tiempo_ejecucion=0.0, IP="127.0.0.1",):
         """Actualizar los atributos del log sin escribir en el CSV inmediatamente."""
         if peticion:
             self.peticion = peticion
@@ -44,15 +24,7 @@ class LogTrabajo:
 
     def escribir_CSV(self, archivo="log_trabajo.csv"):
         "Escribe la información del log en un archivo CSV."
-        header = [
-            "Fecha y Hora",
-            "Peticiones",
-            "IP",
-            "Usuario",
-            "Fallos",
-            "Exitos",
-            "Tiempo de Ejecucion",
-        ]
+        header = ["Fecha y Hora","Peticiones","IP","Usuario","Fallos","Exitos","Tiempo de Ejecucion",]
 
         try:
             with open(archivo, mode="a", newline="") as csvfile:
@@ -60,15 +32,7 @@ class LogTrabajo:
                 if csvfile.tell() == 0:
                     writer.writerow(header)
                 writer.writerow(
-                    [
-                        datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
-                        self.peticion,
-                        self.IP,
-                        self.usuario,
-                        self.fallos,
-                        self.exitos,
-                        self.tiempo_ejecucion,
-                    ]
+                    [datetime.now().strftime("%Y-%m-%d %H:%M:%S"),self.peticion,self.IP,self.usuario,self.fallos,self.exitos,self.tiempo_ejecucion,]
                 )
 
         except Exception as e:
@@ -80,15 +44,7 @@ class LogTrabajo:
             with open(archivo, mode="r", newline="") as csvfile:
                 reader = csv.reader(csvfile)
                 rows = list(reader)
-                col_widths = [
-                    20,
-                    55,
-                    10,
-                    9,
-                    8,
-                    8,
-                    21,
-                ]  # Ajusta los valores según sea necesario
+                col_widths = [20,55,10,9,8,8,21,]  
 
                 num_rows_to_show = min(len(rows) - 1, 100)
                 header = rows[0]

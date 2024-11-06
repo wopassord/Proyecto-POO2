@@ -1,4 +1,3 @@
-from datetime import datetime
 import csv
 
 class Archivo:
@@ -25,7 +24,7 @@ class Archivo:
                         # Encontramos el inicio de una nueva actividad
                         actividad_encontrada = True
                         self.inicio_actividad = row['Fecha y Hora']
-                        self.estado_conexion = True  # Asumimos que está conectado al inicio de la actividad
+                        self.estado_conexion = True
                         self.ordenes = []
                         self.cantidad_ordenes = 0
                         self.ordenes_con_error = 0
@@ -53,11 +52,10 @@ class Archivo:
         try:
             # Parsear la respuesta para extraer la posición
             if "ACTUAL POSITION" in respuesta:
-                # Ejemplo de respuesta: "INFO: ACTUAL POSITION: [X:0.00 Y:170.00 Z:120.00 E:0.00]"
                 posicion = respuesta.split("[")[1].split("]")[0]
                 self.posicion = f"[{posicion}]"
             else:
-                self.posicion = "No disponible"  # En caso de que la respuesta no contenga la posición
+                self.posicion = "No disponible"
         except Exception as e:
             print(f"Error al procesar la posición del robot: {e}")
             self.posicion = "No disponible"

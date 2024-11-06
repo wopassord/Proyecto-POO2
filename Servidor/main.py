@@ -2,9 +2,6 @@ from interfazServidor import InterfazServidor
 from servidor import Servidor
 import time
 from servidor import Servidor
-from servidor_http import app
-import threading
-import uvicorn
 import secrets
 
 
@@ -56,8 +53,9 @@ def init_rpc_server():
                         # Pedir datos del usuario para agregar
                         nombre_usuario = input("Ingrese el nombre de usuario: ")
                         contrasena = input("Ingrese la contraseña: ")
+                        admin = False
                         token = secrets.token_hex(16)
-                        servidor.agregar_usuario(nombre_usuario, contrasena, False, token)
+                        servidor.agregar_usuario(nombre_usuario, contrasena, admin, token)
                 except ValueError:
                     print("Ingrese un numero valido.")
             else:

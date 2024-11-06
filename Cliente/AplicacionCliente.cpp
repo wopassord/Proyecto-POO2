@@ -19,7 +19,6 @@ bool AplicacionCliente::agregar_usuario(){
 void AplicacionCliente::ejecutar() {
     string entrada;
 
-    //cliente->login_o_signin();
 
     
     while (true) {
