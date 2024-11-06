@@ -1,8 +1,6 @@
 from xmlrpc.server import SimpleXMLRPCServer, SimpleXMLRPCRequestHandler
 from usuario import (Usuario,)  # Asegúrate de tener la clase Usuario en un archivo separado llamado usuario.py
-from controlador import Controlador  # Clase que controla el robot, por ejemplo
 import csv
-import interfazServidor
 import threading
 import csv
 from interprete_gcode import UtilGcode
@@ -10,15 +8,15 @@ from interprete_gcode import UtilGcode
 
 class Servidor:
     def __init__(self):
-        self.usuarios = self.leer_usuarios_csv()  # Lista de usuarios
+        self.usuarios = self.leer_usuarios_csv() 
         self.sesion_iniciada = False  # Estado de la sesión de usuario
         self.sesion = {}  # Información de la sesión actual
         self.running = False  # Estado del servidor
         self.server = None  # Instancia del servidor XML-RPC
         self.server_thread = None  # Hilo para el servidor XML-RPC
         self.interface_thread = None  # Hilo para la interfaz de usuario
-        self.ip_cliente = None  # Última IP de cliente conectada
-        self.comando_recibido = None  # Último comando recibido de un cliente
+        self.ip_cliente = None  
+        self.comando_recibido = None  
         self.interfaz = None  # InterfazServidor, se asignará desde main.py
         self.gcode = UtilGcode()
 
@@ -109,7 +107,6 @@ class Servidor:
             writer.writerow([nombre_usuario, contrasena, str(admin), token])
         print(f"Usuario {nombre_usuario} agregado al archivo CSV.")
 
-    # Métodos XML-RPC
     def saludo_personalizado(self, nombre):
         """Retorna un saludo personalizado al cliente."""
         return f"Hola {nombre}, ¡conexión exitosa con el servidor XML-RPC!"
@@ -123,9 +120,6 @@ class Servidor:
                 return f"Se produjo el siguiente error: {e}"
         else:
             return "Esta acciOn solo esta disponible en modo automatico. Cambie el modo de trabajo a automatico para proceder."
-            
-
-    # Visualizacion 3D robot:
 
     def recibir_comando_cliente(self, comando):
         """Recibe un comando desde el cliente y lo procesa."""
@@ -237,6 +231,3 @@ class Servidor:
 
     def __repr__(self):
         return f"Servidor con {len(self.usuarios)} usuarios."
-    
-
-

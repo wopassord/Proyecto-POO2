@@ -1,7 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import re
-import base64
 from io import BytesIO
 import os
 from datetime import datetime
@@ -10,7 +9,7 @@ from datetime import datetime
 
 class SimuladorRobot:
     def __init__(self):
-        self.movimientos = []  # Lista para almacenar las posiciones de cada movimiento
+        self.movimientos = []  
         self.posicion_actual = np.array(
             [60, 0, 260]
         )  # Posición inicial del robot en el origen

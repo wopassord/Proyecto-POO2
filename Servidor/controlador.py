@@ -3,13 +3,12 @@ import time
 import threading
 import queue
 
-
 class Controlador:
     def __init__(self):
         self.estado_robot = False
         self.estado_motores = False
         self.baudrate = 115200
-        self.puerto_COM = "COM"
+        self.puerto_COM = "COM6"
         self.arduino = None
         self.hilo_lectura = None
         self.cola_respuestas = queue.Queue()
@@ -67,7 +66,6 @@ class Controlador:
 
     def activar_motores(self):
         if self.estado_robot:
-            # Enviar el comando M17 al Arduino sin esperar respuesta
             self.enviar_comando("M17")
             self.estado_motores = True
             respuesta = "MOTORES ACTIVADOS."
@@ -75,12 +73,11 @@ class Controlador:
         else:
             respuesta = "No se pueden activar los motores. El robot no está conectado."
             exito = 0
-        print(respuesta)
+            print(respuesta)
         return respuesta, exito
 
     def desactivar_motores(self):
         if self.estado_robot:
-            # Enviar el comando M18 al Arduino sin esperar respuesta
             self.enviar_comando("M18")
             self.estado_motores = False
             respuesta = "MOTORES DESACTIVADOS."
@@ -90,7 +87,7 @@ class Controlador:
                 "No se pueden desactivar los motores. El robot no está conectado."
             )
             exito = 0
-        print(respuesta)
+            print(respuesta)
 
         return respuesta, exito
 
@@ -102,7 +99,6 @@ class Controlador:
                     print(respuesta)
                     exito = 1
                     return respuesta, exito
-                # Verifica si el comando es 'M17' o 'M18' para evitar mostrar "No se recibió respuesta"
 
                 elif comando in ['M17', 'M18']:
                     if comando == 'M17':
@@ -111,17 +107,17 @@ class Controlador:
                         respuesta = "MOTORES ACTIVADOS." #firmware de arduino no acusa respuesta, incluimos esta respuesta interna del servidor
                         print(respuesta)
                         exito = 1
-                    elif comando == 'M18': #firmware de arduino no acusa respuesta, incluimos esta respuesta interna del servidor
+                    elif comando == 'M18':
                         self.arduino.write((comando + '\r\n').encode('latin-1'))
                         time.sleep(0.1)
-                        respuesta = "MOTORES DESACTIVADOS."
+                        respuesta = "MOTORES DESACTIVADOS." #firmware de arduino no acusa respuesta, incluimos esta respuesta interna del servidor
                         print(respuesta)
                         exito = 1
                     return respuesta, exito
                 else:
                     self.arduino.write(
                         (comando + "\r\n").encode("latin-1")
-                    )  # Enviar comando en formato de bytes
+                    ) # Enviar comando en formato de bytes
                     time.sleep(0.1)  # Tiempo de espera para recibir respuesta
                     respuesta = self.leer_respuesta()
                     if respuesta:

@@ -1,10 +1,6 @@
 #include <iostream>
 #include <cstdlib>
 #include "AplicacionCliente.h"
-// '''
-// #include <QApplication>
-// #include "LoginWindow.h"
-// ''' COMENTADAS LAS LIBRERIAS
 
 int main(int argc, char* argv[]) {
     if (argc != 3) {

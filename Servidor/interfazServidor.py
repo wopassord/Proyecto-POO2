@@ -8,9 +8,9 @@ from unidecode import unidecode
 
 class InterfazServidor:
     def __init__(self, servidor, modo_trabajo="automatico", modo_coordenadas="absolutas"):
-        self.servidor = servidor  # Instancia del Servidor
+        self.servidor = servidor  
         self.modo_trabajo = modo_trabajo
-        self.controlador = Controlador()  # Instancia de Controlador
+        self.controlador = Controlador()  
         self.modo_coordenadas = modo_coordenadas
         self.usuario = None
         self.peticion = None
@@ -480,7 +480,7 @@ class InterfazServidor:
             return respuesta
                   
 
-    def verificar_sesion_admin_aux(self): ##SOLO PARA VERIFICAR ERRORES EN EL EXITOS/FALLOS DE MOSTRAR LOG
+    def verificar_sesion_admin_aux(self):
         self.sesion = self.servidor.get_sesion()
         self.usuarios = self.servidor.get_usuarios()
 
@@ -500,7 +500,7 @@ class InterfazServidor:
         
         else:
             return False
-    def mostrar_log_trabajo_aux(self): ##ESTA SOLO RECORRE SIN PRINTEAR NADA PARA VERIFICAR ERRORES UNICAMENTE
+    def mostrar_log_trabajo_aux(self):
         self.peticion = "Mostrar log de trabajo"
         if self.verificar_sesion_admin_aux() == True:
             try:

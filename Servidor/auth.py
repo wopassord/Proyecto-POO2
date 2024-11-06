@@ -1,7 +1,5 @@
 import csv
 import secrets
-from datetime import datetime
-
 
 class GestionUsuarios:
     def __init__(self, archivo_csv="usuarios_servidor_uno.csv"):
@@ -13,7 +11,7 @@ class GestionUsuarios:
             password,
             False,
             self.generar_token(),
-        ]  # Valor booleano en False y luego el token
+        ]
         with open(self.archivo_csv, mode="a", newline="") as file:
             writer = csv.writer(file)
             writer.writerow(data)
@@ -39,7 +37,7 @@ class GestionUsuarios:
         with open(self.archivo_csv, mode="r") as file:
             reader = csv.reader(file)
             for row in reader:
-                if row[3] == token:  # Cambiado para verificar en la posición del token
+                if row[3] == token:
                     return True
         return False
 
@@ -47,6 +45,6 @@ class GestionUsuarios:
         with open(self.archivo_csv, mode="r") as file:
             reader = csv.reader(file)
             for row in reader:
-                if row[3] == token:  # Cambiado para verificar en la posición del token
+                if row[3] == token:
                     return row
         return None
